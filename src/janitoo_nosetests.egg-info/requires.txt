@@ -1,0 +1,6 @@
+janitoo == 0.0.6
+janitoo_packaging == 0.0.6
+nose-html
+nose-progressive
+coverage
+nose
