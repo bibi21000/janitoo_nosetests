@@ -89,8 +89,7 @@ setup(
     #~ data_files = data_files,
     package_dir = { '': 'src' },
     install_requires=[
-                     'janitoo == %s'%janitoo_version,
-                     'janitoo_packaging == %s'%janitoo_version,
+                     #~ 'janitoo_packaging == %s'%janitoo_version,
                      'nose-html',
                      'nose-progressive',
                      'coverage',

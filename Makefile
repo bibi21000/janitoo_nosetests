@@ -74,13 +74,6 @@ endif
 	@echo
 	@echo "Dependencies for ${MODULENAME} finished."
 
-travis-deps:
-ifneq ('${DEBIANDEPS}','')
-	sudo apt-get install -y ${DEBIANDEPS}
-endif
-	@echo
-	@echo "Dependencies for ${MODULENAME} finished."
-
 clean-doc:
 	-rm -Rf ${BUILDDIR}/docs
 	-rm -Rf ${BUILDDIR}/janidoc
@@ -118,6 +111,11 @@ develop:
 	${PYTHON_EXEC} setup.py develop
 	@echo
 	@echo "Installation for developpers of ${MODULENAME} finished."
+
+travis-deps:
+	pip install git+git://github.com/bibi21000/janitoo_nosetests@master
+	@echo
+	@echo "Travis dependencies for ${MODULENAME} installed."
 
 tests:
 	-mkdir -p ${BUILDDIR}/docs/html/tools/coverage
