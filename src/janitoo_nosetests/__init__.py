@@ -35,6 +35,7 @@ import logging
 import json as mjson
 import shutil
 import mock
+import platform
 from pkg_resources import iter_entry_points
 from nose.plugins.skip import SkipTest
 from janitoo.mqtt import MQTTClient
@@ -93,30 +94,35 @@ class JNTTBase(unittest.TestCase):
         except OSError as exc: # Python >2.5
             pass
 
+    @classmethod
     def skipManualTest(self, message=''):
         """Skip a manual test (need human intervention)
         """
         if self.skipManual == True:
             raise SkipTest("%s" % ("manual test (%s)" % message))
 
+    @classmethod
     def skipTest(self, message):
         """Skip a test
         """
         if self.skip == True:
             raise SkipTest("%s" % (message))
 
+    @classmethod
     def skipTravisTest(self, message):
         """Skip a test on travis
         """
         if 'TRAVIS_OS_NAME' in os.environ:
             raise SkipTest("%s" % ("Skip on travis : %s" % message))
 
-    def skipRaspiTest(self):
+    @classmethod
+    def skipRasperryTest(self):
         """Skip a test when not on raspy
         """
         if not platform.machine().startswith('armv6'):
             raise SkipTest("%s" % ('Not on a Raspberry pi'))
 
+    @classmethod
     def skipNoPingTest(self, ip):
         """Skip a test when when no ping response
         """
@@ -124,6 +130,7 @@ class JNTTBase(unittest.TestCase):
         if response != 0:
             raise SkipTest("No ping response from %s" % (ip))
 
+    @classmethod
     def wipTest(self, message=''):
         """Work In Progress test
         """
