@@ -1,4 +1,0 @@
-nose-html
-nose-progressive
-coverage
-nose
