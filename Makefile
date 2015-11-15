@@ -116,7 +116,7 @@ develop:
 	@echo
 	@echo "Installation for developpers of ${MODULENAME} finished."
 
-travis-deps:
+travis-deps: deps
 	pip install git+git://github.com/bibi21000/janitoo_nosetests@master
 	@echo
 	@echo "Travis dependencies for ${MODULENAME} installed."
@@ -144,10 +144,18 @@ tar:
 	@echo "Archive for ${MODULENAME} version ${janitoo_version} created"
 
 commit: develop
-	git commit -m "Auto-commit" -a
+	-git commit -m "Auto-commit" -a
 	git push
 	@echo
 	@echo "Commits for branch master pushed on github."
+
+pull:
+	git pull
+	@echo
+	@echo "Commits from branch master pulled from github."
+
+status:
+	git status
 
 tag: check-tag commit
 	git tag v${janitoo_version}
