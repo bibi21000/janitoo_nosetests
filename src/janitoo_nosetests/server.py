@@ -21,17 +21,11 @@ __copyright__ = "Copyright © 2013-2014 Sébastien GALLET aka bibi21000"
 __author__ = 'Sébastien GALLET aka bibi21000'
 __email__ = 'bibi21000@gmail.com'
 
-try:
-    __import__('pkg_resources').declare_namespace(__name__)
-except:  # pragma: no cover
-    # bootstrapping
-    pass # pragma: no cover
-
 import sys, os, errno
 import time
 import unittest
 import threading
-import logging
+#~ import logging
 import json as mjson
 import shutil
 import mock

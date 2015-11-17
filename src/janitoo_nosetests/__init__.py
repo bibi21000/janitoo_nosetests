@@ -116,7 +116,21 @@ class JNTTBase(unittest.TestCase):
             raise SkipTest("%s" % ("Skip on travis : %s" % message))
 
     @classmethod
+    def onlyTravisTest(self, message):
+        """Run a test only on travis
+        """
+        if not 'TRAVIS_OS_NAME' in os.environ:
+            raise SkipTest("%s" % ("Only on travis : %s" % message))
+
+    @classmethod
     def skipRasperryTest(self):
+        """Skip a test when not on raspy
+        """
+        if not platform.machine().startswith('armv6'):
+            raise SkipTest("%s" % ('Not on a Raspberry pi'))
+
+    @classmethod
+    def onlyRasperryTest(self):
         """Skip a test when not on raspy
         """
         if not platform.machine().startswith('armv6'):
