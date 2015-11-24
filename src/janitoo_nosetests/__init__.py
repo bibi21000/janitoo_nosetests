@@ -120,7 +120,7 @@ class JNTTBase(unittest.TestCase):
         """Run a test only on travis
         """
         if not 'TRAVIS_OS_NAME' in os.environ:
-            raise SkipTest("%s" % ("Only on travis : %s" % message))
+            raise SkipTest("%s" % ("Only on travis"))
 
     @classmethod
     def skipRasperryTest(self):

@@ -36,6 +36,7 @@ MODULENAME   = $(shell basename `pwd`)
 NOSECOVER     = --cover-package=janitoo,janitoo_db,${MODULENAME} --cover-min-percentage= --with-coverage --cover-inclusive --cover-tests --cover-html --cover-html-dir=${BUILDDIR}/docs/html/tools/coverage --with-html --html-file=${BUILDDIR}/docs/html/tools/nosetests/index.html
 
 DEBIANDEPS := $(shell [ -f debian.deps ] && cat debian.deps)
+BOWERDEPS := $(shell [ -f bower.deps ] && cat bower.deps)
 
 TAGGED := $(shell git tag | grep -c v${janitoo_version} )
 
@@ -69,6 +70,26 @@ uninstall:
 	-yes | ${PIP_EXEC} uninstall ${ARCHNAME}
 	-${PYTHON_EXEC} setup.py develop --uninstall
 	-@find . -name \*.egg-info -type d -exec rm -rf "{}" \;
+
+bower-install:
+	sudo apt-get install -y nodejs npm
+	sudo npm install -g bower
+
+bower-list:
+	cd src/${MODULENAME} && bower list
+
+src/${MODULENAME}/bower_components/bootstrap-markdown-editor:
+	cd src/${MODULENAME} && bower install install bootstrap-markdown-editor
+	cd src/${MODULENAME}/bower_components && mv "Bootstrap Markdown Editor" bootstrap-markdown-editor
+
+bower: src/${MODULENAME}/bower_components/bootstrap-markdown-editor
+	cd src/${MODULENAME} && bower install jquery
+	cd src/${MODULENAME} && bower install bootstrap#3.3.5
+	cd src/${MODULENAME} && bower install startbootstrap-sb-admin-2
+	cd src/${MODULENAME} && bower install bootstrap-markdown
+	cd src/${MODULENAME} && bower install socket.io-client#0.9.17
+	cd src/${MODULENAME} && bower install cytoscape
+	cd src/${MODULENAME} && bower install bootstrap-web-components
 
 deps:
 ifneq ('${DEBIANDEPS}','')
