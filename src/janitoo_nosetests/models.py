@@ -66,12 +66,6 @@ class JNTTModels(JNTTBase):
         self.dbsession = scoped_session(self.dbmaker)
         Base.metadata.create_all(bind=engine)
 
-    def test_001_user(self):
-        group = jntmodels.Group(name="test_group")
-        user = jntmodels.User(username="test_user", email="test@gmail.com", _password="test", primary_group=group)
-        self.dbsession.merge(group, user)
-        self.dbsession.commit()
-
 class JNTTFullModels(JNTTBase):
     """Test the models
     """
