@@ -57,6 +57,10 @@ class JNTTModels(JNTTBase):
         JNTTBase.setUp(self)
         import janitoo_db.models
 
+class JNTTModelsCommon():
+    """Test the MODELS
+    """
+
     def test_001_upgrade(self):
         alcommand.upgrade(janitoo_config("sqlite:////tmp/janitoo_test/home/fullmodel.sqlite"), 'heads')
 
