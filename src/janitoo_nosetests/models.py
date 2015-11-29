@@ -51,14 +51,36 @@ assert(COMMAND_DESC[COMMAND_DISCOVERY] == 'COMMAND_DISCOVERY')
 ##############################################################
 
 class JNTTModels(JNTTBase):
-    """Test the MODELS
+    """Test the models
+    """
+    models_conf = "tests/data/janitoo_db.conf"
+
+    def setUp(self):
+        JNTTBase.setUp(self)
+        options = JNTOptions({'conf_file':self.models_conf})
+        options.load()
+        engine = create_db_engine(options)
+        self.dbmaker = sessionmaker()
+        # Bind the sessionmaker to engine
+        self.dbmaker.configure(bind=engine)
+        self.dbsession = scoped_session(self.dbmaker)
+        Base.metadata.create_all(bind=engine)
+
+    def test_001_user(self):
+        group = jntmodels.Group(name="test_group")
+        user = jntmodels.User(username="test_user", email="test@gmail.com", _password="test", primary_group=group)
+        self.dbsession.merge(group, user)
+        self.dbsession.commit()
+
+class JNTTFullModels(JNTTBase):
+    """Test the models
     """
     def setUp(self):
         JNTTBase.setUp(self)
         import janitoo_db.models
 
-class JNTTModelsCommon():
-    """Test the MODELS
+class JNTTFullModelsCommon():
+    """Common tests for models
     """
 
     def test_001_upgrade(self):
