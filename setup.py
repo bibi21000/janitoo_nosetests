@@ -95,5 +95,6 @@ setup(
                      'coverage',
                      'nose',
                      'Flask-Testing',
+                     'urllib3',
                     ],
 )

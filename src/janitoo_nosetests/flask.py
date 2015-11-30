@@ -85,6 +85,7 @@ class JNTTFlaskLive(JNTTBase, LiveServerTestCase, JNTTFlaskMain):
     def assertUrl(self, url='/', code=200):
         response = urllib2.urlopen(self.get_server_url()+url)
         self.assertEqual(response.code, code)
+        time.sleep(0.5)
 
 class JNTTFlaskLiveCommon():
     """Common tests for flask server in live
