@@ -94,5 +94,6 @@ setup(
                      'nose-progressive',
                      'coverage',
                      'nose',
+                     'Flask-Testing',
                     ],
 )
