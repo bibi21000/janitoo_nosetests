@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Unittests for flask.
+"""Unittests for socketio.
 """
 __license__ = """
     This file is part of Janitoo.
@@ -28,9 +28,10 @@ import time, datetime
 import unittest
 import threading
 import logging
-import urllib2
 
-from flask_testing import TestCase, LiveServerTestCase
+
+#~ from flask import Flask, session, request
+from flask_socketio import SocketIO, send, emit, join_room, leave_room
 
 from janitoo_nosetests import JNTTBase
 
@@ -49,41 +50,27 @@ COMMAND_DISCOVERY = 0x5000
 assert(COMMAND_DESC[COMMAND_DISCOVERY] == 'COMMAND_DISCOVERY')
 ##############################################################
 
-class JNTTFlaskMain():
-    """Common function for flask
-    """
-
-    def list_routes(self):
-        output = []
-        for rule in self.app.url_map.iter_rules():
-            methods = ','.join(rule.methods)
-            line = urllib2.unquote("{:50s} {:30s} {}".format(rule.endpoint, methods, rule))
-            output.append(line)
-        for line in sorted(output):
-            print(line)
-
-class JNTTFlask(JNTTBase, TestCase, JNTTFlaskMain):
+class JNTTSocketIO(JNTTBase):
     """Test the flask
     """
     flask_conf = "tests/data/janitoo_flask.conf"
 
-class JNTTFlaskCommon():
+    def create_app(self):
+        """
+        Create your Flask app here, with any
+        configuration you need.
+        """
+        raise NotImplementedError
+
+    def assertConnect(self, namespace="/janitoo"):
+        app, socketio = self.create_app()
+        client = socketio.test_client(app, namespace=namespace)
+        received = client.get_received(namespace)
+        self.assertEqual(len(received), 1)
+        self.assertEqual(received[0]['args'], ({'data': 'Connected'},))
+        client.disconnect(namespace)
+
+class JNTTSocketIOCommon():
     """Common tests for flask
     """
     pass
-
-class JNTTFlaskLive(JNTTBase, LiveServerTestCase, JNTTFlaskMain):
-    """Test the flask server in live
-    """
-    flask_conf = "tests/data/janitoo_flask.conf"
-
-    def assertUrl(self, url='/', code=200):
-        response = urllib2.urlopen(self.get_server_url()+url)
-        self.assertEqual(response.code, code)
-        time.sleep(0.5)
-
-class JNTTFlaskLiveCommon():
-    """Common tests for flask server in live
-    """
-    pass
-
