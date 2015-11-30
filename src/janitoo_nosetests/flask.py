@@ -28,10 +28,14 @@ import time, datetime
 import unittest
 import threading
 import logging
-from pkg_resources import iter_entry_points
+import urllib2
+
 
 from sqlalchemy.orm import sessionmaker, scoped_session
 from alembic import command as alcommand
+
+from flask_testing import TestCase
+from flask_testing import LiveServerTestCase
 
 from janitoo_nosetests import JNTTBase
 
@@ -50,7 +54,20 @@ COMMAND_DISCOVERY = 0x5000
 assert(COMMAND_DESC[COMMAND_DISCOVERY] == 'COMMAND_DISCOVERY')
 ##############################################################
 
-class JNTTFlask(JNTTBase):
+class JNTTFlaskMain():
+    """Common function for flask
+    """
+
+    def list_routes(self):
+        output = []
+        for rule in self.app.url_map.iter_rules():
+            methods = ','.join(rule.methods)
+            line = urllib2.unquote("{:50s} {:30s} {}".format(rule.endpoint, methods, rule))
+            output.append(line)
+        for line in sorted(output):
+            print(line)
+
+class JNTTFlask(JNTTBase, TestCase, JNTTFlaskMain):
     """Test the flask
     """
     flask_conf = "tests/data/janitoo_flask.conf"
@@ -59,3 +76,18 @@ class JNTTFlaskCommon():
     """Common tests for flask
     """
     pass
+
+class JNTTFlaskLive(JNTTBase, LiveServerTestCase, JNTTFlaskMain):
+    """Test the flask server in live
+    """
+    flask_conf = "tests/data/janitoo_flask.conf"
+
+    def assertUrl(self, url='/', code=200):
+        response = urllib2.urlopen(self.get_server_url()+url)
+        self.assertEqual(response.code, code)
+
+class JNTTFlaskLiveCommon():
+    """Common tests for flask server in live
+    """
+    pass
+
