@@ -28,6 +28,7 @@ import time, datetime
 import unittest
 import threading
 import logging
+import urllib
 import urllib2
 
 from flask_testing import TestCase, LiveServerTestCase
@@ -57,7 +58,7 @@ class JNTTFlaskMain():
         output = []
         for rule in self.app.url_map.iter_rules():
             methods = ','.join(rule.methods)
-            line = urllib2.unquote("{:50s} {:30s} {}".format(rule.endpoint, methods, rule))
+            line = urllib.unquote("{:50s} {:30s} {}".format(rule.endpoint, methods, rule))
             output.append(line)
         for line in sorted(output):
             print(line)
