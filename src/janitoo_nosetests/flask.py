@@ -23,6 +23,9 @@ __author__ = 'Sébastien GALLET aka bibi21000'
 __email__ = 'bibi21000@gmail.com'
 __copyright__ = "Copyright © 2013-2014-2015 Sébastien GALLET aka bibi21000"
 
+from gevent import monkey
+monkey.patch_all()
+
 import sys, os
 import time, datetime
 import unittest
@@ -67,9 +70,9 @@ class JNTTFlaskLive(JNTTBase, LiveServerTestCase, JNTTFlaskMain):
     flask_conf = "tests/data/janitoo_flask.conf"
 
     def assertUrl(self, url='/', code=200):
-        response = urllib2.urlopen(self.get_server_url()+url)
+        response = urllib2.urlopen(self.get_server_url()+url, timeout=60)
+        print response
         self.assertEqual(response.code, code)
-        time.sleep(0.5)
 
 class JNTTFlaskLiveCommon():
     """Common tests for flask server in live
