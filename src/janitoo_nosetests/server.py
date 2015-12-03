@@ -25,12 +25,11 @@ import sys, os, errno
 import time
 import unittest
 import threading
-#~ import logging
 import json as mjson
 import shutil
 import mock
-from pkg_resources import iter_entry_points
-from nose.plugins.skip import SkipTest
+from janitoo_nosetests import JNTTBase
+
 from janitoo.mqtt import MQTTClient
 from janitoo.dhcp import JNTNetwork, HeartbeatMessage
 from janitoo.utils import json_dumps, json_loads
@@ -40,7 +39,6 @@ from janitoo.utils import TOPIC_NODES, TOPIC_NODES_REPLY, TOPIC_NODES_REQUEST
 from janitoo.utils import TOPIC_BROADCAST_REPLY, TOPIC_BROADCAST_REQUEST
 from janitoo.utils import TOPIC_VALUES_USER, TOPIC_VALUES_CONFIG, TOPIC_VALUES_SYSTEM, TOPIC_VALUES_BASIC
 from janitoo.runner import jnt_parse_args
-from janitoo_nosetests import JNTTBase
 
 class JNTTServer(JNTTBase):
     """Server base test
@@ -76,13 +74,15 @@ class JNTTServer(JNTTBase):
         self.server = None
         JNTTBase.tearDown(self)
 
-    def startClient(self):
+    def startClient(self, conf=None):
+        if conf is None:
+            conf = self.server.options.data
         if self.mqttc is None:
-            self.mqttc = MQTTClient(options=self.server.options.data)
+            self.mqttc = MQTTClient(options=conf)
             self.mqttc.connect()
             self.mqttc.start()
         if self.hearbeat_mqttc is None:
-            self.hearbeat_mqttc = MQTTClient(options=self.server.options.data)
+            self.hearbeat_mqttc = MQTTClient(options=conf)
             self.hearbeat_mqttc.connect()
             self.hearbeat_mqttc.start()
             self.hearbeat_mqttc.subscribe(topic=TOPIC_HEARTBEAT, callback=self.mqtt_on_heartbeat_message)
@@ -141,11 +141,13 @@ class JNTTServer(JNTTBase):
         print "Waiting for %s" % (hadd)
         self.heartbeat_waiting = hadd
         self.heartbeat_message = None
+        self.heartbeat_received = False
         i = 0
         while i< timeout*10000 and not self.heartbeat_received:
             time.sleep(0.0001)
             i += 1
         self.assertTrue(self.heartbeat_received)
+        time.sleep(0.5)
 
     def assertNodeRequest(self, cmd_class=0, genre=0x04, uuid='request_info_nodes', node_hadd=None, client_hadd=None, data=None, is_writeonly=False, is_readonly=False, timeout=5):
         self.message_received = False
@@ -165,6 +167,7 @@ class JNTTServer(JNTTBase):
             i += 1
         self.assertTrue(self.message_received)
         self.mqttc.unsubscribe(topic=TOPIC_NODES_REPLY%client_hadd)
+        time.sleep(0.5)
 
     def assertBroadcastRequest(self, cmd_class=0, genre=0x04, uuid='request_info_nodes', node_hadd=None, client_hadd=None, data=None, is_writeonly=False, is_readonly=False, timeout=5):
         self.message_received = False
@@ -183,6 +186,115 @@ class JNTTServer(JNTTBase):
             i += 1
         self.assertTrue(self.message_received)
         self.mqttc.unsubscribe(topic=TOPIC_BROADCAST_REPLY%client_hadd)
+        time.sleep(0.5)
+
+    def assertUpdateValue(self, type='user', data=None, cmd_class=0, genre=0x04, uuid='request_info_nodes', node_hadd=None, client_hadd=None, is_writeonly=False, is_readonly=False, timeout=5):
+        self.message_received = False
+        self.message = None
+        print "Waiting for %s : %s" % (node_hadd,uuid)
+        def mqtt_on_message(client, userdata, message):
+            """On generic message
+            """
+            msg = json_loads(message.payload)
+            print "Received message %s"%msg
+            if msg['uuid'] == uuid and msg['hadd'] == node_hadd:                   
+                self.message = message
+                self.message_received = True
+        self.mqttc.subscribe(topic='/values/%s/%s/#'%(type, node_hadd), callback=mqtt_on_message)
+        print 'Subscribe to /values/%s/%s/#'%(type, node_hadd)
+        time.sleep(0.5)
+        msg={ 'cmd_class': cmd_class, 'genre':genre, 'uuid':uuid, 'reply_hadd':client_hadd, 'data':data, 'hadd':node_hadd, 'is_writeonly':is_writeonly, 'is_readonly':is_readonly}
+        self.mqttc.publish('/nodes/%s/request' % (node_hadd), json_dumps(msg))
+        i = 0
+        while i< timeout*10000 and not self.message_received:
+            time.sleep(0.0001)
+            i += 1
+        self.assertTrue(self.message_received)
+        self.assertTrue(self.message is not None)
+        self.assertTrue(self.message.payload is not None)
+        if data is not None:
+            msg = json_loads(self.message.payload)
+            self.assertEqual(msg['data'], data)
+        self.mqttc.unsubscribe(topic='/values/%s/%s/#'%(type, node_hadd))
+        time.sleep(0.5)
+
+    def assertNotUpdateValue(self, type='user', data=None, cmd_class=0, genre=0x04, uuid='request_info_nodes', node_hadd=None, client_hadd=None, is_writeonly=False, is_readonly=False, timeout=5):
+        self.message_received = False
+        self.message = None
+        print "Waiting for %s : %s" % (node_hadd,uuid)
+        def mqtt_on_message(client, userdata, message):
+            """On generic message
+            """
+            msg = json_loads(message.payload)
+            print "Received message %s"%msg
+            if msg['uuid'] == uuid and msg['hadd'] == node_hadd:                   
+                self.message = message
+                self.message_received = True
+        self.mqttc.subscribe(topic='/values/%s/%s/#'%(type, node_hadd), callback=mqtt_on_message)
+        print 'Subscribe to /values/%s/%s/#'%(type, node_hadd)
+        time.sleep(0.5)
+        msg={ 'cmd_class': cmd_class, 'genre':genre, 'uuid':uuid, 'reply_hadd':client_hadd, 'data':data, 'hadd':node_hadd, 'is_writeonly':is_writeonly, 'is_readonly':is_readonly}
+        self.mqttc.publish('/nodes/%s/request' % (node_hadd), json_dumps(msg))
+        i = 0
+        while i< timeout*10000 and not self.message_received:
+            time.sleep(0.0001)
+            i += 1
+        self.assertTrue(self.message is None)
+        self.assertFalse(self.message_received)
+        self.mqttc.unsubscribe(topic='/values/%s/%s/#'%(type, node_hadd))
+        time.sleep(0.5)
+
+    def assertWaitValue(self, type='user', data=None, cmd_class=0, genre=0x04, uuid='request_info_nodes', node_hadd=None, client_hadd=None, is_writeonly=False, is_readonly=False, timeout=5):
+        self.message_received = False
+        self.message = None
+        print "Waiting for %s : %s" % (node_hadd,uuid)
+        def mqtt_on_message(client, userdata, message):
+            """On generic message
+            """
+            msg = json_loads(message.payload)
+            print "Received message %s"%msg
+            if msg['uuid'] == uuid and msg['hadd'] == node_hadd:                   
+                self.message = message
+                self.message_received = True
+        self.mqttc.subscribe(topic='/values/%s/%s/#'%(type, node_hadd), callback=mqtt_on_message)
+        print 'Subscribe to /values/%s/%s/#'%(type, node_hadd)
+        time.sleep(0.5)
+        i = 0
+        while i< timeout*10000 and not self.message_received:
+            time.sleep(0.0001)
+            i += 1
+        self.assertTrue(self.message_received)
+        self.assertTrue(self.message is not None)
+        self.assertTrue(self.message.payload is not None)
+        if data is not None:
+            msg = json_loads(self.message.payload)
+            self.assertEqual(msg['data'], data)
+        self.mqttc.unsubscribe(topic='/values/%s/%s/#'%(type, node_hadd))
+        time.sleep(0.5)
+
+    def assertNotWaitValue(self, type='user', data=None, cmd_class=0, genre=0x04, uuid='request_info_nodes', node_hadd=None, client_hadd=None, is_writeonly=False, is_readonly=False, timeout=5):
+        self.message_received = False
+        self.message = None
+        print "Waiting for %s : %s" % (node_hadd,uuid)
+        def mqtt_on_message(client, userdata, message):
+            """On generic message
+            """
+            msg = json_loads(message.payload)
+            print "Received message %s"%msg
+            if msg['uuid'] == uuid and msg['hadd'] == node_hadd:                   
+                self.message = message
+                self.message_received = True
+        self.mqttc.subscribe(topic='/values/%s/%s/#'%(type, node_hadd), callback=mqtt_on_message)
+        print 'Subscribe to /values/%s/%s/#'%(type, node_hadd)
+        time.sleep(0.5)
+        i = 0
+        while i< timeout*10000 and not self.message_received:
+            time.sleep(0.0001)
+            i += 1
+        self.assertTrue(self.message is None)
+        self.assertFalse(self.message_received)
+        self.mqttc.unsubscribe(topic='/values/%s/%s/#'%(type, node_hadd))
+        time.sleep(0.5)
 
 class JNTTServerCommon():
     """Common tests for servers

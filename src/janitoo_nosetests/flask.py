@@ -29,7 +29,6 @@ monkey.patch_all()
 import sys, os
 import time, datetime
 import unittest
-import logging
 import urllib
 import urllib2
 

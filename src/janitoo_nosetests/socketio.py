@@ -26,8 +26,6 @@ __copyright__ = "Copyright © 2013-2014-2015 Sébastien GALLET aka bibi21000"
 import sys, os
 import time, datetime
 import unittest
-import logging
-
 
 #~ from flask import Flask, session, request
 from flask_socketio import SocketIO, send, emit, join_room, leave_room

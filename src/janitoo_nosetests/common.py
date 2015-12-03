@@ -30,11 +30,11 @@ import sys, os, errno
 import time
 import unittest
 import threading
-import logging
 import json as mjson
 import shutil
 from pkg_resources import iter_entry_points
 from nose.plugins.skip import SkipTest
+
 from janitoo.mqtt import MQTTClient
 from janitoo.dhcp import JNTNetwork, HeartbeatMessage
 from janitoo.utils import json_dumps, json_loads

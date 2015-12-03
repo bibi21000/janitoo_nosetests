@@ -31,12 +31,12 @@ import sys, os, errno
 import time
 import unittest
 import threading
-import logging
 import json as mjson
 import shutil
 import mock
 import platform
 from pkg_resources import iter_entry_points
+
 from nose.plugins.skip import SkipTest
 from janitoo.mqtt import MQTTClient
 from janitoo.dhcp import JNTNetwork, HeartbeatMessage
@@ -51,14 +51,12 @@ from janitoo.runner import jnt_parse_args
 class JNTTBase(unittest.TestCase):
     """Grand mother
     """
-    loglevel = logging.DEBUG
     path = '/tmp/janitoo_test'
     broker_user = 'toto'
     broker_password = 'toto'
 
     @classmethod
     def setUpClass(self):
-        #logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", datefmt="%Y-%m-%d %H:%M:%S", level=self.loglevel)
         self.skip = True
         if 'NOSESKIP' in os.environ:
             self.skip = eval(os.environ['NOSESKIP'])

@@ -31,12 +31,13 @@ import sys, os, errno
 import time
 import unittest
 import threading
-import logging
 import json as mjson
 import shutil
 import mock
 from pkg_resources import iter_entry_points
-from nose.plugins.skip import SkipTest
+
+from janitoo_nosetests import JNTTBase
+
 from janitoo.mqtt import MQTTClient
 from janitoo.dhcp import JNTNetwork, HeartbeatMessage
 from janitoo.utils import json_dumps, json_loads
@@ -46,7 +47,6 @@ from janitoo.utils import TOPIC_NODES, TOPIC_NODES_REPLY, TOPIC_NODES_REQUEST
 from janitoo.utils import TOPIC_BROADCAST_REPLY, TOPIC_BROADCAST_REQUEST
 from janitoo.utils import TOPIC_VALUES_USER, TOPIC_VALUES_CONFIG, TOPIC_VALUES_SYSTEM, TOPIC_VALUES_BASIC
 from janitoo.runner import jnt_parse_args
-from janitoo_nosetests import JNTTBase
 
 class JNTTThread(JNTTBase):
     """Thread base test
