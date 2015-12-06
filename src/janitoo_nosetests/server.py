@@ -132,7 +132,7 @@ class JNTTServer(JNTTBase):
         hbadd_ctrl, hbadd_node, state = hb.get_heartbeat()
         if hbadd_ctrl is not None and hbadd_node is not None:
             if self.heartbeat_waiting is None:
-                self.heartbeat_waiting = HADD%(hbadd_ctrl, hbadd_node)
+                self.heartbeat_received = True
             elif self.heartbeat_waiting == HADD%(hbadd_ctrl, hbadd_node):
                 self.heartbeat_received = True
         print "HADD : %s/%s = %s"%(hbadd_ctrl, hbadd_node, state)
@@ -197,7 +197,7 @@ class JNTTServer(JNTTBase):
             """
             msg = json_loads(message.payload)
             print "Received message %s"%msg
-            if msg['uuid'] == uuid and msg['hadd'] == node_hadd:                   
+            if msg['uuid'] == uuid and msg['hadd'] == node_hadd:
                 self.message = message
                 self.message_received = True
         self.mqttc.subscribe(topic='/values/%s/%s/#'%(type, node_hadd), callback=mqtt_on_message)
@@ -227,7 +227,7 @@ class JNTTServer(JNTTBase):
             """
             msg = json_loads(message.payload)
             print "Received message %s"%msg
-            if msg['uuid'] == uuid and msg['hadd'] == node_hadd:                   
+            if msg['uuid'] == uuid and msg['hadd'] == node_hadd:
                 self.message = message
                 self.message_received = True
         self.mqttc.subscribe(topic='/values/%s/%s/#'%(type, node_hadd), callback=mqtt_on_message)
@@ -253,7 +253,7 @@ class JNTTServer(JNTTBase):
             """
             msg = json_loads(message.payload)
             print "Received message %s"%msg
-            if msg['uuid'] == uuid and msg['hadd'] == node_hadd:                   
+            if msg['uuid'] == uuid and msg['hadd'] == node_hadd:
                 self.message = message
                 self.message_received = True
         self.mqttc.subscribe(topic='/values/%s/%s/#'%(type, node_hadd), callback=mqtt_on_message)
@@ -281,7 +281,7 @@ class JNTTServer(JNTTBase):
             """
             msg = json_loads(message.payload)
             print "Received message %s"%msg
-            if msg['uuid'] == uuid and msg['hadd'] == node_hadd:                   
+            if msg['uuid'] == uuid and msg['hadd'] == node_hadd:
                 self.message = message
                 self.message_received = True
         self.mqttc.subscribe(topic='/values/%s/%s/#'%(type, node_hadd), callback=mqtt_on_message)

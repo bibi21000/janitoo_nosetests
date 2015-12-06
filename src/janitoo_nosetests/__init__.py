@@ -160,6 +160,11 @@ class JNTTBase(unittest.TestCase):
         if os.path.isfile(path):
             os.remove(path)
 
+    def assertFile(self, path):
+        """Check a file exists
+        """
+        self.assertTrue(os.path.isfile(path))
+
     def mkDir(self, path):
         """Create a directory
         """
