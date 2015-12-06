@@ -62,7 +62,7 @@ class JNTTDBServerCommon(JNTTServerCommon):
     def test_051_dbserver_no_auto_migrate(self):
         options = JNTOptions({'conf_file':self.server_conf})
         options.load()
-        self.server.options.set_option('database','auto_migrate', False)
+        options.set_option('database','auto_migrate', False)
         with self.assertRaises(JanitooException):
             self.start()
             self.assertHeartbeatNode()
@@ -71,7 +71,7 @@ class JNTTDBServerCommon(JNTTServerCommon):
     def test_052_dbserver_auto_migrate(self):
         options = JNTOptions({'conf_file':self.server_conf})
         options.load()
-        self.server.options.set_option('database','auto_migrate', True)
+        options.set_option('database','auto_migrate', True)
         self.start()
         self.assertHeartbeatNode()
         self.stop()
