@@ -59,7 +59,7 @@ class JNTTDBServer(JNTTServer):
 class JNTTDBServerCommon(JNTTServerCommon):
     """Common tests for models
     """
-    def test_051_dbserver_auto_migrate(self):
+    def test_051_dbserver_no_auto_migrate(self):
         options = JNTOptions({'conf_file':self.server_conf})
         options.load()
         self.server.options.set_option('database','auto_migrate', False)
