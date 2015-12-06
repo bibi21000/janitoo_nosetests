@@ -24,7 +24,6 @@ __email__ = 'bibi21000@gmail.com'
 import sys, os, errno
 import time
 import unittest
-import threading
 import json as mjson
 import shutil
 import mock

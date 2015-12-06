@@ -26,9 +26,6 @@ __copyright__ = "Copyright © 2013-2014-2015 Sébastien GALLET aka bibi21000"
 import sys, os
 import time, datetime
 import unittest
-import threading
-import logging
-from pkg_resources import iter_entry_points
 
 from sqlalchemy.orm import sessionmaker, scoped_session
 from alembic import command as alcommand
@@ -40,16 +37,6 @@ from janitoo.utils import JanitooNotImplemented, JanitooException
 from janitoo.options import JNTOptions
 from janitoo_db.base import Base, create_db_engine
 from janitoo_db.migrate import Config as alConfig, collect_configs, janitoo_config
-
-##############################################################
-#Check that we are in sync with the official command classes
-#Must be implemented for non-regression
-from janitoo.classes import COMMAND_DESC
-
-COMMAND_DISCOVERY = 0x5000
-
-assert(COMMAND_DESC[COMMAND_DISCOVERY] == 'COMMAND_DISCOVERY')
-##############################################################
 
 class JNTTDBServer(JNTTServer):
     """Test the bd server
