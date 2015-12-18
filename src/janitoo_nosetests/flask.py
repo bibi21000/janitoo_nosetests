@@ -44,11 +44,17 @@ class JNTTFlaskMain():
     """Common function for flask
     """
 
+    def get_routes(self):
+        res = {}
+        for rule in self.app.url_map.iter_rules():
+            res["{}".format(rule.endpoint)] = {'methods':rule.methods, 'rule':"{}".format(rule)}
+        return res
+
     def list_routes(self):
         output = []
-        for rule in self.app.url_map.iter_rules():
-            methods = ','.join(rule.methods)
-            line = urllib.unquote("{:50s} {:30s} {}".format(rule.endpoint, methods, rule))
+        routes = self.get_routes()
+        for route in routes:
+            line = urllib.unquote("{:50s} {:30s} {}".format(route, routes[route]['methods'], routes[route]['rule']))
             output.append(line)
         for line in sorted(output):
             print(line)
