@@ -96,5 +96,6 @@ setup(
                      'nose',
                      'Flask-Testing',
                      'urllib3',
+                     'pygments',
                     ],
 )

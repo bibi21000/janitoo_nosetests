@@ -43,6 +43,7 @@ from janitoo.options import JNTOptions
 from janitoo_db.base import Base, create_db_engine
 from janitoo_db.migrate import Config as alConfig, collect_configs, janitoo_config
 
+
 class JNTTFlaskMain():
     """Common function for flask
     """
