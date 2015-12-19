@@ -32,6 +32,9 @@ import unittest
 import urllib
 import urllib2
 
+from flask_bower import Bower
+from flask_cache import Cache
+
 from flask_testing import TestCase, LiveServerTestCase
 
 from janitoo_nosetests import JNTTBase
