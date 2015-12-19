@@ -67,7 +67,14 @@ class JNTTFlask(JNTTBase, TestCase, JNTTFlaskMain):
 class JNTTFlaskCommon():
     """Common tests for flask
     """
-    pass
+
+    def test_001_server_is_up(self):
+        self.assertEqual(type(self.app.extensions['cache']), type(Cache()))
+        self.assertEqual(type(self.app.extensions['bower']), type(Bower()))
+        routes = self.get_routes()
+        print routes
+        self.assertTrue('bower.serve' in routes)
+        self.assertTrue('static' in routes)
 
 class JNTTFlaskLive(JNTTBase, LiveServerTestCase, JNTTFlaskMain):
     """Test the flask server in live
