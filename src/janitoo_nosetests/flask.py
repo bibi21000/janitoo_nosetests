@@ -84,13 +84,13 @@ class JNTTFlaskLive(JNTTBase, LiveServerTestCase, JNTTFlaskMain):
     """
     flask_conf = "tests/data/janitoo_flask.conf"
 
-    def assertUrl(self, url='/', code=200):
-        response = urllib2.urlopen(self.get_server_url()+url, timeout=60)
-        print response
-        self.assertEqual(response.code, code)
 
 class JNTTFlaskLiveCommon():
     """Common tests for flask server in live
     """
-    pass
+
+    def assertUrl(self, url='/', code=200):
+        response = urllib2.urlopen(self.get_server_url()+url, timeout=60)
+        print response
+        self.assertEqual(response.code, code)
 
