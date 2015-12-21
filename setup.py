@@ -94,8 +94,5 @@ setup(
                      'nose-progressive',
                      'coverage',
                      'nose',
-                     'Flask-Testing',
-                     'urllib3',
-                     'pygments',
                     ],
 )
