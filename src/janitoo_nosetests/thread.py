@@ -58,6 +58,7 @@ class JNTTThread(JNTTBase):
         JNTTBase.setUp(self)
         self.factory = {}
         for entry in iter_entry_points(group='janitoo.threads'):
+            print "Load entry name %s" % entry.name
             self.factory[entry.name] = entry.load()
         print "Thread %s" % self.thread_name
 
