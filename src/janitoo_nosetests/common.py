@@ -91,7 +91,7 @@ class JNTControllerServer(JNTCommon):
         self.assertTrue(self.heartbeat_message is not None)
         self.assertTrue(self.heartbeat_message.payload is not None)
 
-    def assertHeartbeatNode(self, hadd, timeout=90):
+    def assertHeartbeatNode(self, hadd, timeout=90, status=None):
         self.heartbeat_message = None
         checked = False
         state = None
@@ -104,8 +104,13 @@ class JNTControllerServer(JNTCommon):
                 #~ print hbadd_ctrl, hbadd_node, state
                 #msg = json_loads(self.heartbeat_message.payload)
                 if int(hbadd_ctrl) == int(add_ctrl) and int(hbadd_node) == int(add_node):
-                    checked = True
-                    break
+                    if status is not None:
+                        if state == status:
+                            checked = True
+                            break
+                    else:
+                        checked = True
+                        break
                 self.heartbeat_message = None
             else:
                 time.sleep(0.001)
