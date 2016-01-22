@@ -47,6 +47,7 @@ class JNTTDBServerCommon(JNTTServerCommon):
     """Common tests for models
     """
     def test_051_dbserver_no_auto_migrate(self):
+        self.rmFile('/tmp/janitoo_test/home/test_dhcpd.db')
         options = JNTOptions({'conf_file':self.server_conf})
         options.load()
         options.set_option('database','auto_migrate', False)
@@ -56,6 +57,7 @@ class JNTTDBServerCommon(JNTTServerCommon):
             self.stop()
 
     def test_052_dbserver_auto_migrate(self):
+        self.rmFile('/tmp/janitoo_test/home/test_dhcpd.db')
         options = JNTOptions({'conf_file':self.server_conf})
         options.load()
         options.set_option('database','auto_migrate', True)
