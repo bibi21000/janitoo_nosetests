@@ -51,10 +51,13 @@ class JNTTDBServerCommon(JNTTServerCommon):
         options = JNTOptions({'conf_file':self.server_conf})
         options.load()
         options.set_option('database','auto_migrate', False)
-        with self.assertRaises(JanitooException):
-            self.start()
-            self.assertHeartbeatNode()
-            self.stop()
+        try:
+            with self.assertRaises(JanitooException):
+                self.start()
+                self.assertHeartbeatNode()
+                self.stop()
+        finally:
+            options.set_option('database','auto_migrate', True)
 
     def test_052_dbserver_auto_migrate(self):
         self.rmFile('/tmp/janitoo_test/home/test_dhcpd.db')
