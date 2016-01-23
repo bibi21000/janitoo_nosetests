@@ -53,13 +53,18 @@ class JNTTThread(JNTTBase):
     """
 
     thread_name = None
+    conf_file = None
+    prog = "test"
 
     def setUp(self):
         JNTTBase.setUp(self)
         self.factory = {}
-        for entry in iter_entry_points(group='janitoo.threads'):
-            print "Load entry name %s" % entry.name
-            self.factory[entry.name] = entry.load()
+        try:
+            for entry in iter_entry_points(group='janitoo.threads'):
+                print "Load entry name %s" % entry.name
+                self.factory[entry.name] = entry.load()
+        except:
+            pass
         print "Thread %s" % self.thread_name
 
     def tearDown(self):
@@ -80,3 +85,13 @@ class JNTTThreadCommon():
         self.assertFalse(self.thread_name is None)
         self.assertThreadEntryPoint(self.thread_name)
 
+    def test_011_thread_start_wait_stop(self):
+        if self.conf_file is None:
+            self.skipTest("No configuration file provided")
+        self.assertFalse(self.thread_name is None)
+        with mock.patch('sys.argv', [self.prog, 'start', '--conf_file=%s'%self.conf_file]):
+            options = vars(jnt_parse_args())
+        th = self.factory[self.thread_name](options)
+        th.start()
+        time.sleep(1)
+        th.stop()
