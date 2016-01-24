@@ -163,7 +163,14 @@ class JNTTBase(unittest.TestCase):
     def assertFile(self, path):
         """Check a file exists
         """
+        print "Check file %s" % path
         self.assertTrue(os.path.isfile(path))
+
+    def assertDir(self, path):
+        """Check a directory exists
+        """
+        print "Check directory %s" % path
+        self.assertTrue(os.path.isdir(path))
 
     def mkDir(self, path):
         """Create a directory

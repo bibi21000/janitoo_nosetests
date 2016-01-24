@@ -55,8 +55,6 @@ class JNTTThread(JNTTBase):
     """
 
     thread_name = None
-    conf_file = None
-    prog = "test"
 
     def setUp(self):
         JNTTBase.setUp(self)
@@ -68,6 +66,7 @@ class JNTTThread(JNTTBase):
         except:
             pass
         print "Thread %s" % self.thread_name
+        self.thread = None
 
     def tearDown(self):
         self.factory = None
@@ -79,6 +78,26 @@ class JNTTThread(JNTTBase):
             mkth = entry.load()
         self.assertNotEqual(mkth, None)
 
+class JNTTThreadRun(JNTTThread):
+    """Thread base test
+    """
+
+    conf_file = None
+    prog = "test"
+
+    def setUp(self):
+        JNTTThread.setUp(self)
+        logging_fileConfig(self.conf_file)
+        with mock.patch('sys.argv', [self.prog, 'start', '--conf_file=%s'%self.conf_file]):
+            options = vars(jnt_parse_args())
+        self.thread = self.factory[self.thread_name](options)
+        self.thread.start()
+
+    def tearDown(self):
+        if self.thread is not None:
+            self.thread.stop()
+        JNTTThread.tearDown(self)
+
 class JNTTThreadCommon():
     """Common tests for components
     """
@@ -87,14 +106,9 @@ class JNTTThreadCommon():
         self.assertFalse(self.thread_name is None)
         self.assertThreadEntryPoint(self.thread_name)
 
+class JNTTThreadRunCommon(JNTTThreadCommon):
+    """Common tests for components
+    """
+
     def test_011_thread_start_wait_stop(self):
-        if self.conf_file is None:
-            self.skipTest("No configuration file provided")
-        logging_fileConfig(self.conf_file)
-        self.assertFalse(self.thread_name is None)
-        with mock.patch('sys.argv', [self.prog, 'start', '--conf_file=%s'%self.conf_file]):
-            options = vars(jnt_parse_args())
-        th = self.factory[self.thread_name](options)
-        th.start()
         time.sleep(5)
-        th.stop()
