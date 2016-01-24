@@ -35,6 +35,8 @@ import json as mjson
 import shutil
 import mock
 from pkg_resources import iter_entry_points
+import logging
+from logging.config import fileConfig as logging_fileConfig
 
 from janitoo_nosetests import JNTTBase
 
@@ -88,10 +90,11 @@ class JNTTThreadCommon():
     def test_011_thread_start_wait_stop(self):
         if self.conf_file is None:
             self.skipTest("No configuration file provided")
+        logging_fileConfig(self.conf_file)
         self.assertFalse(self.thread_name is None)
         with mock.patch('sys.argv', [self.prog, 'start', '--conf_file=%s'%self.conf_file]):
             options = vars(jnt_parse_args())
         th = self.factory[self.thread_name](options)
         th.start()
-        time.sleep(1)
+        time.sleep(5)
         th.stop()
