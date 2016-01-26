@@ -95,6 +95,7 @@ class JNTTThreadRun(JNTTThread):
 
     def tearDown(self):
         if self.thread is not None:
+            time.sleep(5)
             self.thread.stop()
         JNTTThread.tearDown(self)
 
@@ -111,5 +112,5 @@ class JNTTThreadRunCommon(JNTTThreadCommon):
     """
 
     def test_011_thread_start_wait_stop(self):
-        self.skipTest("Fail on docker")
+        #~ self.skipTest("Fail on docker")
         time.sleep(5)
