@@ -50,6 +50,8 @@ from janitoo.utils import TOPIC_BROADCAST_REPLY, TOPIC_BROADCAST_REQUEST
 from janitoo.utils import TOPIC_VALUES_USER, TOPIC_VALUES_CONFIG, TOPIC_VALUES_SYSTEM, TOPIC_VALUES_BASIC
 from janitoo.runner import jnt_parse_args
 
+JNTTBase.skipDockerTest()
+
 class JNTTThread(JNTTBase):
     """Thread base test
     """
@@ -62,7 +64,10 @@ class JNTTThread(JNTTBase):
         try:
             for entry in iter_entry_points(group='janitoo.threads'):
                 print "Load entry name %s" % entry.name
-                self.factory[entry.name] = entry.load()
+                try:
+                    self.factory[entry.name] = entry.load()
+                except:
+                    pass
         except:
             pass
         print "Thread %s" % self.thread_name
@@ -114,3 +119,4 @@ class JNTTThreadRunCommon(JNTTThreadCommon):
     def test_011_thread_start_wait_stop(self):
         #~ self.skipTest("Fail on docker")
         time.sleep(5)
+

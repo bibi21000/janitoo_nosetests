@@ -35,6 +35,8 @@ import json as mjson
 import shutil
 import mock
 import platform
+import pwd
+import grp
 from pkg_resources import iter_entry_points
 
 from nose.plugins.skip import SkipTest
@@ -121,6 +123,29 @@ class JNTTBase(unittest.TestCase):
             raise SkipTest("%s" % ("Only on travis"))
 
     @classmethod
+    def skipDockerTest(self):
+        """Skip a test on docker
+        """
+        usr = "docker"
+        print "Check user %s" % usr
+        try:
+            pwd.getpwnam(usr)
+            res = True
+        except KeyError:
+            print('User %s does not exist.' % usr)
+            res = False
+
+        if res:
+            raise SkipTest("%s" % ("Skipped on docker"))
+
+    @classmethod
+    def onlyDockerTest(self):
+        """Run a test only on docker
+        """
+        if not 'TRAVIS_OS_NAME' in os.environ:
+            raise SkipTest("%s" % ("Only on travis"))
+
+    @classmethod
     def skipRasperryTest(self):
         """Skip a test when not on raspy
         """
@@ -171,6 +196,29 @@ class JNTTBase(unittest.TestCase):
         """
         print "Check directory %s" % path
         self.assertTrue(os.path.isdir(path))
+
+    def assertUser(self, usr):
+        """Check a user exists on the system
+        """
+        print "Check user %s" % usr
+        try:
+            pwd.getpwnam(usr)
+            res = True
+        except KeyError:
+            print('User %s does not exist.' % usr)
+            res = False
+        self.assertTrue(res)
+
+    def assertGroup(self, grp):
+        """Check a group exists on the system
+        """
+        print "Check group %s" % grp
+        try:
+            grp.getgrnam('somegrp')
+        except KeyError:
+            print('Group %s does not exist.' % grp)
+            res = False
+        self.assertTrue(res)
 
     def mkDir(self, path):
         """Create a directory
