@@ -110,7 +110,7 @@ class JNTTBase(unittest.TestCase):
 
     @classmethod
     def skipTravisTest(self):
-        """Skip a test on travis
+        """Skip a test on travis.
         """
         if 'TRAVIS_OS_NAME' in os.environ:
             raise SkipTest("%s" % ("Skipped on travis"))
@@ -121,6 +121,38 @@ class JNTTBase(unittest.TestCase):
         """
         if not 'TRAVIS_OS_NAME' in os.environ:
             raise SkipTest("%s" % ("Only on travis"))
+
+    @classmethod
+    def skipCircleTest(self):
+        """Skip a test on circle
+        """
+        if 'CIRCLE_USERNAME' in os.environ:
+            raise SkipTest("%s" % ("Skipped on circle"))
+
+    @classmethod
+    def onlyCircleTest(self):
+        """Run a test only on circle
+        """
+        if not 'CIRCLE_USERNAME' in os.environ:
+            raise SkipTest("%s" % ("Only on circle"))
+
+    @classmethod
+    def skipCITest(self):
+        """Skip a test on continouos integration
+        """
+        if 'TRAVIS_OS_NAME' in os.environ:
+            raise SkipTest("%s" % ("Skipped on Continuous Integration"))
+        if 'CIRCLE_USERNAME' in os.environ:
+            raise SkipTest("%s" % ("Skipped on Continuous Integration"))
+
+    @classmethod
+    def onlyCITest(self):
+        """Run a test only on continuous integration
+        """
+        if not 'TRAVIS_OS_NAME' in os.environ and \
+           not 'CIRCLE_USERNAME' in os.environ:
+            raise SkipTest("%s" % ("Only on Continuous Integration"))
+
 
     @classmethod
     def skipDockerTest(self):
