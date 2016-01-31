@@ -109,6 +109,20 @@ class JNTTBase(unittest.TestCase):
             raise SkipTest("%s" % (message))
 
     @classmethod
+    def skipAllTests(self):
+        """Skip a test when JANITOO_ALLTESTS is in env.
+        """
+        if 'JANITOO_ALLTESTS' in os.environ:
+            raise SkipTest("%s" % ("Skipped on JANITOO_ALLTESTS"))
+
+    @classmethod
+    def onlyAllTests(self):
+        """Run a test only when JANITOO_ALLTESTS is in env
+        """
+        if not 'JANITOO_ALLTESTS' in os.environ:
+            raise SkipTest("%s" % ("Only on JANITOO_ALLTESTS"))
+
+    @classmethod
     def skipTravisTest(self):
         """Skip a test on travis.
         """
