@@ -96,12 +96,14 @@ class JNTTThreadRun(JNTTThread):
         with mock.patch('sys.argv', [self.prog, 'start', '--conf_file=%s'%self.conf_file]):
             options = vars(jnt_parse_args())
         self.thread = self.factory[self.thread_name](options)
-        self.thread.start()
 
     def tearDown(self):
         if self.thread is not None:
             time.sleep(5)
-            self.thread.stop()
+            try:
+                self.thread.stop()
+            except:
+                pass
         JNTTThread.tearDown(self)
 
 class JNTTThreadCommon():
