@@ -167,29 +167,19 @@ class JNTTBase(unittest.TestCase):
            not 'CIRCLE_USERNAME' in os.environ:
             raise SkipTest("%s" % ("Only on Continuous Integration"))
 
-
     @classmethod
     def skipDockerTest(self):
         """Skip a test on docker
         """
-        usr = "docker"
-        print "Check user %s" % usr
-        try:
-            pwd.getpwnam(usr)
-            res = True
-        except KeyError:
-            print('User %s does not exist.' % usr)
-            res = False
-
-        if res:
-            raise SkipTest("%s" % ("Skipped on docker"))
+        if 'DOCKER_TESTS' in os.environ:
+            raise SkipTest("%s" % ("Skipped on Docker"))
 
     @classmethod
     def onlyDockerTest(self):
         """Run a test only on docker
         """
-        if not 'TRAVIS_OS_NAME' in os.environ:
-            raise SkipTest("%s" % ("Only on travis"))
+        if not 'DOCKER_TESTS' in os.environ:
+            raise SkipTest("%s" % ("Only on docker"))
 
     @classmethod
     def skipRasperryTest(self):
