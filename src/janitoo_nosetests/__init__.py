@@ -79,7 +79,15 @@ class JNTTBase(unittest.TestCase):
         try:
             shutil.rmtree(self.path)
         except OSError as exc: # Python >2.5
-            pass
+            time.sleep(1.0)
+            try:
+                shutil.rmtree(self.path)
+            except OSError as exc: # Python >2.5
+                time.sleep(5.0)
+                try:
+                    shutil.rmtree(self.path)
+                except OSError as exc: # Python >2.5
+                    pass
         os.makedirs(self.path)
         os.makedirs(os.path.join(self.path, 'etc'))
         os.makedirs(os.path.join(self.path, 'cache'))
