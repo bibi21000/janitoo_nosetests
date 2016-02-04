@@ -50,8 +50,6 @@ from janitoo.utils import TOPIC_BROADCAST_REPLY, TOPIC_BROADCAST_REQUEST
 from janitoo.utils import TOPIC_VALUES_USER, TOPIC_VALUES_CONFIG, TOPIC_VALUES_SYSTEM, TOPIC_VALUES_BASIC
 from janitoo.runner import jnt_parse_args
 
-JNTTBase.skipDockerTest()
-
 class JNTTThread(JNTTBase):
     """Thread base test
     """
