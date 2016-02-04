@@ -49,6 +49,7 @@ from janitoo.utils import TOPIC_NODES, TOPIC_NODES_REPLY, TOPIC_NODES_REQUEST
 from janitoo.utils import TOPIC_BROADCAST_REPLY, TOPIC_BROADCAST_REQUEST
 from janitoo.utils import TOPIC_VALUES_USER, TOPIC_VALUES_CONFIG, TOPIC_VALUES_SYSTEM, TOPIC_VALUES_BASIC
 from janitoo.runner import jnt_parse_args
+from janitoo.options import JNTOptions, string_to_bool
 
 class JNTTThread(JNTTBase):
     """Thread base test
@@ -93,6 +94,7 @@ class JNTTThreadRun(JNTTThread):
         logging_fileConfig(self.conf_file)
         with mock.patch('sys.argv', [self.prog, 'start', '--conf_file=%s'%self.conf_file]):
             options = vars(jnt_parse_args())
+        self.options = JNTOptions(options)
         self.thread = self.factory[self.thread_name](options)
 
     def tearDown(self):
@@ -102,6 +104,7 @@ class JNTTThreadRun(JNTTThread):
                 self.thread.stop()
             except:
                 pass
+        self.options = None
         JNTTThread.tearDown(self)
 
 class JNTTThreadCommon():
@@ -120,3 +123,21 @@ class JNTTThreadRunCommon(JNTTThreadCommon):
         #~ self.skipTest("Fail on docker")
         time.sleep(5)
 
+    def test_031_cron_hourly(self):
+        cron = string_to_bool(self.options.get_option(self.thread_name, 'hourly_timer', default = False))
+        if cron:
+            self.thread.start()
+            timeout = 120
+            i = 0
+            while i< timeout and not self.thread.nodeman.is_started:
+                time.sleep(1)
+                i += 1
+                #~ print self.thread.nodeman.state
+            self.assertNotEqual(self.thread.hourly_timer, None)
+            self.thread.stop_hourly_timer()
+            self.assertEqual(self.thread.hourly_timer, None)
+            self.thread.start_hourly_timer()
+            self.assertNotEqual(self.thread.hourly_timer, None)
+            self.thread.do_hourly_timer()
+        else:
+            self.skipTest("Hpurly timer not used for this thread")
