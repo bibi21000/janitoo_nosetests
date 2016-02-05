@@ -27,6 +27,8 @@ import unittest
 import json as mjson
 import shutil
 import mock
+import re
+
 from janitoo_nosetests import JNTTBase
 
 from janitoo.mqtt import MQTTClient
@@ -135,6 +137,40 @@ class JNTTServer(JNTTBase):
             elif self.heartbeat_waiting == HADD%(hbadd_ctrl, hbadd_node):
                 self.heartbeat_received = True
         print "HADD : %s/%s = %s"%(hbadd_ctrl, hbadd_node, state)
+
+    def assertInLogfile(self, expr='^ERROR '):
+        """Assert an expression is in logifle
+        """
+        self.assertTrue(self.server is not None)
+        log_file_from_config = self.server.options.get_option('handler_file','args',None)
+        self.assertTrue(log_file_from_config is not None)
+        #I know, it's bad
+        log_args = eval(log_file_from_config)
+        log_file_from_config = log_args[0]
+        self.assertFile(log_file_from_config)
+        found = False
+        hand = open(log_file_from_config)
+        for line in hand:
+            if re.search(expr, line):
+                found = True
+        self.assertTrue(found)
+
+    def assertNotInLogfile(self, expr='^ERROR '):
+        """Assert an expression is not in logifle
+        """
+        self.assertTrue(self.server is not None)
+        log_file_from_config = self.server.options.get_option('handler_file','args',None)
+        self.assertTrue(log_file_from_config is not None)
+        #I know, it's bad
+        log_args = eval(log_file_from_config)
+        log_file_from_config = log_args[0]
+        self.assertFile(log_file_from_config)
+        found = False
+        hand = open(log_file_from_config)
+        for line in hand:
+            if re.search(expr, line):
+                found = True
+        self.assertFalse(found)
 
     def assertHeartbeatNode(self, hadd=None, timeout=90):
         print "Waiting for %s" % (hadd)
@@ -300,23 +336,29 @@ class JNTTServerCommon():
     """
     def test_010_start_heartbeat_stop(self):
         self.start()
-        self.assertHeartbeatNode()
-        self.stop()
+        try:
+            self.assertHeartbeatNode()
+        finally:
+            self.stop()
 
     def test_011_start_reload_stop(self):
         self.start()
-        self.assertHeartbeatNode()
-        time.sleep(2.5)
-        self.server.reload()
-        time.sleep(2.5)
-        self.assertHeartbeatNode()
-        self.stop()
+        try:
+            self.assertHeartbeatNode()
+            time.sleep(2.5)
+            self.server.reload()
+            time.sleep(2.5)
+            self.assertHeartbeatNode()
+        finally:
+            self.stop()
 
     def test_012_start_reload_threads_stop(self):
         self.start()
-        self.assertHeartbeatNode()
-        time.sleep(2.5)
-        self.server.reload_threads()
-        time.sleep(2.5)
-        self.assertHeartbeatNode()
-        self.stop()
+        try:
+            self.assertHeartbeatNode()
+            time.sleep(2.5)
+            self.server.reload_threads()
+            time.sleep(2.5)
+            self.assertHeartbeatNode()
+        finally:
+            self.stop()
