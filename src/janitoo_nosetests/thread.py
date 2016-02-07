@@ -133,6 +133,7 @@ class JNTTThreadRunCommon(JNTTThreadCommon):
                 time.sleep(1)
                 i += 1
                 #~ print self.thread.nodeman.state
+            time.sleep(2)
             self.assertNotEqual(self.thread.nodeman.hourly_timer, None)
             self.thread.nodeman.stop_hourly_timer()
             self.assertEqual(self.thread.nodeman.hourly_timer, None)
@@ -140,4 +141,4 @@ class JNTTThreadRunCommon(JNTTThreadCommon):
             self.assertNotEqual(self.thread.nodeman.hourly_timer, None)
             self.thread.nodeman.do_hourly_timer()
         else:
-            self.skipTest("Hpurly timer not used for this thread")
+            self.skipTest("Hourly timer not used for this thread")
