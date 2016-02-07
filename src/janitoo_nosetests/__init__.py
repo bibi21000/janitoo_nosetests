@@ -179,14 +179,14 @@ class JNTTBase(unittest.TestCase):
     def skipDockerTest(self):
         """Skip a test on docker
         """
-        if 'DOCKER_TESTS' in os.environ:
+        if 'JANITOO_ALLTESTS' in os.environ:
             raise SkipTest("%s" % ("Skipped on Docker"))
 
     @classmethod
     def onlyDockerTest(self):
         """Run a test only on docker
         """
-        if not 'DOCKER_TESTS' in os.environ:
+        if not 'JANITOO_ALLTESTS' in os.environ:
             raise SkipTest("%s" % ("Only on docker"))
 
     @classmethod
