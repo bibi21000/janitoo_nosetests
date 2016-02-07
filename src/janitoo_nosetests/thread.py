@@ -124,7 +124,7 @@ class JNTTThreadRunCommon(JNTTThreadCommon):
         time.sleep(5)
 
     def test_031_cron_hourly(self):
-        JNTTServer.skipCITest()
+        self.skipCITest()
         cron = string_to_bool(self.options.get_option(self.thread_name, 'hourly_timer', default = False))
         if cron:
             self.thread.start()
