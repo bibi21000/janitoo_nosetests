@@ -338,6 +338,7 @@ class JNTTServerCommon():
         self.start()
         try:
             self.assertHeartbeatNode()
+            time.sleep(5)
         finally:
             self.stop()
 
@@ -345,10 +346,10 @@ class JNTTServerCommon():
         self.start()
         try:
             self.assertHeartbeatNode()
-            time.sleep(2.5)
+            time.sleep(5)
             self.server.reload()
-            time.sleep(2.5)
             self.assertHeartbeatNode()
+            time.sleep(5)
         finally:
             self.stop()
 
@@ -356,9 +357,9 @@ class JNTTServerCommon():
         self.start()
         try:
             self.assertHeartbeatNode()
-            time.sleep(2.5)
+            time.sleep(5)
             self.server.reload_threads()
-            time.sleep(2.5)
             self.assertHeartbeatNode()
+            time.sleep(5)
         finally:
             self.stop()
