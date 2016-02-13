@@ -363,3 +363,13 @@ class JNTTServerCommon():
             time.sleep(5)
         finally:
             self.stop()
+
+    def test_020_brodcast_nodes_and_values(self):
+        self.start()
+        try:
+            self.assertHeartbeatNode()
+            time.sleep(5)
+            for request in ['request_info_nodes', 'request_info_users', 'request_info_configs', 'request_info_systems', 'request_info_basics', 'request_info_commands']:
+                self.assertBroadcastRequest(cmd_class=COMMAND_DISCOVERY, uuid=request, client_hadd=HADD%(9999,0))
+        finally:
+            self.stop()
