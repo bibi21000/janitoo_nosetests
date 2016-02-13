@@ -34,12 +34,22 @@ from janitoo_nosetests import JNTTBase
 from janitoo.mqtt import MQTTClient
 from janitoo.dhcp import JNTNetwork, HeartbeatMessage
 from janitoo.utils import json_dumps, json_loads
-from janitoo.utils import HADD_SEP, HADD
+from janitoo.utils import HADD_SEP, HADD, NETWORK_REQUESTS
 from janitoo.utils import TOPIC_HEARTBEAT
 from janitoo.utils import TOPIC_NODES, TOPIC_NODES_REPLY, TOPIC_NODES_REQUEST
 from janitoo.utils import TOPIC_BROADCAST_REPLY, TOPIC_BROADCAST_REQUEST
 from janitoo.utils import TOPIC_VALUES_USER, TOPIC_VALUES_CONFIG, TOPIC_VALUES_SYSTEM, TOPIC_VALUES_BASIC
 from janitoo.runner import jnt_parse_args
+
+##############################################################
+#Check that we are in sync with the official command classes
+#Must be implemented for non-regression
+from janitoo.classes import COMMAND_DESC
+
+COMMAND_DISCOVERY = 0x5000
+
+assert(COMMAND_DESC[COMMAND_DISCOVERY] == 'COMMAND_DISCOVERY')
+##############################################################
 
 class JNTTServer(JNTTBase):
     """Server base test
@@ -369,7 +379,7 @@ class JNTTServerCommon():
         try:
             self.assertHeartbeatNode()
             time.sleep(5)
-            for request in ['request_info_nodes', 'request_info_users', 'request_info_configs', 'request_info_systems', 'request_info_basics', 'request_info_commands']:
+            for request in NETWORK_REQUESTS:
                 self.assertBroadcastRequest(cmd_class=COMMAND_DISCOVERY, uuid=request, client_hadd=HADD%(9999,0))
         finally:
             self.stop()
