@@ -48,7 +48,7 @@ class JNTTDBServerCommon(JNTTServerCommon):
     """
     def test_051_dbserver_no_auto_migrate(self):
         self.rmFile('/tmp/janitoo_test/home/test_dhcpd.db')
-        options = JNTOptions({'conf_file':self.server_conf})
+        options = JNTOptions({'conf_file':self.getDataFile(self.server_conf)})
         options.load()
         options.set_option('database','auto_migrate', False)
         try:
@@ -61,7 +61,7 @@ class JNTTDBServerCommon(JNTTServerCommon):
 
     def test_052_dbserver_auto_migrate(self):
         self.rmFile('/tmp/janitoo_test/home/test_dhcpd.db')
-        options = JNTOptions({'conf_file':self.server_conf})
+        options = JNTOptions({'conf_file':self.getDataFile(self.server_conf)})
         options.load()
         options.set_option('database','auto_migrate', True)
         self.start()

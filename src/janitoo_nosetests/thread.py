@@ -92,7 +92,7 @@ class JNTTThreadRun(JNTTThread):
     def setUp(self):
         JNTTThread.setUp(self)
         logging_fileConfig(self.conf_file)
-        with mock.patch('sys.argv', [self.prog, 'start', '--conf_file=%s'%self.conf_file]):
+        with mock.patch('sys.argv', [self.prog, 'start', '--conf_file=%s'%self.getDataFile(self.conf_file)]):
             options = vars(jnt_parse_args())
         self.options = JNTOptions(options)
         self.thread = self.factory[self.thread_name](options)

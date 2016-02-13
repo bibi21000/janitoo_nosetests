@@ -288,4 +288,13 @@ class JNTTBase(unittest.TestCase):
     def stopServer(self):
         pass
 
+    def getDataFile(self, path):
+        """Retrieve a datafile. Look in the current dir and if not found look in the __file__ directory
+        """
+        if os.path.isfile(path):
+            return path
+        fpath = os.path.join(os.path.dirname(__name__), path)
+        if os.path.isfile(fpath):
+            return fpath
+        raise RuntimeError("[%s] : Can't find data file %s in %s"%(self.__class__.__name__, path, __name__))
 

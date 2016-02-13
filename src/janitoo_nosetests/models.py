@@ -57,7 +57,7 @@ class JNTTModels(JNTTBase):
 
     def setUp(self):
         JNTTBase.setUp(self)
-        options = JNTOptions({'conf_file':self.models_conf})
+        options = JNTOptions({'conf_file':self.getDataFile(self.models_conf)})
         options.load()
         engine = create_db_engine(options)
         self.dbmaker = sessionmaker()

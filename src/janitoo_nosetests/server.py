@@ -103,7 +103,7 @@ class JNTTServer(JNTTBase):
 
     def startServer(self):
         self.server = None
-        with mock.patch('sys.argv', ['%s'%self.server_class, 'start', '--conf_file=%s' % self.server_conf]):
+        with mock.patch('sys.argv', ['%s'%self.server_class, 'start', '--conf_file=%s' % self.getDataFile(self.server_conf)]):
             options = vars(jnt_parse_args())
             self.server = self.server_class(options)
         self.server.start()
