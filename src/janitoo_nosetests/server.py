@@ -113,7 +113,7 @@ class JNTTServer(JNTTBase):
     def stopServer(self):
         if self.server is not None:
             self.server.stop()
-            time.sleep(2.5)
+            time.sleep(5)
         self.server = None
         self.message = None
 
