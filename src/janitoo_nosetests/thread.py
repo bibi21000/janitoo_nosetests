@@ -122,7 +122,7 @@ class JNTTThreadRunCommon(JNTTThreadCommon):
     def test_011_thread_start_wait_stop(self):
         #~ self.skipTest("Fail on docker")
         self.thread.start()
-        time.sleep(5)
+        time.sleep(10)
 
     def test_031_cron_hourly(self):
         cron = string_to_bool(self.options.get_option(self.thread_name, 'hourly_timer', default = False))
