@@ -374,7 +374,7 @@ class JNTTServerCommon():
         finally:
             self.stop()
 
-    def test_020_brodcast_nodes_and_values(self):
+    def test_020_broadcast_nodes_and_values(self):
         self.start()
         try:
             self.assertHeartbeatNode()
