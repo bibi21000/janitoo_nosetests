@@ -378,8 +378,9 @@ class JNTTServerCommon():
         self.start()
         try:
             self.assertHeartbeatNode()
-            time.sleep(5)
+            time.sleep(10)
             for request in NETWORK_REQUESTS:
                 self.assertBroadcastRequest(cmd_class=COMMAND_DISCOVERY, uuid=request, client_hadd=HADD%(9999,0))
+                time.sleep(2)
         finally:
             self.stop()
