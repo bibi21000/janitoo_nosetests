@@ -124,22 +124,24 @@ class JNTTThreadRunCommon(JNTTThreadCommon):
         time.sleep(5)
 
     def test_031_cron_hourly(self):
-        self.skipCITest()
         cron = string_to_bool(self.options.get_option(self.thread_name, 'hourly_timer', default = False))
         if cron:
             self.thread.start()
-            timeout = 120
-            i = 0
-            while i< timeout and not self.thread.nodeman.is_started:
-                time.sleep(1)
-                i += 1
-                #~ print self.thread.nodeman.state
-            time.sleep(2)
-            self.assertNotEqual(self.thread.nodeman.hourly_timer, None)
-            self.thread.nodeman.stop_hourly_timer()
-            self.assertEqual(self.thread.nodeman.hourly_timer, None)
-            self.thread.nodeman.start_hourly_timer()
-            self.assertNotEqual(self.thread.nodeman.hourly_timer, None)
-            self.thread.nodeman.do_hourly_timer()
+            try:
+                timeout = 120
+                i = 0
+                while i< timeout and not self.thread.nodeman.is_started:
+                    time.sleep(1)
+                    i += 1
+                    #~ print self.thread.nodeman.state
+                time.sleep(2)
+                self.assertNotEqual(self.thread.nodeman.hourly_timer, None)
+                self.thread.nodeman.stop_hourly_timer()
+                self.assertEqual(self.thread.nodeman.hourly_timer, None)
+                self.thread.nodeman.start_hourly_timer()
+                self.assertNotEqual(self.thread.nodeman.hourly_timer, None)
+                self.thread.nodeman.do_hourly_timer()
+            finally:
+                self.thread.stop()
         else:
             self.skipTest("Hourly timer not used for this thread")
