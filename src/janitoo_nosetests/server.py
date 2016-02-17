@@ -213,6 +213,7 @@ class JNTTServer(JNTTBase):
         while i< timeout*10000 and not self.heartbeat_received:
             time.sleep(0.0001)
             i += 1
+        print "Unreceived heartbeats %s" % self.heartbeat_waitings
         self.assertTrue(self.heartbeat_received)
         time.sleep(0.5)
 
@@ -422,7 +423,7 @@ class JNTTServerCommon():
         finally:
             self.stop()
 
-    def test_30_wait_for_all_nodes(self):
+    def test_030_wait_for_all_nodes(self):
         if self.hadds is None:
             self.skipTest("No hadds_defined. Skip test")
         self.start()
