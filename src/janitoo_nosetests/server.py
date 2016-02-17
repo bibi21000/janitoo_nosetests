@@ -65,6 +65,7 @@ class JNTTServer(JNTTBase):
         self.hearbeat_mqttc = None
         self.heartbeat_message = None
         self.heartbeat_waiting = None
+        self.heartbeat_waitings = None
         self.heartbeat_received = False
         self.server = None
         self.add_ctrl = None
@@ -81,6 +82,7 @@ class JNTTServer(JNTTBase):
         self.hearbeat_mqttc = None
         self.heartbeat_message = None
         self.heartbeat_waiting = None
+        self.heartbeat_waitings = None
         self.heartbeat_received = False
         self.server = None
         JNTTBase.tearDown(self)
@@ -143,7 +145,12 @@ class JNTTServer(JNTTBase):
         hbadd_ctrl, hbadd_node, state = hb.get_heartbeat()
         if hbadd_ctrl is not None and hbadd_node is not None:
             if self.heartbeat_waiting is None:
-                self.heartbeat_received = True
+                if self.heartbeat_waitings is None:
+                    self.heartbeat_received = True
+                elif HADD%(hbadd_ctrl, hbadd_node) in self.heartbeat_waitings:
+                    self.heartbeat_waitings.remove(HADD%(hbadd_ctrl, hbadd_node))
+                    if len(self.heartbeat_waitings)==0:
+                        self.heartbeat_received = True
             elif self.heartbeat_waiting == HADD%(hbadd_ctrl, hbadd_node):
                 self.heartbeat_received = True
         print "HADD : %s/%s = %s"%(hbadd_ctrl, hbadd_node, state)
@@ -185,6 +192,18 @@ class JNTTServer(JNTTBase):
     def assertHeartbeatNode(self, hadd=None, timeout=90):
         print "Waiting for %s" % (hadd)
         self.heartbeat_waiting = hadd
+        self.heartbeat_message = None
+        self.heartbeat_received = False
+        i = 0
+        while i< timeout*10000 and not self.heartbeat_received:
+            time.sleep(0.0001)
+            i += 1
+        self.assertTrue(self.heartbeat_received)
+        time.sleep(0.5)
+
+    def assertHeartbeatNodes(self, hadds=[], timeout=90):
+        print "Waiting for %s" % (hadds)
+        self.heartbeat_waitings = hadds
         self.heartbeat_message = None
         self.heartbeat_received = False
         i = 0
