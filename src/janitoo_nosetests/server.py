@@ -56,6 +56,8 @@ class JNTTServer(JNTTBase):
     """
     server_class = None
     server_conf = ""
+    hadd_ctrl = None
+    hadds = None
 
     def setUp(self):
         JNTTBase.setUp(self)
@@ -68,7 +70,8 @@ class JNTTServer(JNTTBase):
         self.heartbeat_waitings = None
         self.heartbeat_received = False
         self.server = None
-        self.hadd_ctrl = None
+        if self.hadd_ctrl is None and self.hadds is not None:
+            self.hadd_ctrl = self.hadds[0]
 
     def tearDown(self):
         self.stopClient()
@@ -404,3 +407,27 @@ class JNTTServerCommon():
                 time.sleep(2)
         finally:
             self.stop()
+
+    def test_021_request_nodes_and_values(self):
+        if self.hadd_ctrl is None:
+            self.skipTest("No hadd_ctrl defined. Skip test")
+        self.start()
+        try:
+            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
+            time.sleep(5)
+            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
+            for request in NETWORK_REQUESTS:
+                self.assertNodeRequest(cmd_class=COMMAND_DISCOVERY, uuid=request, node_hadd=self.hadd_ctrl, client_hadd=HADD%(9999,0))
+                time.sleep(2)
+        finally:
+            self.stop()
+
+    def test_30_wait_for_all_nodes(self):
+        if self.hadds is None:
+            self.skipTest("No hadds_defined. Skip test")
+        self.start()
+        try:
+            self.assertHeartbeatNodes(hadds=self.hadds)
+        finally:
+            self.stop()
+
