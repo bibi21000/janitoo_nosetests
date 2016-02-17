@@ -70,7 +70,7 @@ class JNTTServer(JNTTBase):
         self.heartbeat_waitings = None
         self.heartbeat_received = False
         self.server = None
-        if self.hadd_ctrl is None and self.hadds is not None:
+        if self.hadd_ctrl is None and len(self.hadds)>0:
             self.hadd_ctrl = self.hadds[0]
 
     def tearDown(self):
