@@ -68,7 +68,7 @@ class JNTTServer(JNTTBase):
         self.heartbeat_waitings = None
         self.heartbeat_received = False
         self.server = None
-        self.add_ctrl = None
+        self.hadd_ctrl = None
 
     def tearDown(self):
         self.stopClient()
@@ -366,7 +366,7 @@ class JNTTServerCommon():
     def test_010_start_heartbeat_stop(self):
         self.start()
         try:
-            self.assertHeartbeatNode()
+            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
             time.sleep(5)
         finally:
             self.stop()
@@ -374,10 +374,10 @@ class JNTTServerCommon():
     def test_011_start_reload_stop(self):
         self.start()
         try:
-            self.assertHeartbeatNode()
+            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
             time.sleep(5)
             self.server.reload()
-            self.assertHeartbeatNode()
+            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
             time.sleep(5)
         finally:
             self.stop()
@@ -385,10 +385,10 @@ class JNTTServerCommon():
     def test_012_start_reload_threads_stop(self):
         self.start()
         try:
-            self.assertHeartbeatNode()
+            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
             time.sleep(5)
             self.server.reload_threads()
-            self.assertHeartbeatNode()
+            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
             time.sleep(5)
         finally:
             self.stop()
@@ -396,9 +396,9 @@ class JNTTServerCommon():
     def test_020_broadcast_nodes_and_values(self):
         self.start()
         try:
-            self.assertHeartbeatNode()
-            time.sleep(10)
-            self.assertHeartbeatNode()
+            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
+            time.sleep(5)
+            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
             for request in NETWORK_REQUESTS:
                 self.assertBroadcastRequest(cmd_class=COMMAND_DISCOVERY, uuid=request, client_hadd=HADD%(9999,0))
                 time.sleep(2)
