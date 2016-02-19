@@ -106,14 +106,12 @@ class JNTTServer(JNTTBase):
     def stopClient(self):
         if self.mqttc != None:
             self.mqttc.stop()
-        if self.hearbeat_mqttc != None:
-            self.hearbeat_mqttc.unsubscribe(topic=TOPIC_HEARTBEAT)
-            self.hearbeat_mqttc.stop()
-        if self.mqttc != None:
             if self.mqttc.is_alive():
                 self.mqttc.join()
             self.mqttc = None
         if self.hearbeat_mqttc != None:
+            self.hearbeat_mqttc.unsubscribe(topic=TOPIC_HEARTBEAT)
+            self.hearbeat_mqttc.stop()
             if self.hearbeat_mqttc.is_alive():
                 self.hearbeat_mqttc.join()
             self.hearbeat_mqttc = None

@@ -293,8 +293,8 @@ class JNTTBase(unittest.TestCase):
         """
         if os.path.isfile(path):
             return path
-        fpath = os.path.join(os.path.dirname(__name__), path)
-        if os.path.isfile(fpath):
-            return fpath
-        raise RuntimeError("[%s] : Can't find data file %s in %s"%(self.__class__.__name__, path, __name__))
+        path = os.path.join(os.path.dirname(__name__), path)
+        if os.path.isfile(path):
+            return path
+        raise RuntimeError("[%s] : Can't find data file %s"%(self.__class__.__name__, path))
 
