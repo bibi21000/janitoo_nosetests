@@ -171,10 +171,10 @@ class JNTTServer(JNTTBase):
         log_file_from_config = log_args[0]
         self.assertFile(log_file_from_config)
         found = False
-        hand = open(log_file_from_config)
-        for line in hand:
-            if re.search(expr, line):
-                found = True
+        with open(log_file_from_config, 'r') as hand:
+            for line in hand:
+                if re.search(expr, line):
+                    found = True
         self.assertTrue(found)
 
     def assertNotInLogfile(self, expr='^ERROR '):
@@ -188,10 +188,10 @@ class JNTTServer(JNTTBase):
         log_file_from_config = log_args[0]
         self.assertFile(log_file_from_config)
         found = False
-        hand = open(log_file_from_config)
-        for line in hand:
-            if re.search(expr, line):
-                found = True
+        with open(log_file_from_config, 'r') as hand:
+            for line in hand:
+                if re.search(expr, line):
+                    found = True
         self.assertFalse(found)
 
     def assertHeartbeatNode(self, hadd=None, timeout=90):
