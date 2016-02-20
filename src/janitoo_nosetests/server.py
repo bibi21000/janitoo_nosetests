@@ -40,6 +40,7 @@ from janitoo.utils import TOPIC_NODES, TOPIC_NODES_REPLY, TOPIC_NODES_REQUEST
 from janitoo.utils import TOPIC_BROADCAST_REPLY, TOPIC_BROADCAST_REQUEST
 from janitoo.utils import TOPIC_VALUES_USER, TOPIC_VALUES_CONFIG, TOPIC_VALUES_SYSTEM, TOPIC_VALUES_BASIC
 from janitoo.runner import jnt_parse_args
+from janitoo.options import JNTOptions
 
 ##############################################################
 #Check that we are in sync with the official command classes
@@ -162,9 +163,11 @@ class JNTTServer(JNTTBase):
 
     def assertInLogfile(self, expr='^ERROR '):
         """Assert an expression is in logifle
+        Must be called at the end of process, when the server has closed the logfile.
         """
-        self.assertTrue(self.server is not None)
-        log_file_from_config = self.server.options.get_option('handler_file','args',None)
+        self.assertTrue(self.server_conf is not None)
+        options = JNTOptions(options={'conf_file':self.getDataFile(self.server_conf)})
+        log_file_from_config = options.get_option('handler_file','args',None)
         self.assertTrue(log_file_from_config is not None)
         #I know, it's bad
         log_args = eval(log_file_from_config)
@@ -178,10 +181,12 @@ class JNTTServer(JNTTBase):
         self.assertTrue(found)
 
     def assertNotInLogfile(self, expr='^ERROR '):
-        """Assert an expression is not in logifle
+        """Assert an expression is not in logifle.
+        Must be called at the end of process, when the server has closed the logfile.
         """
-        self.assertTrue(self.server is not None)
-        log_file_from_config = self.server.options.get_option('handler_file','args',None)
+        self.assertTrue(self.server_conf is not None)
+        options = JNTOptions(options={'conf_file':self.getDataFile(self.server_conf)})
+        log_file_from_config = options.get_option('handler_file','args',None)
         self.assertTrue(log_file_from_config is not None)
         #I know, it's bad
         log_args = eval(log_file_from_config)
