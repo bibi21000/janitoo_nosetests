@@ -197,6 +197,7 @@ class JNTTServer(JNTTBase):
     def assertHeartbeatNode(self, hadd=None, timeout=90):
         print "Waiting for %s" % (hadd)
         self.heartbeat_waiting = hadd
+        self.heartbeat_waitings = None
         self.heartbeat_message = None
         self.heartbeat_received = False
         i = 0
@@ -208,7 +209,8 @@ class JNTTServer(JNTTBase):
 
     def assertHeartbeatNodes(self, hadds=[], timeout=90):
         print "Waiting for %s" % (hadds)
-        self.heartbeat_waitings = hadds
+        self.heartbeat_waiting = None
+        self.heartbeat_waitings = list(hadds)
         self.heartbeat_message = None
         self.heartbeat_received = False
         i = 0
