@@ -25,6 +25,7 @@ import sys, os, errno
 import time
 import unittest
 import json as mjson
+import threading
 import shutil
 import mock
 import re
@@ -71,6 +72,7 @@ class JNTTServer(JNTTBase):
         self.heartbeat_waitings = None
         self.heartbeat_received = False
         self.server = None
+        self.running_server = None
         if self.hadd_ctrl is None and self.hadds is not None and len(self.hadds)>0:
             self.hadd_ctrl = self.hadds[0]
 
@@ -89,6 +91,7 @@ class JNTTServer(JNTTBase):
         self.heartbeat_waitings = None
         self.heartbeat_received = False
         self.server = None
+        self.running_server = None
         JNTTBase.tearDown(self)
 
     def startClient(self, conf=None):
@@ -120,18 +123,19 @@ class JNTTServer(JNTTBase):
             self.hearbeat_mqttc = None
 
     def startServer(self):
-        self.server = None
-        with mock.patch('sys.argv', ['%s'%self.server_class, 'start', '--conf_file=%s' % self.getDataFile(self.server_conf)]):
-            options = vars(jnt_parse_args())
-            self.server = self.server_class(options)
-        self.server.start()
-        time.sleep(1.5)
-        self.message = None
+        if self.server is None:
+            with mock.patch('sys.argv', ['%s'%self.server_class, 'start', '--conf_file=%s' % self.getDataFile(self.server_conf)]):
+                options = vars(jnt_parse_args())
+                self.server = self.server_class(options)
+            self.server.start()
+            self.running_server = threading.Timer(0.01, self.server.run)
+            self.running_server.start()
+            time.sleep(1.5)
 
     def stopServer(self):
         if self.server is not None:
             self.server.stop()
-            time.sleep(5)
+            time.sleep(10)
         self.server = None
         self.message = None
 
@@ -176,6 +180,7 @@ class JNTTServer(JNTTBase):
         found = False
         with open(log_file_from_config, 'r') as hand:
             for line in hand:
+                #~ print line
                 if re.search(expr, line):
                     found = True
         self.assertTrue(found)
@@ -195,6 +200,7 @@ class JNTTServer(JNTTBase):
         found = False
         with open(log_file_from_config, 'r') as hand:
             for line in hand:
+                #~ print line
                 if re.search(expr, line):
                     found = True
         self.assertFalse(found)
@@ -213,6 +219,8 @@ class JNTTServer(JNTTBase):
         time.sleep(0.5)
 
     def assertHeartbeatNodes(self, hadds=[], timeout=90):
+        if hadds is None:
+            hadds = self.hadds
         print "Waiting for %s" % (hadds)
         self.heartbeat_waiting = None
         self.heartbeat_waitings = list(hadds)
@@ -387,22 +395,24 @@ class JNTTServerCommon():
     def test_011_start_reload_stop(self):
         self.start()
         try:
-            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
-            time.sleep(5)
+            self.assertHeartbeatNodes(hadds=self.hadds)
+            time.sleep(2)
             self.server.reload()
-            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
-            time.sleep(5)
+            time.sleep(1)
+            self.assertHeartbeatNodes(hadds=self.hadds)
+            time.sleep(1)
         finally:
             self.stop()
 
     def test_012_start_reload_threads_stop(self):
         self.start()
         try:
-            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
-            time.sleep(5)
+            self.assertHeartbeatNodes(hadds=self.hadds)
+            time.sleep(2)
             self.server.reload_threads()
-            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
-            time.sleep(5)
+            time.sleep(1)
+            self.assertHeartbeatNodes(hadds=self.hadds)
+            time.sleep(1)
         finally:
             self.stop()
 
@@ -441,3 +451,31 @@ class JNTTServerCommon():
         finally:
             self.stop()
 
+    def test_040_server_start_no_error_in_log(self, timeout=60):
+        self.start()
+        self.assertHeartbeatNodes(hadds=self.hadds)
+        time.sleep(timeout)
+        #~ self.stop()
+        #~ time.sleep(10)
+        self.assertNotInLogfile('^ERROR ')
+        self.assertInLogfile('Start the server')
+        self.assertInLogfile('Connected to broker')
+        self.assertInLogfile('Found heartbeats in timeout')
+
+    def test_041_server_reload_no_error_in_log(self, timeout=60):
+        self.test_040_server_start_no_error_in_log(timeout=timeout)
+        self.server.reload()
+        time.sleep(2)
+        self.assertHeartbeatNodes(hadds=self.hadds)
+        time.sleep(timeout)
+        self.assertInLogfile('Reload the server')
+        self.assertNotInLogfile('^ERROR ')
+
+    def test_042_server_reload_threads_no_error_in_log(self, timeout=60):
+        self.test_040_server_start_no_error_in_log(timeout=timeout)
+        self.server.reload_threads()
+        time.sleep(2)
+        self.assertHeartbeatNodes(hadds=self.hadds)
+        time.sleep(timeout)
+        self.assertInLogfile('Reload threads')
+        self.assertNotInLogfile('^ERROR ')
