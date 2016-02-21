@@ -465,7 +465,7 @@ class JNTTServerCommon():
         self.server.reload()
         time.sleep(2)
         self.assertHeartbeatNodes(hadds=self.hadds)
-        time.sleep(65)
+        time.sleep(30)
         self.assertInLogfile('Reload the server')
         self.assertNotInLogfile('^ERROR ')
 
@@ -474,6 +474,6 @@ class JNTTServerCommon():
         self.server.reload_threads()
         time.sleep(2)
         self.assertHeartbeatNodes(hadds=self.hadds)
-        time.sleep(65)
+        time.sleep(30)
         self.assertInLogfile('Reload threads')
         self.assertNotInLogfile('^ERROR ')
