@@ -142,6 +142,7 @@ class JNTTThreadRunCommon(JNTTThreadCommon):
                 self.thread.nodeman.start_hourly_timer()
                 self.assertNotEqual(self.thread.nodeman.hourly_timer, None)
                 self.thread.nodeman.do_hourly_timer()
+                time.sleep(5)
             finally:
                 self.thread.stop()
         else:
