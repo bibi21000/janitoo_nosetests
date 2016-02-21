@@ -444,38 +444,36 @@ class JNTTServerCommon():
 
     def test_030_wait_for_all_nodes(self):
         if self.hadds is None:
-            self.skipTest("No hadds_defined. Skip test")
+            self.skipTest("No hadds defined. Skip test")
         self.start()
         try:
             self.assertHeartbeatNodes(hadds=self.hadds)
         finally:
             self.stop()
 
-    def test_040_server_start_no_error_in_log(self, timeout=60):
+    def test_040_server_start_no_error_in_log(self):
         self.start()
         self.assertHeartbeatNodes(hadds=self.hadds)
-        time.sleep(timeout)
-        #~ self.stop()
-        #~ time.sleep(10)
+        time.sleep(65)
         self.assertNotInLogfile('^ERROR ')
         self.assertInLogfile('Start the server')
         self.assertInLogfile('Connected to broker')
         self.assertInLogfile('Found heartbeats in timeout')
 
-    def test_041_server_reload_no_error_in_log(self, timeout=60):
-        self.test_040_server_start_no_error_in_log(timeout=timeout)
+    def test_041_server_reload_no_error_in_log(self):
+        self.test_040_server_start_no_error_in_log()
         self.server.reload()
         time.sleep(2)
         self.assertHeartbeatNodes(hadds=self.hadds)
-        time.sleep(timeout)
+        time.sleep(65)
         self.assertInLogfile('Reload the server')
         self.assertNotInLogfile('^ERROR ')
 
-    def test_042_server_reload_threads_no_error_in_log(self, timeout=60):
-        self.test_040_server_start_no_error_in_log(timeout=timeout)
+    def test_042_server_reload_threads_no_error_in_log(self):
+        self.test_040_server_start_no_error_in_log()
         self.server.reload_threads()
         time.sleep(2)
         self.assertHeartbeatNodes(hadds=self.hadds)
-        time.sleep(timeout)
+        time.sleep(65)
         self.assertInLogfile('Reload threads')
         self.assertNotInLogfile('^ERROR ')
