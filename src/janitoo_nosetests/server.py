@@ -452,7 +452,6 @@ class JNTTServerCommon():
             self.stop()
 
     def test_040_server_start_no_error_in_log(self):
-        self.skipTravisTest()
         self.start()
         self.assertHeartbeatNodes(hadds=self.hadds)
         time.sleep(65)
