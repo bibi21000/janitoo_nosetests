@@ -135,8 +135,12 @@ class JNTTServer(JNTTBase):
     def stopServer(self):
         if self.server is not None:
             self.server.stop()
-            time.sleep(10)
-        self.server = None
+            time.sleep(5)
+            self.server = None
+        if self.running_server is not None:
+            self.running_server.cancel()
+            time.sleep(5)
+            self.running_server = None
         self.message = None
 
     def start(self):
