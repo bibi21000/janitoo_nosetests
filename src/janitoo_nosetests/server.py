@@ -420,7 +420,9 @@ class JNTTServerCommon():
         finally:
             self.stop()
 
-    def test_020_broadcast_nodes_and_values(self):
+    def test_020_request_broadcast(self):
+        if self.hadd_ctrl is None:
+            self.skipTest("No hadd_ctrl defined. Skip test")
         self.start()
         try:
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
@@ -429,14 +431,6 @@ class JNTTServerCommon():
             for request in NETWORK_REQUESTS:
                 self.assertBroadcastRequest(cmd_class=COMMAND_DISCOVERY, uuid=request, client_hadd=HADD%(9999,0))
                 time.sleep(2)
-        finally:
-            self.stop()
-
-    def test_021_request_nodes_and_values(self):
-        if self.hadd_ctrl is None:
-            self.skipTest("No hadd_ctrl defined. Skip test")
-        self.start()
-        try:
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
             time.sleep(5)
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
@@ -463,18 +457,14 @@ class JNTTServerCommon():
         self.assertInLogfile('Start the server')
         self.assertInLogfile('Connected to broker')
         self.assertInLogfile('Found heartbeats in timeout')
-
-    def test_041_server_reload_no_error_in_log(self):
-        self.test_040_server_start_no_error_in_log()
+        print "Reload server"
         self.server.reload()
         time.sleep(2)
         self.assertHeartbeatNodes(hadds=self.hadds)
         time.sleep(30)
         self.assertInLogfile('Reload the server')
         self.assertNotInLogfile('^ERROR ')
-
-    def test_042_server_reload_threads_no_error_in_log(self):
-        self.test_040_server_start_no_error_in_log()
+        print "Reload threads"
         self.server.reload_threads()
         time.sleep(2)
         self.assertHeartbeatNodes(hadds=self.hadds)
