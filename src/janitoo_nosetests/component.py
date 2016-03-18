@@ -71,7 +71,9 @@ class JNTTComponent(JNTTBase):
         self.factory = None
         JNTTBase.tearDown(self)
 
-    def assertComponentEntryPoint(self, entry):
+    def assertComponentEntryPoint(self, entry = None):
+        if entry is None:
+            entry = self.component_name
         mkth = None
         for entry in iter_entry_points(group='janitoo.components', name=entry):
             mkth = entry.load()
@@ -83,5 +85,14 @@ class JNTTComponentCommon():
 
     def test_001_component_entry_point(self):
         self.assertFalse(self.component_name is None)
-        self.assertComponentEntryPoint(self.component_name)
+        self.assertComponentEntryPoint()
 
+    def test_002_component_oid(self):
+        self.assertFalse(self.component_name is None)
+        entries = iter_entry_points(group='janitoo.components', name=self.component_name)
+        entry = entries.next()
+        mkth = entry.load()
+        self.assertFalse(mkth is None)
+        compo = mkth()
+        self.assertFalse(compo is None)
+        self.assertEqual(compo.oid,  self.component_name)
