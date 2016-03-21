@@ -96,3 +96,5 @@ class JNTTComponentCommon():
         compo = mkth()
         self.assertFalse(compo is None)
         self.assertEqual(compo.oid,  self.component_name)
+        self.assertFalse(compo.name is None)
+        self.assertFalse(compo.product_name is None)
