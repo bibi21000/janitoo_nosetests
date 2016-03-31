@@ -120,7 +120,7 @@ class JNTTThreadRunCommon(JNTTThreadCommon):
     """
 
     def test_011_thread_start_wait_stop(self):
-        self.skipTest("Freeze on docker, travis and circle")
+        #~ self.skipTest("Freeze on docker, travis and circle")
         try:
             self.thread.start()
             time.sleep(10)
@@ -128,7 +128,7 @@ class JNTTThreadRunCommon(JNTTThreadCommon):
             self.thread.stop()
 
     def test_031_cron_hourly(self):
-        self.skipTest("Freeze on docker, travis and circle")
+        #~ self.skipTest("Freeze on docker, travis and circle")
         cron = string_to_bool(self.options.get_option(self.thread_name, 'hourly_timer', default = False))
         if cron:
             self.thread.start()
