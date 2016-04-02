@@ -91,5 +91,8 @@ setup(
                      'nose-progressive',
                      'coverage',
                      'nose',
+                     'xunitmerge',
+                     'xunitparser',
+                     'nose-parameterized',
                     ],
 )
