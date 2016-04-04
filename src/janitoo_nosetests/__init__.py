@@ -28,7 +28,7 @@ except:  # pragma: no cover
     pass # pragma: no cover
 
 import sys, os, errno
-import time
+import time, datetime
 import unittest
 import threading
 import json as mjson
@@ -193,7 +193,7 @@ class JNTTBase(unittest.TestCase):
     def skipRasperryTest(self):
         """Skip a test when not on raspy
         """
-        if not platform.machine().startswith('armv6'):
+        if platform.machine().startswith('armv6'):
             raise SkipTest("%s" % ('Skipped on Raspberry pi'))
 
     @classmethod
@@ -263,6 +263,10 @@ class JNTTBase(unittest.TestCase):
             print('Group %s does not exist.' % grp)
             res = False
         self.assertTrue(res)
+
+    def assertDateInterval(self, which, dateref, delta=1):
+        self.assertTrue(which > dateref - datetime.timedelta(seconds=delta))
+        self.assertTrue(which < dateref + datetime.timedelta(seconds=delta))
 
     def mkDir(self, path):
         """Create a directory
