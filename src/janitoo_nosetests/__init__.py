@@ -265,6 +265,9 @@ class JNTTBase(unittest.TestCase):
         self.assertTrue(res)
 
     def assertDateInterval(self, which, dateref, delta=1):
+        """ 
+        """
+        print "Check date %s in interval : %s  +/-  %s s"
         self.assertTrue(which > dateref - datetime.timedelta(seconds=delta))
         self.assertTrue(which < dateref + datetime.timedelta(seconds=delta))
 
