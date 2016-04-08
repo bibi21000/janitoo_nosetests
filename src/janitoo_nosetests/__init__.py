@@ -179,14 +179,14 @@ class JNTTBase(unittest.TestCase):
     def skipDockerTest(self):
         """Skip a test on docker
         """
-        if 'JANITOO_ALLTESTS' in os.environ:
+        if 'JANITOO_DOCKER' in os.environ:
             raise SkipTest("%s" % ("Skipped on Docker"))
 
     @classmethod
     def onlyDockerTest(self):
         """Run a test only on docker
         """
-        if not 'JANITOO_ALLTESTS' in os.environ:
+        if not 'JANITOO_DOCKER' in os.environ:
             raise SkipTest("%s" % ("Only on docker"))
 
     @classmethod
@@ -265,7 +265,7 @@ class JNTTBase(unittest.TestCase):
         self.assertTrue(res)
 
     def assertDateInterval(self, which, dateref, delta=1):
-        """ 
+        """
         """
         print "Check date %s in interval : %s  +/-  %ss" % (which, dateref, delta)
         self.assertTrue(which > dateref - datetime.timedelta(seconds=delta))

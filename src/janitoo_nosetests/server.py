@@ -385,9 +385,41 @@ class JNTTServer(JNTTBase):
         self.mqttc.unsubscribe(topic='/values/%s/%s/#'%(type, node_hadd))
         time.sleep(0.5)
 
-class JNTTServerCommon():
+class Common():
+    """Common tests for servers and docker
+    """
+    longdelay = 65
+    shortdelay = 30
+
+    def test_040_server_start_no_error_in_log(self):
+        self.start()
+        self.assertHeartbeatNodes(hadds=self.hadds)
+        time.sleep(self.longdelay)
+        self.assertNotInLogfile('^ERROR ')
+        self.assertInLogfile('Start the server')
+        self.assertInLogfile('Connected to broker')
+        self.assertInLogfile('Found heartbeats in timeout')
+        print "Reload server"
+        self.server.reload()
+        time.sleep(5)
+        self.assertHeartbeatNodes(hadds=self.hadds)
+        time.sleep(self.shortdelay)
+        self.assertInLogfile('Reload the server')
+        self.assertNotInLogfile('^ERROR ')
+        print "Reload threads"
+        self.server.reload_threads()
+        time.sleep(5)
+        self.assertHeartbeatNodes(hadds=self.hadds)
+        time.sleep(self.shortdelay)
+        self.assertInLogfile('Reload threads')
+        self.assertNotInLogfile('^ERROR ')
+
+class JNTTServerCommon(Common):
     """Common tests for servers
     """
+    longdelay = 65
+    shortdelay = 30
+
     def test_010_start_heartbeat_stop(self):
         self.start()
         try:
@@ -449,25 +481,13 @@ class JNTTServerCommon():
         finally:
             self.stop()
 
-    def test_040_server_start_no_error_in_log(self):
-        self.start()
-        self.assertHeartbeatNodes(hadds=self.hadds)
-        time.sleep(65)
-        self.assertNotInLogfile('^ERROR ')
-        self.assertInLogfile('Start the server')
-        self.assertInLogfile('Connected to broker')
-        self.assertInLogfile('Found heartbeats in timeout')
-        print "Reload server"
-        self.server.reload()
-        time.sleep(2)
-        self.assertHeartbeatNodes(hadds=self.hadds)
-        time.sleep(30)
-        self.assertInLogfile('Reload the server')
-        self.assertNotInLogfile('^ERROR ')
-        print "Reload threads"
-        self.server.reload_threads()
-        time.sleep(2)
-        self.assertHeartbeatNodes(hadds=self.hadds)
-        time.sleep(30)
-        self.assertInLogfile('Reload threads')
-        self.assertNotInLogfile('^ERROR ')
+class JNTTDockerServerCommon(Common):
+    """Common tests for servers on docker
+    """
+    longdelay = 90
+    shortdelay = 90
+
+class JNTTDockerServer(JNTTServer):
+    """Tests for servers on docker
+    """
+    JNTTServer.onlyDockerTest()
