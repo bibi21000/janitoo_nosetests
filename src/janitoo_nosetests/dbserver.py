@@ -31,7 +31,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from alembic import command as alcommand
 
 from janitoo_nosetests import JNTTBase
-from janitoo_nosetests.server import JNTTServer, JNTTServerCommon
+from janitoo_nosetests.server import JNTTServer, JNTTServerCommon, JNTTDockerServerCommon
 
 from janitoo.utils import JanitooNotImplemented, JanitooException
 from janitoo.options import JNTOptions
@@ -67,3 +67,18 @@ class JNTTDBServerCommon(JNTTServerCommon):
         self.start()
         self.assertHeartbeatNode()
         self.stop()
+
+class JNTTDBDockerServerCommon(JNTTDockerServerCommon):
+    """Common tests for servers on docker
+    """
+    longdelay = 90
+    shortdelay = 90
+
+    def test_040_server_start_no_error_in_log(self):
+        JNTTServer.onlyDockerTest()
+        Common.test_040_server_start_no_error_in_log(self)
+
+class JNTTDBDockerServer(JNTTDBServer):
+    """Tests for servers on docker
+    """
+    pass

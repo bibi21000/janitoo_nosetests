@@ -487,7 +487,11 @@ class JNTTDockerServerCommon(Common):
     longdelay = 90
     shortdelay = 90
 
+    def test_040_server_start_no_error_in_log(self):
+        JNTTServer.onlyDockerTest()
+        Common.test_040_server_start_no_error_in_log(self)
+
 class JNTTDockerServer(JNTTServer):
     """Tests for servers on docker
     """
-    JNTTServer.onlyDockerTest()
+    pass
