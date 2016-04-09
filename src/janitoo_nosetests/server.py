@@ -419,6 +419,26 @@ class Common():
         self.assertInLogfile('Reload threads')
         self.assertNotInLogfile('^ERROR ')
 
+    def minimal_040_server_start_reload_restart(self):
+        self.start()
+        self.assertHeartbeatNodes(hadds=self.hadds)
+        time.sleep(self.longdelay)
+        self.assertInLogfile('Start the server')
+        self.assertInLogfile('Connected to broker')
+        self.assertInLogfile('Found heartbeats in timeout')
+        print "Reload server"
+        self.server.reload()
+        time.sleep(5)
+        self.assertHeartbeatNodes(hadds=self.hadds)
+        time.sleep(self.shortdelay)
+        self.assertInLogfile('Reload the server')
+        print "Reload threads"
+        self.server.reload_threads()
+        time.sleep(5)
+        self.assertHeartbeatNodes(hadds=self.hadds)
+        time.sleep(self.shortdelay)
+        self.assertInLogfile('Reload threads')
+
 class JNTTServerCommon(Common):
     """Common tests for servers
     """
