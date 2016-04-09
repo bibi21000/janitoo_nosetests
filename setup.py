@@ -82,6 +82,7 @@ setup(
     zip_safe = False,
     packages = find_packages('src', exclude=["scripts", "docs", "config"]),
     keywords = "tests",
+    scripts=['src/scripts/xunitreport'],
     include_package_data=True,
     #~ data_files = data_files,
     package_dir = { '': 'src' },
