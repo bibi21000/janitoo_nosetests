@@ -43,7 +43,32 @@ class JNTTDBServer(JNTTServer):
     """
     pass
 
-class JNTTDBServerCommon(JNTTServerCommon):
+class Common():
+    """Common tests for models
+    """
+    def test_051_dbserver_no_auto_migrate(self):
+        self.rmFile('/tmp/janitoo_test/home/test_dhcpd.db')
+        options = JNTOptions({'conf_file':self.getDataFile(self.server_conf)})
+        options.load()
+        options.set_option('database','auto_migrate', False)
+        try:
+            with self.assertRaises(JanitooException):
+                self.start()
+                self.assertHeartbeatNode()
+                self.stop()
+        finally:
+            options.set_option('database','auto_migrate', True)
+
+    def test_052_dbserver_auto_migrate(self):
+        self.rmFile('/tmp/janitoo_test/home/test_dhcpd.db')
+        options = JNTOptions({'conf_file':self.getDataFile(self.server_conf)})
+        options.load()
+        options.set_option('database','auto_migrate', True)
+        self.start()
+        self.assertHeartbeatNode()
+        self.stop()
+
+class JNTTDBServerCommon(Common, JNTTServerCommon):
     """Common tests for models
     """
     def test_051_dbserver_no_auto_migrate(self):
@@ -73,7 +98,7 @@ class JNTTDBDockerServer(JNTTDBServer):
     """
     pass
 
-class JNTTDBDockerServerCommon(JNTTDockerServerCommon):
+class JNTTDBDockerServerCommon(Common, JNTTDockerServerCommon):
     """Common tests for servers on docker
     """
     longdelay = 90
