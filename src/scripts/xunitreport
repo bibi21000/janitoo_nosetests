@@ -1,0 +1,74 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""DBManager for Janitoo
+"""
+__license__ = """
+    This file is part of Janitoo.
+
+    Janitoo is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Janitoo is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Janitoo. If not, see <http://www.gnu.org/licenses/>.
+
+"""
+__author__ = 'Sébastien GALLET aka bibi21000'
+__email__ = 'bibi21000@gmail.com'
+__copyright__ = "Copyright © 2013-2014-2015 Sébastien GALLET aka bibi21000"
+import warnings
+#~ warnings.filterwarnings("ignore")
+import sys, os
+import time, datetime
+#We must NOT subsitute % in value for alembic (database section)
+from ConfigParser import RawConfigParser as ConfigParser
+import argparse
+
+def jnt_parser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('file', help='The Xunit nosetests file')
+    return parser
+
+def report(xunitfile):
+    """
+    """
+    import xunitparser
+    ret={'run':0,'success':0,'skipped':0,'failed':0,'errored':0,}
+
+    def drawline(tc, status):
+        print('{:<100} : {}'.format('%s - %s' %(tc.classname, tc.methodname), status))
+
+    ts, tr = xunitparser.parse(open(xunitfile))
+    for tc in ts:
+        if tc.success:
+            ret['success'] += 1
+            ret['run'] += 1
+            drawline(tc, 'success')
+        elif tc.skipped:
+            ret['skipped'] += 1
+            ret['run'] += 1
+            drawline(tc, 'skipped')
+        elif tc.failed:
+            ret['failed'] += 1
+            ret['run'] += 1
+            drawline(tc, 'failed')
+        elif tc.errored:
+            ret['errored'] += 1
+            ret['run'] += 1
+            drawline(tc, 'errored')
+    print ret
+
+def main():
+    parser = jnt_parser()
+    args = parser.parse_args()
+    report(args.file)
+
+if __name__ == '__main__':
+    main()
