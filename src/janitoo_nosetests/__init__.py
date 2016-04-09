@@ -37,6 +37,7 @@ import mock
 import platform
 import pwd
 import grp
+import socket
 from pkg_resources import iter_entry_points
 
 from nose.plugins.skip import SkipTest
@@ -270,6 +271,21 @@ class JNTTBase(unittest.TestCase):
         print "Check date %s in interval : %s  +/-  %ss" % (which, dateref, delta)
         self.assertTrue(which > dateref - datetime.timedelta(seconds=delta))
         self.assertTrue(which < dateref + datetime.timedelta(seconds=delta))
+
+    def assertTCP(self, server='localhost', port=80):
+        """
+        """
+        # Create a TCP socket
+        try:
+            ip  = socket.gethostbyname(server)
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.connect_ex((ip, port))
+            s.send('test')
+            s.close()
+        except socket.error, e:
+            raise AssertionError("Can't connect to %s(%s):%s"%(server, ip, port))
+        except socket.gaierror:
+            raise AssertionError("Can't connect to %s(%s):%s"%(server, 'unknown', port))
 
     def mkDir(self, path):
         """Create a directory
