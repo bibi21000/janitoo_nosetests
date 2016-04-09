@@ -87,10 +87,10 @@ setup(
     package_dir = { '': 'src' },
     install_requires=[
                      #~ 'janitoo_packaging == %s'%janitoo_version,
+                     'nose==1.3.7',
                      'nose-html',
                      'nose-progressive',
                      'coverage',
-                     'nose',
                      'xunitmerge',
                      'xunitparser',
                      'nose-parameterized',
