@@ -385,6 +385,11 @@ class JNTTServer(JNTTBase):
         self.mqttc.unsubscribe(topic='/values/%s/%s/#'%(type, node_hadd))
         time.sleep(0.5)
 
+class JNTTDockerServer(JNTTServer):
+    """Tests for servers on docker
+    """
+    pass
+
 class Common():
     """Common tests for servers and docker
     """
@@ -488,10 +493,5 @@ class JNTTDockerServerCommon(Common):
     shortdelay = 90
 
     def test_040_server_start_no_error_in_log(self):
-        JNTTServer.onlyDockerTest()
+        JNTTDockerServer.onlyDockerTest()
         Common.test_040_server_start_no_error_in_log(self)
-
-class JNTTDockerServer(JNTTServer):
-    """Tests for servers on docker
-    """
-    pass

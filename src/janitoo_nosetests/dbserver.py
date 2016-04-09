@@ -68,6 +68,11 @@ class JNTTDBServerCommon(JNTTServerCommon):
         self.assertHeartbeatNode()
         self.stop()
 
+class JNTTDBDockerServer(JNTTDBServer):
+    """Tests for servers on docker
+    """
+    pass
+
 class JNTTDBDockerServerCommon(JNTTDockerServerCommon):
     """Common tests for servers on docker
     """
@@ -75,10 +80,5 @@ class JNTTDBDockerServerCommon(JNTTDockerServerCommon):
     shortdelay = 90
 
     def test_040_server_start_no_error_in_log(self):
-        JNTTServer.onlyDockerTest()
-        Common.test_040_server_start_no_error_in_log(self)
-
-class JNTTDBDockerServer(JNTTDBServer):
-    """Tests for servers on docker
-    """
-    pass
+        JNTTDBServer.onlyDockerTest()
+        JNTTDockerServerCommon.test_040_server_start_no_error_in_log(self)
