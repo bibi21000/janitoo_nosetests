@@ -439,6 +439,57 @@ class Common():
         time.sleep(self.shortdelay)
         self.assertInLogfile('Reload threads')
 
+    def test_020_request_broadcast(self):
+        if self.hadd_ctrl is None:
+            self.skipTest("No hadd_ctrl defined. Skip test")
+        self.start()
+        try:
+            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
+            time.sleep(5)
+            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
+            for request in NETWORK_REQUESTS:
+                self.assertBroadcastRequest(cmd_class=COMMAND_DISCOVERY, uuid=request, client_hadd=HADD%(9999,0))
+                time.sleep(2)
+            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
+            time.sleep(5)
+            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
+            for request in NETWORK_REQUESTS:
+                self.assertNodeRequest(cmd_class=COMMAND_DISCOVERY, uuid=request, node_hadd=self.hadd_ctrl, client_hadd=HADD%(9999,0))
+                time.sleep(2)
+        finally:
+            self.stop()
+
+    def minimal_020_request_broadcast(self):
+        if self.hadd_ctrl is None:
+            self.skipTest("No hadd_ctrl defined. Skip test")
+        self.start()
+        try:
+            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
+            time.sleep(5)
+            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
+            run = False
+            for request in NETWORK_REQUESTS:
+                try:
+                    self.assertBroadcastRequest(cmd_class=COMMAND_DISCOVERY, uuid=request, client_hadd=HADD%(9999,0))
+                    time.sleep(2)
+                except:
+                    pass
+            self.assertTrue(run)
+            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
+            time.sleep(5)
+            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
+            run = False
+            for request in NETWORK_REQUESTS:
+                try:
+                    self.assertNodeRequest(cmd_class=COMMAND_DISCOVERY, uuid=request, node_hadd=self.hadd_ctrl, client_hadd=HADD%(9999,0))
+                    run = True
+                    time.sleep(2)
+                except:
+                    pass
+            self.assertTrue(run)
+        finally:
+            self.stop()
+
 class JNTTServerCommon(Common):
     """Common tests for servers
     """
@@ -477,26 +528,6 @@ class JNTTServerCommon(Common):
         finally:
             self.stop()
 
-    def test_020_request_broadcast(self):
-        if self.hadd_ctrl is None:
-            self.skipTest("No hadd_ctrl defined. Skip test")
-        self.start()
-        try:
-            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
-            time.sleep(5)
-            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
-            for request in NETWORK_REQUESTS:
-                self.assertBroadcastRequest(cmd_class=COMMAND_DISCOVERY, uuid=request, client_hadd=HADD%(9999,0))
-                time.sleep(2)
-            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
-            time.sleep(5)
-            self.assertHeartbeatNode(hadd=self.hadd_ctrl)
-            for request in NETWORK_REQUESTS:
-                self.assertNodeRequest(cmd_class=COMMAND_DISCOVERY, uuid=request, node_hadd=self.hadd_ctrl, client_hadd=HADD%(9999,0))
-                time.sleep(2)
-        finally:
-            self.stop()
-
     def test_030_wait_for_all_nodes(self):
         if self.hadds is None:
             self.skipTest("No hadds defined. Skip test")
@@ -511,6 +542,10 @@ class JNTTDockerServerCommon(Common):
     """
     longdelay = 90
     shortdelay = 90
+
+    def test_020_request_broadcast(self):
+        JNTTDockerServer.onlyDockerTest()
+        Common.test_020_request_broadcast(self)
 
     def test_040_server_start_no_error_in_log(self):
         JNTTDockerServer.onlyDockerTest()
