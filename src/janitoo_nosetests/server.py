@@ -493,7 +493,7 @@ class Common():
 class JNTTServerCommon(Common):
     """Common tests for servers
     """
-    longdelay = 65
+    longdelay = 60
     shortdelay = 30
 
     def test_010_start_heartbeat_stop(self):
