@@ -540,8 +540,8 @@ class JNTTServerCommon(Common):
 class JNTTDockerServerCommon(Common):
     """Common tests for servers on docker
     """
-    longdelay = 30
-    shortdelay = 15
+    longdelay = 45
+    shortdelay = 30
 
     def test_020_request_broadcast(self):
         JNTTDockerServer.onlyDockerTest()
