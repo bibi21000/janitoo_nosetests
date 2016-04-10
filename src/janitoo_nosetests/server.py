@@ -406,14 +406,14 @@ class Common():
         self.assertInLogfile('Found heartbeats in timeout')
         print "Reload server"
         self.server.reload()
-        time.sleep(5)
+        time.sleep(3)
         self.assertHeartbeatNodes(hadds=self.hadds)
         time.sleep(self.shortdelay)
         self.assertInLogfile('Reload the server')
         self.assertNotInLogfile('^ERROR ')
         print "Reload threads"
         self.server.reload_threads()
-        time.sleep(5)
+        time.sleep(3)
         self.assertHeartbeatNodes(hadds=self.hadds)
         time.sleep(self.shortdelay)
         self.assertInLogfile('Reload threads')
@@ -428,13 +428,13 @@ class Common():
         self.assertInLogfile('Found heartbeats in timeout')
         print "Reload server"
         self.server.reload()
-        time.sleep(5)
+        time.sleep(3)
         self.assertHeartbeatNodes(hadds=self.hadds)
         time.sleep(self.shortdelay)
         self.assertInLogfile('Reload the server')
         print "Reload threads"
         self.server.reload_threads()
-        time.sleep(5)
+        time.sleep(3)
         self.assertHeartbeatNodes(hadds=self.hadds)
         time.sleep(self.shortdelay)
         self.assertInLogfile('Reload threads')
@@ -445,13 +445,13 @@ class Common():
         self.start()
         try:
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
-            time.sleep(5)
+            time.sleep(3)
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
             for request in NETWORK_REQUESTS:
                 self.assertBroadcastRequest(cmd_class=COMMAND_DISCOVERY, uuid=request, client_hadd=HADD%(9999,0))
                 time.sleep(2)
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
-            time.sleep(5)
+            time.sleep(3)
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
             for request in NETWORK_REQUESTS:
                 self.assertNodeRequest(cmd_class=COMMAND_DISCOVERY, uuid=request, node_hadd=self.hadd_ctrl, client_hadd=HADD%(9999,0))
@@ -465,7 +465,7 @@ class Common():
         self.start()
         try:
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
-            time.sleep(5)
+            time.sleep(3)
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
             run = False
             for request in NETWORK_REQUESTS:
@@ -476,7 +476,7 @@ class Common():
                     pass
             self.assertTrue(run)
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
-            time.sleep(5)
+            time.sleep(3)
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
             run = False
             for request in NETWORK_REQUESTS:
@@ -540,8 +540,8 @@ class JNTTServerCommon(Common):
 class JNTTDockerServerCommon(Common):
     """Common tests for servers on docker
     """
-    longdelay = 60
-    shortdelay = 30
+    longdelay = 30
+    shortdelay = 15
 
     def test_020_request_broadcast(self):
         JNTTDockerServer.onlyDockerTest()
