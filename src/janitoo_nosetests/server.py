@@ -238,6 +238,21 @@ class JNTTServer(JNTTBase):
         self.assertTrue(self.heartbeat_received)
         time.sleep(0.5)
 
+    def waitHeartbeatNodes(self, hadds=[], timeout=90):
+        if hadds is None:
+            hadds = self.hadds
+        print "Waiting for %s" % (hadds)
+        self.heartbeat_waiting = None
+        self.heartbeat_waitings = list(hadds)
+        self.heartbeat_message = None
+        self.heartbeat_received = False
+        i = 0
+        while i< timeout*10000 and not self.heartbeat_received:
+            time.sleep(0.0001)
+            i += 1
+        print "Unreceived heartbeats %s" % self.heartbeat_waitings
+        time.sleep(0.5)
+
     def assertNodeRequest(self, cmd_class=0, genre=0x04, uuid='request_info_nodes', node_hadd=None, client_hadd=None, data=None, is_writeonly=False, is_readonly=False, timeout=5):
         self.message_received = False
         print "Waiting for %s : %s" % (node_hadd,uuid)
@@ -398,7 +413,7 @@ class Common():
 
     def test_040_server_start_no_error_in_log(self):
         self.start()
-        self.assertHeartbeatNodes(hadds=self.hadds)
+        self.waitHeartbeatNodes(hadds=self.hadds)
         time.sleep(self.longdelay)
         self.assertNotInLogfile('^ERROR ')
         self.assertInLogfile('Start the server')
@@ -407,21 +422,21 @@ class Common():
         print "Reload server"
         self.server.reload()
         time.sleep(5)
-        self.assertHeartbeatNodes(hadds=self.hadds)
+        self.waitHeartbeatNodes(hadds=self.hadds)
         time.sleep(self.shortdelay)
         self.assertInLogfile('Reload the server')
         self.assertNotInLogfile('^ERROR ')
         print "Reload threads"
         self.server.reload_threads()
         time.sleep(5)
-        self.assertHeartbeatNodes(hadds=self.hadds)
+        self.waitHeartbeatNodes(hadds=self.hadds)
         time.sleep(self.shortdelay)
         self.assertInLogfile('Reload threads')
         self.assertNotInLogfile('^ERROR ')
 
     def minimal_040_server_start_reload_restart(self):
         self.start()
-        self.assertHeartbeatNodes(hadds=self.hadds)
+        self.waitHeartbeatNodes(hadds=self.hadds)
         time.sleep(self.longdelay)
         self.assertInLogfile('Start the server')
         self.assertInLogfile('Connected to broker')
@@ -429,13 +444,13 @@ class Common():
         print "Reload server"
         self.server.reload()
         time.sleep(5)
-        self.assertHeartbeatNodes(hadds=self.hadds)
+        self.waitHeartbeatNodes(hadds=self.hadds)
         time.sleep(self.shortdelay)
         self.assertInLogfile('Reload the server')
         print "Reload threads"
         self.server.reload_threads()
         time.sleep(5)
-        self.assertHeartbeatNodes(hadds=self.hadds)
+        self.waitHeartbeatNodes(hadds=self.hadds)
         time.sleep(self.shortdelay)
         self.assertInLogfile('Reload threads')
 
