@@ -57,6 +57,7 @@ class JNTTBus(JNTTBase):
 
     bus = None
     oid = None
+    generic ='generic'
 
     def setUp(self):
         JNTTBase.setUp(self)
@@ -72,5 +73,8 @@ class JNTTBusCommon():
 
     def test_001_bus_oid(self):
         bus = self.bus()
+        self.assertFalse(bus is None)
+        self.assertEqual(self.generic, bus.oid)
+        bus = self.bus(oid=self.oid)
         self.assertFalse(bus is None)
         self.assertEqual(self.oid, bus.oid)
