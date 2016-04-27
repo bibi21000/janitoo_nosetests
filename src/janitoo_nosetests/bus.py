@@ -66,7 +66,6 @@ class JNTTBus(JNTTBase):
         self.factory = None
         JNTTBase.tearDown(self)
 
-
 class JNTTBusCommon():
     """Common tests for buss
     """
