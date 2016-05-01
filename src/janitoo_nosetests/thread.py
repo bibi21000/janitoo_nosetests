@@ -88,6 +88,7 @@ class JNTTThreadRun(JNTTThread):
 
     conf_file = None
     prog = "test"
+    timeout = 120
 
     def setUp(self):
         JNTTThread.setUp(self)
@@ -106,6 +107,27 @@ class JNTTThreadRun(JNTTThread):
                 pass
         self.options = None
         JNTTThread.tearDown(self)
+
+    def wait_for_nodeman(self):
+        """Wait for the nodemanager to be ready"""
+        if not self.thread.is_alive():
+            self.thread.start()
+        i = 0
+        while i< self.timeout and not self.thread.nodeman.is_started:
+            time.sleep(1)
+            i += 1
+            print self.thread.nodeman.state
+
+    def assertNodeOnBus(self, node_uuid):
+        """Assert a node is on the bus"""
+        print 'Look for node %s' % node_uuid
+        self.assertNotEqual(None, self.thread.bus.nodeman.find_node(node_uuid))
+
+    def assertValueOnBus(self, node_uuid, value_uuid):
+        """Assert a value is on the bus"""
+        self.assertNodeOnBus(node_uuid)
+        print 'Look for value %s' % value_uuid
+        self.assertNotEqual(None, self.thread.bus.nodeman.find_value(node_uuid,value_uuid))
 
 class JNTTThreadCommon():
     """Common tests for components
@@ -131,14 +153,8 @@ class JNTTThreadRunCommon(JNTTThreadCommon):
         #~ self.skipTest("Freeze on docker, travis and circle")
         cron = string_to_bool(self.options.get_option(self.thread_name, 'hourly_timer', default = False))
         if cron:
-            self.thread.start()
+            self.wait_for_nodeman()
             try:
-                timeout = 120
-                i = 0
-                while i< timeout and not self.thread.nodeman.is_started:
-                    time.sleep(1)
-                    i += 1
-                    #~ print self.thread.nodeman.state
                 time.sleep(2)
                 self.assertNotEqual(self.thread.nodeman.hourly_timer, None)
                 self.thread.nodeman.stop_hourly_timer()
