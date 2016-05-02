@@ -42,6 +42,7 @@ from janitoo.utils import TOPIC_BROADCAST_REPLY, TOPIC_BROADCAST_REQUEST
 from janitoo.utils import TOPIC_VALUES_USER, TOPIC_VALUES_CONFIG, TOPIC_VALUES_SYSTEM, TOPIC_VALUES_BASIC
 from janitoo.runner import jnt_parse_args
 from janitoo.options import JNTOptions
+from janitoo.thread import JNTBusThread
 
 ##############################################################
 #Check that we are in sync with the official command classes
@@ -58,6 +59,7 @@ class JNTTServer(JNTTBase):
     """
     server_class = None
     server_conf = ""
+    server_section = None
     hadd_ctrl = None
     hadds = None
 
@@ -410,9 +412,17 @@ class Common():
     """
     longdelay = 60
     shortdelay = 30
+    mindelay = 5
+    server_section = None
 
     def test_040_server_start_no_error_in_log(self):
         self.start()
+        time.sleep(5)
+        if self.server_section:
+            print "Look for thread %s"%self.server_section
+            thread = self.server.find_thread(self.server_section)
+            self.assertNotEqual(thread, None)
+            self.assertIsInstance(thread, JNTBusThread)
         self.waitHeartbeatNodes(hadds=self.hadds)
         time.sleep(self.longdelay)
         self.assertNotInLogfile('^ERROR ')
@@ -436,6 +446,12 @@ class Common():
 
     def minimal_040_server_start_reload_restart(self):
         self.start()
+        time.sleep(5)
+        if self.server_section:
+            print "Look for thread %s"%self.server_section
+            thread = self.server.find_thread(self.server_section)
+            self.assertNotEqual(thread, None)
+            self.assertIsInstance(thread, JNTBusThread)
         self.waitHeartbeatNodes(hadds=self.hadds)
         time.sleep(self.longdelay)
         self.assertInLogfile('Start the server')
@@ -516,6 +532,12 @@ class JNTTServerCommon(Common):
         try:
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
             time.sleep(5)
+            if self.server_section:
+                print "Look for thread %s"%self.server_section
+                thread = self.server.find_thread(self.server_section)
+                self.assertNotEqual(thread, None)
+                self.assertIsInstance(thread, JNTBusThread)
+
         finally:
             self.stop()
 
