@@ -321,3 +321,11 @@ class JNTTBase(unittest.TestCase):
             return path
         raise RuntimeError("[%s] : Can't find data file %s"%(self.__class__.__name__, path))
 
+class JNTTDockerBase(JNTTBase):
+    """Tests for servers on docker
+    """
+
+    def setUp(self):
+        JNTTBase.onlyDockerTest()
+        JNTTBase.setUp(self)
+

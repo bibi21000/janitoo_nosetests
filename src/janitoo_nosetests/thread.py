@@ -82,6 +82,14 @@ class JNTTThread(JNTTBase):
             mkth = entry.load()
         self.assertNotEqual(mkth, None)
 
+class JNTTDockerThread(JNTTThread):
+    """Tests for threads on docker
+    """
+
+    def setUp(self):
+        JNTTThread.onlyDockerTest()
+        JNTTThread.setUp(self)
+
 class JNTTThreadRun(JNTTThread):
     """Thread base test
     """
@@ -128,6 +136,14 @@ class JNTTThreadRun(JNTTThread):
         self.assertNodeOnBus(node_uuid)
         print 'Look for value %s' % value_uuid
         self.assertNotEqual(None, self.thread.bus.nodeman.find_value(node_uuid,value_uuid))
+
+class JNTTDockerThreadRun(JNTTThreadRun):
+    """Tests for threads on docker
+    """
+
+    def setUp(self):
+        JNTTThreadRun.onlyDockerTest()
+        JNTTThreadRun.setUp(self)
 
 class JNTTThreadCommon():
     """Common tests for components
