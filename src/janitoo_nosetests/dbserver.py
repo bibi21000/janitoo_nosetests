@@ -96,7 +96,9 @@ class JNTTDBServerCommon(Common, JNTTServerCommon):
 class JNTTDBDockerServer(JNTTDBServer):
     """Tests for servers on docker
     """
-    pass
+    def setUp(self):
+        JNTTDBServer.onlyDockerTest()
+        JNTTDBServer.setUp(self)
 
 class JNTTDBDockerServerCommon(Common, JNTTDockerServerCommon):
     """Common tests for servers on docker

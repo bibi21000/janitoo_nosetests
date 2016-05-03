@@ -66,12 +66,26 @@ class JNTTModels(JNTTBase):
         self.dbsession = scoped_session(self.dbmaker)
         Base.metadata.create_all(bind=engine)
 
+class JNTTDockerModels(JNTTModels):
+    """Tests for models on docker
+    """
+    def setUp(self):
+        JNTTDockerModels.onlyDockerTest()
+        JNTTDockerModels.setUp(self)
+
 class JNTTFullModels(JNTTBase):
     """Test the models
     """
     def setUp(self):
         JNTTBase.setUp(self)
         import janitoo_db.models
+
+class JNTTDockerModels(JNTTFullModels):
+    """Tests for full models on docker
+    """
+    def setUp(self):
+        JNTTFullModels.onlyDockerTest()
+        JNTTFullModels.setUp(self)
 
 class JNTTFullModelsCommon():
     """Common tests for models
