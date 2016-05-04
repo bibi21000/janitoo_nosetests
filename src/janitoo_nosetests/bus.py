@@ -77,3 +77,11 @@ class JNTTBusCommon():
         bus = self.bus(oid=self.oid)
         self.assertFalse(bus is None)
         self.assertEqual(self.oid, bus.oid)
+
+    def test_002_bus_values(self):
+        bus = self.bus()
+        #Bus values must starts with
+        for value in bus.values:
+            print("Check bus value : {:s}_".format(self.oid))
+            self.assertTrue(value.startswith("{:s}_".format(self.oid)))
+
