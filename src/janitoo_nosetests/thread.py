@@ -81,6 +81,8 @@ class JNTTThread(JNTTBase):
         for entry in iter_entry_points(group='janitoo.threads', name=entry):
             mkth = entry.load()
         self.assertNotEqual(mkth, None)
+        th = mkth({}, force=False)
+        self.assertEqual(th, None)
 
 class JNTTDockerThread(JNTTThread):
     """Tests for threads on docker
