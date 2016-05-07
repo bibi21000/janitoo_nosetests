@@ -30,6 +30,8 @@ import threading
 import logging
 from pkg_resources import iter_entry_points
 
+from nose_parameterized import parameterized
+
 from sqlalchemy.orm import sessionmaker, scoped_session
 from alembic import command as alcommand
 
@@ -66,12 +68,22 @@ class JNTTModels(JNTTBase):
         self.dbsession = scoped_session(self.dbmaker)
         Base.metadata.create_all(bind=engine)
 
-class JNTTDockerModels(JNTTModels):
+class JNTTDockerModels(JNTTBase):
     """Tests for models on docker
     """
+    models_conf = "tests/data/janitoo_db.conf"
+
     def setUp(self):
-        JNTTDockerModels.onlyDockerTest()
-        JNTTDockerModels.setUp(self)
+        JNTTBase.onlyDockerTest()
+        JNTTBase.setUp(self)
+        options = JNTOptions({'conf_file':self.getDataFile(self.models_conf)})
+        options.load()
+        engine = create_db_engine(options)
+        self.dbmaker = sessionmaker()
+        # Bind the sessionmaker to engine
+        self.dbmaker.configure(bind=engine)
+        self.dbsession = scoped_session(self.dbmaker)
+        Base.metadata.create_all(bind=engine)
 
 class JNTTFullModels(JNTTBase):
     """Test the models
@@ -80,7 +92,7 @@ class JNTTFullModels(JNTTBase):
         JNTTBase.setUp(self)
         import janitoo_db.models
 
-class JNTTDockerModels(JNTTFullModels):
+class JNTTFullDockerModels(JNTTFullModels):
     """Tests for full models on docker
     """
     def setUp(self):
