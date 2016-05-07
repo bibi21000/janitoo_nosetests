@@ -68,22 +68,31 @@ class JNTTModels(JNTTBase):
         self.dbsession = scoped_session(self.dbmaker)
         Base.metadata.create_all(bind=engine)
 
-class JNTTDockerModels(JNTTBase):
-    """Tests for models on docker
-    """
-    models_conf = "tests/data/janitoo_db.conf"
+DBCONFS = [
+        ('Sqlite', {'dbconf':'sqlite:////tmp/janitoo_tests.sqlite'}),
+        ('Mysql',{'dbconf':'mysql://root:janitoo@localhost/janitoo_tests'}),
+        ('Postgresql',{'dbconf':'postgresql://janitoo:janitoo@localhost/janitoo_tests'}),
+        ]
 
+class JNTTDockerModels(JNTTBase):
+    """Tests for model on docker
+    """
+    dbconf = ('sqlite', {'dbconf':'sqlite:////tmp/janitoo_tests.sqlite'})
     def setUp(self):
         JNTTBase.onlyDockerTest()
         JNTTBase.setUp(self)
-        options = JNTOptions({'conf_file':self.getDataFile(self.models_conf)})
-        options.load()
-        engine = create_db_engine(options)
+        engine = create_db_engine(self.dbconf[1]['dbconf'])
         self.dbmaker = sessionmaker()
         # Bind the sessionmaker to engine
         self.dbmaker.configure(bind=engine)
         self.dbsession = scoped_session(self.dbmaker)
         Base.metadata.create_all(bind=engine)
+
+def jntt_docker_models(module_name, cls):
+    """Launch cls tests for every supported database
+    """
+    for name, conf in DBCONFS:
+        setattr(sys.modules[module_name], 'JNTTDockerModels%s'%name, type(name, (JNTTDockerModels,cls), {'dbconf': (name, conf)}))
 
 class JNTTFullModels(JNTTBase):
     """Test the models
