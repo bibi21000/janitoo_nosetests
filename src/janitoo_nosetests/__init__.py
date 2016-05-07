@@ -114,8 +114,7 @@ class JNTTBase(unittest.TestCase):
     def skipTest(self, message=''):
         """Skip a test
         """
-        if self.skip == True:
-            raise SkipTest("%s" % (message))
+        raise SkipTest("%s" % (message))
 
     @classmethod
     def skipAllTests(self):
