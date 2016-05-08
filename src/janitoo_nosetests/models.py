@@ -68,6 +68,11 @@ class JNTTModels(JNTTBase):
         self.dbsession = scoped_session(self.dbmaker)
         Base.metadata.create_all(bind=engine)
 
+class JNTTModelsCommon():
+    """Common tests for models
+    """
+    pass
+
 DBCONFS = [
         ('Sqlite', {'dbconf':'sqlite:////tmp/janitoo_tests.sqlite'}),
         ('Mysql',{'dbconf':'mysql://root:janitoo@localhost/janitoo_tests'}),
@@ -97,25 +102,33 @@ def jntt_docker_models(module_name, cls):
 class JNTTFullModels(JNTTBase):
     """Test the models
     """
+    db_uri = "sqlite:////tmp/janitoo_test/home/fullmodel.sqlite"
     def setUp(self):
         JNTTBase.setUp(self)
         import janitoo_db.models
 
-class JNTTFullDockerModels(JNTTFullModels):
+class JNTTDockerFullModels(JNTTFullModels):
     """Tests for full models on docker
     """
+    dbconf = ('sqlite', {'dbconf':'sqlite:////tmp/janitoo_tests.sqlite'})
     def setUp(self):
         JNTTFullModels.onlyDockerTest()
         JNTTFullModels.setUp(self)
+        self.db_uri = self.dbconf[1]['dbconf']
+
+def jntt_docker_fullmodels(module_name, cls):
+    """Launch cls tests for every supported database
+    """
+    for name, conf in DBCONFS:
+        setattr(sys.modules[module_name], 'JNTTDockerFullModels%s'%name, type(name, (JNTTDockerFullModels,cls), {'dbconf': (name, conf)}))
 
 class JNTTFullModelsCommon():
     """Common tests for models
     """
 
     def test_001_upgrade(self):
-        alcommand.upgrade(janitoo_config("sqlite:////tmp/janitoo_test/home/fullmodel.sqlite"), 'heads')
+        alcommand.upgrade(janitoo_config(self.db_uri), 'heads')
 
     def test_002_downgrade(self):
-        alcommand.upgrade(janitoo_config("sqlite:////tmp/janitoo_test/home/fullmodel.sqlite"), 'heads')
-        alcommand.downgrade(janitoo_config("sqlite:////tmp/janitoo_test/home/fullmodel.sqlite"), 'base')
-
+        alcommand.upgrade(janitoo_config(self.db_uri), 'heads')
+        alcommand.downgrade(janitoo_config(self.db_uri), 'base')
