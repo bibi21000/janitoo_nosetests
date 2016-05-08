@@ -102,7 +102,7 @@ class JNTTDBDockerServer(JNTTDBServer):
     def setUp(self):
         JNTTDBServer.onlyDockerTest()
         JNTTDBServer.setUp(self)
-        tmp_conf = cpTempFile(self.server_conf)
+        tmp_conf = self.cpTempFile(self.server_conf)
         options = JNTOptions(options={'conf_file':tmp_conf})
         options.set_option('database', 'sqlalchemy.url', self.dbconf[1]['dbconf'])
         self.server_conf = tmp_conf
