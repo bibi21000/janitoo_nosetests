@@ -121,4 +121,4 @@ def jntt_docker_dbserver(module_name, cls):
     """Launch cls tests for every supported database
     """
     for name, conf in DBCONFS:
-        setattr(sys.modules[module_name], 'JNTTDBDockerServer%s'%name, type(name, (JNTTDBDockerServer,cls), {'dbconf': (name, conf)}))
+        setattr(sys.modules[module_name], 'JNTTDBDockerServer%s'%name, type(name, (cls, JNTTDBDockerServer), {'dbconf': (name, conf)}))
