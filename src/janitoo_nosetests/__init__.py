@@ -38,6 +38,7 @@ import platform
 import pwd
 import grp
 import socket
+import tempfile
 from pkg_resources import iter_entry_points
 
 from nose.plugins.skip import SkipTest
@@ -67,6 +68,7 @@ class JNTTBase(unittest.TestCase):
             self.skipManual = eval(os.environ['MANUALSKIP'])
         else:
             self.skipManual = True
+        self.tmp_files = []
 
     @classmethod
     def tearDownClass(self):
@@ -295,6 +297,34 @@ class JNTTBase(unittest.TestCase):
             if exc.errno == errno.EEXIST and os.path.isdir(path):
                 pass
             else: raise
+
+    def mkTempFile(self):
+        """Create a temporary file
+        """
+        tmpfile = tempfile.mkstemp(prefix='janitoo_tmp')
+        self.tmp_files.append(tmpfile.name)
+        return tmpfile
+
+    def cpTempFile(self, path_src):
+        """Copy the path_src fil to a tmp file.
+        Return the path of the tmp file
+        """
+        dst_name = None
+        try:
+            src = open(path_src, 'r')
+            dst = self.mkTempFile()
+            shutil.copyfileobj(src, dst)
+            dst_name = dst.name
+        finally:
+            try:
+                src.close()
+            except:
+                pass
+            try:
+                dst.close()
+            except:
+                pass
+        return dst_name
 
     def rmDir(self, path):
         """Remove a directory

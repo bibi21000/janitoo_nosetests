@@ -95,13 +95,17 @@ class JNTTDBServerCommon(Common, JNTTServerCommon):
         self.stop()
 
 class JNTTDBDockerServer(JNTTDBServer):
-    """Tests for servers on docker
+    """Tests for database servers on docker
     """
     dbconf = ('sqlite', {'dbconf':'sqlite:////tmp/janitoo_tests.sqlite'})
 
     def setUp(self):
         JNTTDBServer.onlyDockerTest()
         JNTTDBServer.setUp(self)
+        tmp_conf = cpTempFile(self.server_conf)
+        options = JNTOptions(options={'conf_file':tmp_conf})
+        options.set_option('database', 'sqlalchemy.url', self.dbconf[1]['dbconf'])
+        self.server_conf = tmp_conf
 
 class JNTTDBDockerServerCommon(Common, JNTTDockerServerCommon):
     """Common tests for servers on docker
