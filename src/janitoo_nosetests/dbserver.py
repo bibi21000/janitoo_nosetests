@@ -32,6 +32,7 @@ from alembic import command as alcommand
 
 from janitoo_nosetests import JNTTBase
 from janitoo_nosetests.server import JNTTServer, JNTTServerCommon, JNTTDockerServerCommon
+from janitoo_nosetests.models import DBCONFS
 
 from janitoo.utils import JanitooNotImplemented, JanitooException
 from janitoo.options import JNTOptions
@@ -96,6 +97,8 @@ class JNTTDBServerCommon(Common, JNTTServerCommon):
 class JNTTDBDockerServer(JNTTDBServer):
     """Tests for servers on docker
     """
+    dbconf = ('sqlite', {'dbconf':'sqlite:////tmp/janitoo_tests.sqlite'})
+
     def setUp(self):
         JNTTDBServer.onlyDockerTest()
         JNTTDBServer.setUp(self)
@@ -109,3 +112,9 @@ class JNTTDBDockerServerCommon(Common, JNTTDockerServerCommon):
     def test_040_server_start_no_error_in_log(self):
         JNTTDBServer.onlyDockerTest()
         JNTTDockerServerCommon.test_040_server_start_no_error_in_log(self)
+
+def jntt_docker_dbserver(module_name, cls):
+    """Launch cls tests for every supported database
+    """
+    for name, conf in DBCONFS:
+        setattr(sys.modules[module_name], 'JNTTDBDockerServer%s'%name, type(name, (JNTTDBDockerServer,cls), {'dbconf': (name, conf)}))
