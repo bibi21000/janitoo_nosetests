@@ -211,7 +211,7 @@ class JNTTServer(JNTTBase):
                     found = True
         self.assertFalse(found)
 
-    def assertHeartbeatNode(self, hadd=None, timeout=90):
+    def assertHeartbeatNode(self, hadd=None, timeout=60):
         print "Waiting for %s" % (hadd)
         self.heartbeat_waiting = hadd
         self.heartbeat_waitings = None
@@ -224,7 +224,7 @@ class JNTTServer(JNTTBase):
         self.assertTrue(self.heartbeat_received)
         time.sleep(0.5)
 
-    def assertHeartbeatNodes(self, hadds=[], timeout=90):
+    def assertHeartbeatNodes(self, hadds=[], timeout=60):
         if hadds is None:
             hadds = self.hadds
         print "Waiting for %s" % (hadds)
@@ -240,7 +240,7 @@ class JNTTServer(JNTTBase):
         self.assertTrue(self.heartbeat_received)
         time.sleep(0.5)
 
-    def waitHeartbeatNodes(self, hadds=[], timeout=90):
+    def waitHeartbeatNodes(self, hadds=[], timeout=60):
         if hadds is None:
             hadds = self.hadds
         print "Waiting for %s" % (hadds)
@@ -405,7 +405,7 @@ class JNTTServer(JNTTBase):
 class Common():
     """Common tests for servers and docker
     """
-    longdelay = 60
+    longdelay = 50
     shortdelay = 30
     mindelay = 5
     server_section = None
@@ -519,7 +519,7 @@ class Common():
 class JNTTServerCommon(Common):
     """Common tests for servers
     """
-    longdelay = 60
+    longdelay = 50
     shortdelay = 30
 
     def test_010_start_heartbeat_stop(self):
