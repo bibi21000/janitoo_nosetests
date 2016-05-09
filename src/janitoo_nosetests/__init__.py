@@ -312,7 +312,6 @@ class JNTTBase(unittest.TestCase):
         """
         dst = None
         try:
-            src = open(path_src, 'r')
             dst = self.mkTempFile()
             shutil.copyfile(src, dst)
         finally:
