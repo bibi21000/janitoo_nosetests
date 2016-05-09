@@ -298,23 +298,23 @@ class JNTTBase(unittest.TestCase):
                 pass
             else: raise
 
-    def mkTempFile(self):
-        """Create a temporary file
-        :returns: tuple file, finemane
+    def mkTempFile(self, prefix="tmp"):
+        """Create a temporary file and return ist name
         """
-        tmpfile,tmpname = tempfile.mkstemp(prefix='janitoo_tmp')
+        tmpfile,tmpname = tempfile.mkstemp(prefix='janitoo_%s'%prefix)
         self.tmp_files.append(tmpname)
-        return tmpfile,tmpname
+        os.close(tmpfile)
+        return tmpname
 
-    def cpTempFile(self, path_src):
+    def cpTempFile(self, src):
         """Copy the path_src fil to a tmp file.
         Return the path of the tmp file
         """
-        dst_name = None
+        dst = None
         try:
             src = open(path_src, 'r')
-            dst, dst_name = self.mkTempFile()
-            shutil.copyfileobj(src, dst)
+            dst = self.mkTempFile()
+            shutil.copyfile(src, dst)
         finally:
             try:
                 src.close()
@@ -324,7 +324,7 @@ class JNTTBase(unittest.TestCase):
                 dst.close()
             except:
                 pass
-        return dst_name
+        return dst
 
     def rmDir(self, path):
         """Remove a directory
