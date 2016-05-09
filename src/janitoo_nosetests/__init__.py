@@ -300,10 +300,11 @@ class JNTTBase(unittest.TestCase):
 
     def mkTempFile(self):
         """Create a temporary file
+        :returns: tuple file, finemane
         """
-        tmpfile = tempfile.mkstemp(prefix='janitoo_tmp')
-        self.tmp_files.append(tmpfile.name)
-        return tmpfile
+        tmpfile,tmpname = tempfile.mkstemp(prefix='janitoo_tmp')
+        self.tmp_files.append(tmpname)
+        return tmpfile,tmpname
 
     def cpTempFile(self, path_src):
         """Copy the path_src fil to a tmp file.
@@ -312,9 +313,8 @@ class JNTTBase(unittest.TestCase):
         dst_name = None
         try:
             src = open(path_src, 'r')
-            dst = self.mkTempFile()
+            dst, dst_name = self.mkTempFile()
             shutil.copyfileobj(src, dst)
-            dst_name = dst.name
         finally:
             try:
                 src.close()
