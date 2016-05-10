@@ -42,7 +42,29 @@ from janitoo_db.migrate import Config as alConfig, collect_configs, janitoo_conf
 class JNTTDBServer(JNTTServer):
     """Test the bd server
     """
-    pass
+    def setUp(self):
+        JNTTServer.setUp(self)
+        options = JNTOptions({'conf_file':self.getDataFile(self.server_conf)})
+        options.load()
+        self.dbengine = create_db_engine(options)
+        self.dbmaker = sessionmaker()
+        # Bind the sessionmaker to engine
+        self.dbmaker.configure(bind=self.dbengine)
+        self.dbsession = scoped_session(self.dbmaker)
+        Base.metadata.drop_all(bind=self.dbengine)
+
+    def tearDown(self):
+        if self.dbsession is not None:
+            self.dbsession.commit()
+            self.dbsession.close()
+            self.dbsession = None
+        if self.dbmaker is not None:
+            self.dbmaker.close_all()
+            self.dbmaker = None
+        if self.dbengine is not None:
+            self.dbengine.dispose()
+            self.dbengine = None
+        JNTTServer.tearDown(self)
 
 class Common():
     """Common tests for models
@@ -88,8 +110,8 @@ class JNTTDBDockerServer(JNTTDBServer):
 class JNTTDBDockerServerCommon(JNTTDockerServerCommon, Common):
     """Common tests for servers on docker
     """
-    longdelay = 90
-    shortdelay = 90
+    longdelay = 50
+    shortdelay = 30
 
     def test_040_server_start_no_error_in_log(self):
         JNTTDBServer.onlyDockerTest()
