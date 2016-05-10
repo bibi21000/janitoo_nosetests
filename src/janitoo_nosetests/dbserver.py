@@ -48,7 +48,6 @@ class Common():
     """Common tests for models
     """
     def test_051_dbserver_no_auto_migrate(self):
-        self.rmFile('/tmp/janitoo_test/home/test_dhcpd.db')
         options = JNTOptions({'conf_file':self.getDataFile(self.server_conf)})
         options.load()
         options.set_option('database','auto_migrate', False)
@@ -61,7 +60,6 @@ class Common():
             options.set_option('database','auto_migrate', True)
 
     def test_052_dbserver_auto_migrate(self):
-        self.rmFile('/tmp/janitoo_test/home/test_dhcpd.db')
         options = JNTOptions({'conf_file':self.getDataFile(self.server_conf)})
         options.load()
         options.set_option('database','auto_migrate', True)
@@ -69,30 +67,10 @@ class Common():
         self.assertHeartbeatNode()
         self.stop()
 
-class JNTTDBServerCommon(Common, JNTTServerCommon):
+class JNTTDBServerCommon(JNTTServerCommon, Common):
     """Common tests for models
     """
-    def test_051_dbserver_no_auto_migrate(self):
-        self.rmFile('/tmp/janitoo_test/home/test_dhcpd.db')
-        options = JNTOptions({'conf_file':self.getDataFile(self.server_conf)})
-        options.load()
-        options.set_option('database','auto_migrate', False)
-        try:
-            with self.assertRaises(JanitooException):
-                self.start()
-                self.assertHeartbeatNode()
-                self.stop()
-        finally:
-            options.set_option('database','auto_migrate', True)
-
-    def test_052_dbserver_auto_migrate(self):
-        self.rmFile('/tmp/janitoo_test/home/test_dhcpd.db')
-        options = JNTOptions({'conf_file':self.getDataFile(self.server_conf)})
-        options.load()
-        options.set_option('database','auto_migrate', True)
-        self.start()
-        self.assertHeartbeatNode()
-        self.stop()
+    pass
 
 class JNTTDBDockerServer(JNTTDBServer):
     """Tests for database servers on docker
@@ -107,7 +85,7 @@ class JNTTDBDockerServer(JNTTDBServer):
         options.set_option('database', 'sqlalchemy.url', self.dbconf[1]['dbconf'])
         self.server_conf = tmp_conf
 
-class JNTTDBDockerServerCommon(Common, JNTTDockerServerCommon):
+class JNTTDBDockerServerCommon(JNTTDockerServerCommon, Common):
     """Common tests for servers on docker
     """
     longdelay = 90
