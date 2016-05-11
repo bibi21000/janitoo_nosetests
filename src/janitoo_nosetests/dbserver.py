@@ -118,8 +118,8 @@ class JNTTDBDockerServerCommon(JNTTDockerServerCommon, Common):
         JNTTDBServer.onlyDockerTest()
         JNTTDockerServerCommon.test_040_server_start_no_error_in_log(self)
 
-def jntt_docker_dbserver(module_name, cls):
+def jntt_docker_dbserver(module_name, cls, prefix='Class'):
     """Launch cls tests for every supported database
     """
     for name, conf in DBCONFS:
-        setattr(sys.modules[module_name], 'JNTTDBDockerServer%s'%name, type(name, (JNTTDBDockerServerCommon, cls, JNTTDBDockerServer), {'dbconf': (name, conf)}))
+        setattr(sys.modules[module_name], 'JNTTDBDockerServer%s%s'%(prefix,name), type('%s%s'%(prefix,name), (JNTTDBDockerServerCommon, cls, JNTTDBDockerServer), {'dbconf': (name, conf)}))

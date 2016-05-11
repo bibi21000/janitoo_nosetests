@@ -149,11 +149,11 @@ class JNTTDockerFullModels(JNTTFullModels):
         JNTTFullModels.setUp(self)
         self.db_uri = self.dbconf[1]['dbconf']
 
-def jntt_docker_fullmodels(module_name, cls):
+def jntt_docker_fullmodels(module_name, cls, prefix='Class'):
     """Launch cls tests for every supported database
     """
     for name, conf in DBCONFS:
-        setattr(sys.modules[module_name], 'JNTTDockerFullModels%s'%name, type(name, (JNTTDockerFullModels,cls), {'dbconf': (name, conf)}))
+        setattr(sys.modules[module_name], 'JNTTDockerFullModels%s%s'%(prefix,name), type('%s%s'%(prefix,name), (JNTTDockerFullModels,cls), {'dbconf': (name, conf)}))
 
 class JNTTFullModelsCommon():
     """Common tests for models
