@@ -66,7 +66,14 @@ class JNTTModels(JNTTBase):
         # Bind the sessionmaker to engine
         self.dbmaker.configure(bind=engine)
         self.dbsession = scoped_session(self.dbmaker)
+        self.drop_all()
+        self.create_all()
+
+    def create_all(self):
         Base.metadata.create_all(bind=engine)
+
+    def drop_all(self):
+        Base.metadata.drop_all(bind=engine)
 
 class JNTTModelsCommon():
     """Common tests for models
@@ -91,8 +98,8 @@ class JNTTDockerModels(JNTTBase):
         # Bind the sessionmaker to engine
         self.dbmaker.configure(bind=self.dbengine)
         self.dbsession = scoped_session(self.dbmaker)
-        Base.metadata.create_all(bind=self.dbengine)
-        Base.metadata.drop_all(bind=self.dbengine)
+        self.drop_all()
+        self.create_all()
 
 def jntt_docker_models(module_name, cls):
     """Launch cls tests for every supported database
