@@ -55,8 +55,6 @@ assert(COMMAND_DESC[COMMAND_DISCOVERY] == 'COMMAND_DISCOVERY')
 class JNTTModels(JNTTBase):
     """Test the models
     """
-    models_conf = "tests/data/janitoo_db.conf"
-
     def setUp(self):
         JNTTBase.setUp(self)
         options = JNTOptions({'conf_file':self.getDataFile(self.models_conf)})
@@ -72,6 +70,8 @@ class JNTTModels(JNTTBase):
 class JNTTModelsCommon():
     """Common tests for models
     """
+    models_conf = "tests/data/janitoo_db.conf"
+
     def create_all(self):
         Base.metadata.create_all(bind=self.dbengine)
 
