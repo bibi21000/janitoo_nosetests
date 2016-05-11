@@ -86,12 +86,13 @@ class JNTTDockerModels(JNTTBase):
     def setUp(self):
         JNTTBase.onlyDockerTest()
         JNTTBase.setUp(self)
-        engine = create_db_engine(self.dbconf[1]['dbconf'])
+        self.dbengine = create_db_engine(self.dbconf[1]['dbconf'])
         self.dbmaker = sessionmaker()
         # Bind the sessionmaker to engine
-        self.dbmaker.configure(bind=engine)
+        self.dbmaker.configure(bind=self.dbengine)
         self.dbsession = scoped_session(self.dbmaker)
-        Base.metadata.create_all(bind=engine)
+        Base.metadata.create_all(bind=self.dbengine)
+        Base.metadata.drop_all(bind=self.dbengine)
 
 def jntt_docker_models(module_name, cls):
     """Launch cls tests for every supported database
