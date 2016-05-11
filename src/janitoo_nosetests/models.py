@@ -140,7 +140,7 @@ def jntt_docker_models(module_name, cls, prefix='Class'):
     """Launch cls tests for every supported database
     """
     for name, conf in DBCONFS:
-        setattr(sys.modules[module_name], 'Models_%s_%s'%(prefix,name), type('Models_%s_%s'%(prefix,name), (JNTTDockerModels,cls), {'dbconf': (name, conf)}))
+        setattr(sys.modules[module_name], 'TestModels_%s_%s'%(prefix,name), type('TestModels_%s_%s'%(prefix,name), (JNTTDockerModels,cls), {'dbconf': (name, conf)}))
 
 class JNTTFullModels(JNTTBase):
     """Test the models
@@ -163,7 +163,7 @@ def jntt_docker_fullmodels(module_name, cls, prefix='Class'):
     """Launch cls tests for every supported database
     """
     for name, conf in DBCONFS:
-        setattr(sys.modules[module_name], 'FullModels_%s_%s'%(prefix,name), type('FullModels_%s_%s'%(prefix,name), (JNTTDockerFullModels,cls), {'dbconf': (name, conf)}))
+        setattr(sys.modules[module_name], 'TestFullModels_%s_%s'%(prefix,name), type('TestFullModels_%s_%s'%(prefix,name), (JNTTDockerFullModels,cls), {'dbconf': (name, conf)}))
 
 class JNTTFullModelsCommon():
     """Common tests for models
