@@ -126,11 +126,11 @@ class JNTTDockerModels(JNTTBase):
         self.drop_all()
         self.create_all()
 
-def jntt_docker_models(module_name, cls):
+def jntt_docker_models(module_name, cls, prefix='Class'):
     """Launch cls tests for every supported database
     """
     for name, conf in DBCONFS:
-        setattr(sys.modules[module_name], 'JNTTDockerModels%s'%name, type(name, (JNTTDockerModels,cls), {'dbconf': (name, conf)}))
+        setattr(sys.modules[module_name], 'JNTTDockerModels%s%s'%(prefix,name), type('%s%s'%(prefix,name), (JNTTDockerModels,cls), {'dbconf': (name, conf)}))
 
 class JNTTFullModels(JNTTBase):
     """Test the models
