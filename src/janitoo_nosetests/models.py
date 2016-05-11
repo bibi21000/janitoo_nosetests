@@ -55,6 +55,10 @@ assert(COMMAND_DESC[COMMAND_DISCOVERY] == 'COMMAND_DISCOVERY')
 class JNTTModels(JNTTBase):
     """Test the models
     """
+    def tearDown(self):
+        self.drop_all()
+        JNTTBase.tearDown(self)
+
     def setUp(self):
         JNTTBase.setUp(self)
         options = JNTOptions({'conf_file':self.getDataFile(self.models_conf)})
@@ -64,8 +68,6 @@ class JNTTModels(JNTTBase):
         # Bind the sessionmaker to engine
         self.dbmaker.configure(bind=self.dbengine)
         self.dbsession = scoped_session(self.dbmaker)
-        self.drop_all()
-        self.create_all()
 
 class JNTTModelsCommon():
     """Common tests for models
@@ -79,17 +81,20 @@ class JNTTModelsCommon():
         Base.metadata.drop_all(bind=self.dbengine)
 
     def test_001_versiondb(self):
+        self.drop_all()
         config = alConfig(conf_file=self.models_conf)
         config.initdb()
         versions = config.versiondb()
         self.assertTrue(len(versions)>0)
 
     def test_002_heads(self):
+        self.drop_all()
         config = alConfig(conf_file=self.models_conf)
         heads = config.heads()
         self.assertTrue(len(heads)>0)
 
     def test_003_checkdb(self):
+        self.drop_all()
         config = alConfig(conf_file=self.models_conf)
         config.initdb()
         self.assertTrue(config.checkdb())
