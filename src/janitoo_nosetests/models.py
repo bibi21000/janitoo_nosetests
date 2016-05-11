@@ -69,16 +69,16 @@ class JNTTModels(JNTTBase):
         self.dbmaker.configure(bind=self.dbengine)
         self.dbsession = scoped_session(self.dbmaker)
 
-class JNTTModelsCommon():
-    """Common tests for models
-    """
-    models_conf = "tests/data/janitoo_db.conf"
-
     def create_all(self):
         Base.metadata.create_all(bind=self.dbengine)
 
     def drop_all(self):
         Base.metadata.drop_all(bind=self.dbengine)
+
+class JNTTModelsCommon():
+    """Common tests for models
+    """
+    models_conf = "tests/data/janitoo_db.conf"
 
     def test_001_versiondb(self):
         self.drop_all()
@@ -125,6 +125,12 @@ class JNTTDockerModels(JNTTBase):
         self.dbsession = scoped_session(self.dbmaker)
         self.drop_all()
         self.create_all()
+
+    def create_all(self):
+        Base.metadata.create_all(bind=self.dbengine)
+
+    def drop_all(self):
+        Base.metadata.drop_all(bind=self.dbengine)
 
 def jntt_docker_models(module_name, cls, prefix='Class'):
     """Launch cls tests for every supported database
