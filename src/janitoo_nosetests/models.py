@@ -126,6 +126,10 @@ class JNTTDockerModels(JNTTBase):
         self.dbsession = scoped_session(self.dbmaker)
         self.drop_all()
 
+    def tearDown(self):
+        self.drop_all()
+        JNTTBase.tearDown(self)
+
     def create_all(self):
         Base.metadata.create_all(bind=self.dbengine)
 
