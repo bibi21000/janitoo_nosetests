@@ -61,36 +61,36 @@ class JNTTModels(JNTTBase):
         JNTTBase.setUp(self)
         options = JNTOptions({'conf_file':self.getDataFile(self.models_conf)})
         options.load()
-        engine = create_db_engine(options)
+        self.dbengine = create_db_engine(options)
         self.dbmaker = sessionmaker()
         # Bind the sessionmaker to engine
-        self.dbmaker.configure(bind=engine)
+        self.dbmaker.configure(bind=self.dbengine)
         self.dbsession = scoped_session(self.dbmaker)
         self.drop_all()
         self.create_all()
 
-    def create_all(self):
-        Base.metadata.create_all(bind=engine)
-
-    def drop_all(self):
-        Base.metadata.drop_all(bind=engine)
-
 class JNTTModelsCommon():
     """Common tests for models
     """
+    def create_all(self):
+        Base.metadata.create_all(bind=self.dbengine)
+
+    def drop_all(self):
+        Base.metadata.drop_all(bind=self.dbengine)
+
     def test_001_versiondb(self):
-        config = JNTConfig(conf_file=self.models_conf)
+        config = alConfig(conf_file=self.models_conf)
         config.initdb()
         versions = config.versiondb()
         self.assertTrue(len(versions)>0)
 
     def test_002_heads(self):
-        config = JNTConfig(conf_file=self.models_conf)
+        config = alConfig(conf_file=self.models_conf)
         heads = config.heads()
         self.assertTrue(len(heads)>0)
 
     def test_003_checkdb(self):
-        config = JNTConfig(conf_file=self.models_conf)
+        config = alConfig(conf_file=self.models_conf)
         config.initdb()
         self.assertTrue(config.checkdb())
         config.downgrade()
