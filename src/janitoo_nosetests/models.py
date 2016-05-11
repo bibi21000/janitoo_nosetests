@@ -78,7 +78,23 @@ class JNTTModels(JNTTBase):
 class JNTTModelsCommon():
     """Common tests for models
     """
-    pass
+    def test_001_versiondb(self):
+        config = JNTConfig(conf_file=self.models_conf)
+        config.initdb()
+        versions = config.versiondb()
+        self.assertTrue(len(versions)>0)
+
+    def test_002_heads(self):
+        config = JNTConfig(conf_file=self.models_conf)
+        heads = config.heads()
+        self.assertTrue(len(heads)>0)
+
+    def test_003_checkdb(self):
+        config = JNTConfig(conf_file=self.models_conf)
+        config.initdb()
+        self.assertTrue(config.checkdb())
+        config.downgrade()
+        self.assertFalse(config.checkdb())
 
 DBCONFS = [
         ('Sqlite', {'dbconf':'sqlite:////tmp/janitoo_tests.sqlite'}),
@@ -93,6 +109,10 @@ class JNTTDockerModels(JNTTBase):
     def setUp(self):
         JNTTBase.onlyDockerTest()
         JNTTBase.setUp(self)
+        tmp_conf = self.cpTempFile(self.models_conf)
+        options = JNTOptions(options={'conf_file':tmp_conf})
+        options.set_option('database', 'sqlalchemy.url', self.dbconf[1]['dbconf'])
+        self.models_conf = tmp_conf
         self.dbengine = create_db_engine(self.dbconf[1]['dbconf'])
         self.dbmaker = sessionmaker()
         # Bind the sessionmaker to engine
