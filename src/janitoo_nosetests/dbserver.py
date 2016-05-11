@@ -114,6 +114,7 @@ class JNTTDBDockerServerCommon(JNTTDockerServerCommon, Common):
     shortdelay = 30
 
     def test_040_server_start_no_error_in_log(self):
+        JNTTDBServer.wipTest()
         JNTTDBServer.onlyDockerTest()
         JNTTDockerServerCommon.test_040_server_start_no_error_in_log(self)
 
