@@ -56,7 +56,10 @@ class JNTTModels(JNTTBase):
     """Test the models
     """
     def tearDown(self):
-        self.drop_all()
+        #~ try:
+            #~ self.drop_all()
+        #~ except:
+            #~ pass
         JNTTBase.tearDown(self)
 
     def setUp(self):
@@ -127,7 +130,10 @@ class JNTTDockerModels(JNTTBase):
         self.drop_all()
 
     def tearDown(self):
-        self.drop_all()
+        #~ try:
+            #~ self.drop_all()
+        #~ except:
+            #~ pass
         JNTTBase.tearDown(self)
 
     def create_all(self):
