@@ -164,6 +164,11 @@ class JNTTThreadRunCommon(JNTTThreadCommon):
         try:
             self.thread.start()
             time.sleep(10)
+            if hasattr(self,'bus'):
+                self.thread.bus.check_heartbeat()
+            self.wait_for_nodeman()
+            if hasattr(self,'bus'):
+                self.thread.bus.check_heartbeat()
         finally:
             self.thread.stop()
 
