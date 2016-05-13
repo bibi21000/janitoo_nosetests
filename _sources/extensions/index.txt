@@ -1,0 +1,5 @@
+janitoo_nosetests package
+=========================
+
+Show janitoo's extensions.
+
