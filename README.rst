@@ -1,11 +1,10 @@
-===============
-The README file
-===============
+=================
+Janitoo_nosetests
+=================
 
-This file will be published on your github account
+Nosetests frameworks for Janitoo
 
-
-A section
-=========
-A text in this section.
+Documentation
+=============
+You can browse online documentation here : https://bibi21000.github.io/janitoo_nosetests/.
 
