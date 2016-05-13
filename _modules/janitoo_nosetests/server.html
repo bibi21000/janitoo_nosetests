@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>janitoo_nosetests.server &mdash; janitoo_nosetests 0.0.6 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinxcontrib-images/LightBox2/lightbox2/css/lightbox.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/united/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sphinxcontrib-images/LightBox2/lightbox2/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/sphinxcontrib-images/LightBox2/lightbox2/js/lightbox.min.js"></script>
+    <script type="text/javascript" src="../../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="janitoo_nosetests 0.0.6 documentation" href="../../index.html" />
+    <link rel="up" title="janitoo_nosetests" href="../janitoo_nosetests.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          janitoo_nosetests</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.6</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../tools/index.html">Tools</a></li>
+                <li><a href="../../api/index.html">Reference</a></li>
+                <li><a href="../../extensions/index.html">Janitoo extensions</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="simple">
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <h1>Source code for janitoo_nosetests.server</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+
+<span class="s">This file is part of **janitoo** project https://github.com/bibi21000/janitoo.</span>
+
+<span class="s">License : GPL(v3)</span>
+
+<span class="s">**janitoo** is free software: you can redistribute it and/or modify</span>
+<span class="s">it under the terms of the GNU General Public License as published by</span>
+<span class="s">the Free Software Foundation, either version 3 of the License, or</span>
+<span class="s">(at your option) any later version.</span>
+
+<span class="s">**janitoo** is distributed in the hope that it will be useful,</span>
+<span class="s">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="s">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
+<span class="s">GNU General Public License for more details.</span>
+<span class="s">You should have received a copy of the GNU General Public License</span>
+<span class="s">along with janitoo. If not, see http://www.gnu.org/licenses.</span>
+<span class="s">&quot;&quot;&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s">&quot;Copyright © 2013-2014-2015-2016 Sébastien GALLET aka bibi21000&quot;</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Sébastien GALLET aka bibi21000&#39;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s">&#39;bibi21000@gmail.com&#39;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">errno</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">json</span> <span class="kn">as</span> <span class="nn">mjson</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">mock</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">from</span> <span class="nn">janitoo_nosetests</span> <span class="kn">import</span> <span class="n">JNTTBase</span>
+
+<span class="kn">from</span> <span class="nn">janitoo.mqtt</span> <span class="kn">import</span> <span class="n">MQTTClient</span>
+<span class="kn">from</span> <span class="nn">janitoo.dhcp</span> <span class="kn">import</span> <span class="n">JNTNetwork</span><span class="p">,</span> <span class="n">HeartbeatMessage</span>
+<span class="kn">from</span> <span class="nn">janitoo.utils</span> <span class="kn">import</span> <span class="n">json_dumps</span><span class="p">,</span> <span class="n">json_loads</span>
+<span class="kn">from</span> <span class="nn">janitoo.utils</span> <span class="kn">import</span> <span class="n">HADD_SEP</span><span class="p">,</span> <span class="n">HADD</span><span class="p">,</span> <span class="n">NETWORK_REQUESTS</span>
+<span class="kn">from</span> <span class="nn">janitoo.utils</span> <span class="kn">import</span> <span class="n">TOPIC_HEARTBEAT</span>
+<span class="kn">from</span> <span class="nn">janitoo.utils</span> <span class="kn">import</span> <span class="n">TOPIC_NODES</span><span class="p">,</span> <span class="n">TOPIC_NODES_REPLY</span><span class="p">,</span> <span class="n">TOPIC_NODES_REQUEST</span>
+<span class="kn">from</span> <span class="nn">janitoo.utils</span> <span class="kn">import</span> <span class="n">TOPIC_BROADCAST_REPLY</span><span class="p">,</span> <span class="n">TOPIC_BROADCAST_REQUEST</span>
+<span class="kn">from</span> <span class="nn">janitoo.utils</span> <span class="kn">import</span> <span class="n">TOPIC_VALUES_USER</span><span class="p">,</span> <span class="n">TOPIC_VALUES_CONFIG</span><span class="p">,</span> <span class="n">TOPIC_VALUES_SYSTEM</span><span class="p">,</span> <span class="n">TOPIC_VALUES_BASIC</span>
+<span class="kn">from</span> <span class="nn">janitoo.runner</span> <span class="kn">import</span> <span class="n">jnt_parse_args</span>
+<span class="kn">from</span> <span class="nn">janitoo.options</span> <span class="kn">import</span> <span class="n">JNTOptions</span>
+<span class="kn">from</span> <span class="nn">janitoo.thread</span> <span class="kn">import</span> <span class="n">JNTBusThread</span>
+
+<span class="c">##############################################################</span>
+<span class="c">#Check that we are in sync with the official command classes</span>
+<span class="c">#Must be implemented for non-regression</span>
+<span class="kn">from</span> <span class="nn">janitoo.classes</span> <span class="kn">import</span> <span class="n">COMMAND_DESC</span>
+
+<span class="n">COMMAND_DISCOVERY</span> <span class="o">=</span> <span class="mh">0x5000</span>
+
+<span class="k">assert</span><span class="p">(</span><span class="n">COMMAND_DESC</span><span class="p">[</span><span class="n">COMMAND_DISCOVERY</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;COMMAND_DISCOVERY&#39;</span><span class="p">)</span>
+<span class="c">##############################################################</span>
+
+<div class="viewcode-block" id="JNTTServer"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer">[docs]</a><span class="k">class</span> <span class="nc">JNTTServer</span><span class="p">(</span><span class="n">JNTTBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Server base test</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">server_class</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">server_conf</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="n">server_section</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">hadd_ctrl</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">hadds</span> <span class="o">=</span> <span class="bp">None</span>
+
+<div class="viewcode-block" id="JNTTServer.setUp"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">JNTTBase</span><span class="o">.</span><span class="n">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message_received</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hearbeat_mqttc</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_message</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_waiting</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_waitings</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_received</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">running_server</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hadd_ctrl</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">hadds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hadds</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hadd_ctrl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hadds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</div>
+<div class="viewcode-block" id="JNTTServer.tearDown"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.tearDown">[docs]</a>    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stopClient</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mqtthearbeat</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stopClient</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stopServer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message_received</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hearbeat_mqttc</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_message</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_waiting</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_waitings</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_received</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">running_server</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">JNTTBase</span><span class="o">.</span><span class="n">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTServer.startClient"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.startClient">[docs]</a>    <span class="k">def</span> <span class="nf">startClient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">conf</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">conf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">data</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span> <span class="o">=</span> <span class="n">MQTTClient</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">conf</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hearbeat_mqttc</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hearbeat_mqttc</span> <span class="o">=</span> <span class="n">MQTTClient</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="n">conf</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hearbeat_mqttc</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hearbeat_mqttc</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hearbeat_mqttc</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">TOPIC_HEARTBEAT</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mqtt_on_heartbeat_message</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTServer.stopClient"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.stopClient">[docs]</a>    <span class="k">def</span> <span class="nf">stopClient</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hearbeat_mqttc</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hearbeat_mqttc</span><span class="o">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">TOPIC_HEARTBEAT</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hearbeat_mqttc</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hearbeat_mqttc</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hearbeat_mqttc</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">hearbeat_mqttc</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hearbeat_mqttc</span> <span class="o">=</span> <span class="bp">None</span>
+</div>
+<div class="viewcode-block" id="JNTTServer.startServer"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.startServer">[docs]</a>    <span class="k">def</span> <span class="nf">startServer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s">&#39;sys.argv&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">server_class</span><span class="p">,</span> <span class="s">&#39;start&#39;</span><span class="p">,</span> <span class="s">&#39;--conf_file=</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">getDataFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">server_conf</span><span class="p">)]):</span>
+                <span class="n">options</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">(</span><span class="n">jnt_parse_args</span><span class="p">())</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server_class</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">running_server</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">run</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">running_server</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTServer.stopServer"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.stopServer">[docs]</a>    <span class="k">def</span> <span class="nf">stopServer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">running_server</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">running_server</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">running_server</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="bp">None</span>
+</div>
+<div class="viewcode-block" id="JNTTServer.start"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">startServer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">startClient</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="JNTTServer.stop"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stopClient</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stopServer</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="JNTTServer.mqtt_on_heartbeat_message"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.mqtt_on_heartbeat_message">[docs]</a>    <span class="k">def</span> <span class="nf">mqtt_on_heartbeat_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;On generic message</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_message</span> <span class="o">=</span> <span class="n">message</span>
+        <span class="n">hb</span> <span class="o">=</span> <span class="n">HeartbeatMessage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_message</span><span class="p">)</span>
+        <span class="n">hbadd_ctrl</span><span class="p">,</span> <span class="n">hbadd_node</span><span class="p">,</span> <span class="n">state</span> <span class="o">=</span> <span class="n">hb</span><span class="o">.</span><span class="n">get_heartbeat</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">hbadd_ctrl</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">hbadd_node</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_waiting</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_waitings</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_received</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="k">elif</span> <span class="n">HADD</span><span class="o">%</span><span class="p">(</span><span class="n">hbadd_ctrl</span><span class="p">,</span> <span class="n">hbadd_node</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_waitings</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_waitings</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">HADD</span><span class="o">%</span><span class="p">(</span><span class="n">hbadd_ctrl</span><span class="p">,</span> <span class="n">hbadd_node</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_waitings</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_received</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_waiting</span> <span class="o">==</span> <span class="n">HADD</span><span class="o">%</span><span class="p">(</span><span class="n">hbadd_ctrl</span><span class="p">,</span> <span class="n">hbadd_node</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_received</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">print</span> <span class="s">&quot;HADD : </span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s"> = </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">hbadd_ctrl</span><span class="p">,</span> <span class="n">hbadd_node</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTServer.assertInLogfile"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.assertInLogfile">[docs]</a>    <span class="k">def</span> <span class="nf">assertInLogfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expr</span><span class="o">=</span><span class="s">&#39;^ERROR &#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Assert an expression is in logifle</span>
+<span class="sd">        Must be called at the end of process, when the server has closed the logfile.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">server_conf</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="n">JNTOptions</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;conf_file&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">getDataFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">server_conf</span><span class="p">)})</span>
+        <span class="n">log_file_from_config</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">get_option</span><span class="p">(</span><span class="s">&#39;handler_file&#39;</span><span class="p">,</span><span class="s">&#39;args&#39;</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">log_file_from_config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="c">#I know, it&#39;s bad</span>
+        <span class="n">log_args</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">log_file_from_config</span><span class="p">)</span>
+        <span class="n">log_file_from_config</span> <span class="o">=</span> <span class="n">log_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFile</span><span class="p">(</span><span class="n">log_file_from_config</span><span class="p">)</span>
+        <span class="n">found</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">log_file_from_config</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">hand</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">hand</span><span class="p">:</span>
+                <span class="k">print</span> <span class="n">line</span>
+                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+                    <span class="n">found</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">found</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTServer.assertNotInLogfile"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.assertNotInLogfile">[docs]</a>    <span class="k">def</span> <span class="nf">assertNotInLogfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expr</span><span class="o">=</span><span class="s">&#39;^ERROR &#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Assert an expression is not in logifle.</span>
+<span class="sd">        Must be called at the end of process, when the server has closed the logfile.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">server_conf</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="n">JNTOptions</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;conf_file&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">getDataFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">server_conf</span><span class="p">)})</span>
+        <span class="n">log_file_from_config</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">get_option</span><span class="p">(</span><span class="s">&#39;handler_file&#39;</span><span class="p">,</span><span class="s">&#39;args&#39;</span><span class="p">,</span><span class="bp">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">log_file_from_config</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="c">#I know, it&#39;s bad</span>
+        <span class="n">log_args</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">log_file_from_config</span><span class="p">)</span>
+        <span class="n">log_file_from_config</span> <span class="o">=</span> <span class="n">log_args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFile</span><span class="p">(</span><span class="n">log_file_from_config</span><span class="p">)</span>
+        <span class="n">found</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">log_file_from_config</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">hand</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">hand</span><span class="p">:</span>
+                <span class="k">print</span> <span class="n">line</span>
+                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">expr</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+                    <span class="n">found</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">found</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTServer.assertHeartbeatNode"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.assertHeartbeatNode">[docs]</a>    <span class="k">def</span> <span class="nf">assertHeartbeatNode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hadd</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;Waiting for </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hadd</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_waiting</span> <span class="o">=</span> <span class="n">hadd</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_waitings</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_message</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_received</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span><span class="o">&lt;</span> <span class="n">timeout</span><span class="o">*</span><span class="mi">10000</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_received</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_received</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTServer.assertHeartbeatNodes"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.assertHeartbeatNodes">[docs]</a>    <span class="k">def</span> <span class="nf">assertHeartbeatNodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hadds</span><span class="o">=</span><span class="p">[],</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">hadds</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">hadds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hadds</span>
+        <span class="k">print</span> <span class="s">&quot;Waiting for </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hadds</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_waiting</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_waitings</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">hadds</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_message</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_received</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span><span class="o">&lt;</span> <span class="n">timeout</span><span class="o">*</span><span class="mi">10000</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_received</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">print</span> <span class="s">&quot;Unreceived heartbeats </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_waitings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_received</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTServer.waitHeartbeatNodes"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.waitHeartbeatNodes">[docs]</a>    <span class="k">def</span> <span class="nf">waitHeartbeatNodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hadds</span><span class="o">=</span><span class="p">[],</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">hadds</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">hadds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hadds</span>
+        <span class="k">print</span> <span class="s">&quot;Waiting for </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hadds</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_waiting</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_waitings</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">hadds</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_message</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_received</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span><span class="o">&lt;</span> <span class="n">timeout</span><span class="o">*</span><span class="mi">10000</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_received</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">print</span> <span class="s">&quot;Unreceived heartbeats </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_waitings</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTServer.assertNodeRequest"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.assertNodeRequest">[docs]</a>    <span class="k">def</span> <span class="nf">assertNodeRequest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd_class</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">genre</span><span class="o">=</span><span class="mh">0x04</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="s">&#39;request_info_nodes&#39;</span><span class="p">,</span> <span class="n">node_hadd</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">client_hadd</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">is_writeonly</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">is_readonly</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message_received</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">print</span> <span class="s">&quot;Waiting for </span><span class="si">%s</span><span class="s"> : </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">node_hadd</span><span class="p">,</span><span class="n">uuid</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">mqtt_on_message</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;On generic message</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">message_received</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">TOPIC_NODES_REPLY</span><span class="o">%</span><span class="n">client_hadd</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">mqtt_on_message</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">msg</span><span class="o">=</span><span class="p">{</span> <span class="s">&#39;cmd_class&#39;</span><span class="p">:</span> <span class="n">cmd_class</span><span class="p">,</span> <span class="s">&#39;genre&#39;</span><span class="p">:</span><span class="n">genre</span><span class="p">,</span> <span class="s">&#39;uuid&#39;</span><span class="p">:</span><span class="n">uuid</span><span class="p">,</span> <span class="s">&#39;reply_hadd&#39;</span><span class="p">:</span><span class="n">client_hadd</span><span class="p">,</span> <span class="s">&#39;data&#39;</span><span class="p">:</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;hadd&#39;</span><span class="p">:</span><span class="n">node_hadd</span><span class="p">,</span> <span class="s">&#39;is_writeonly&#39;</span><span class="p">:</span><span class="n">is_writeonly</span><span class="p">,</span> <span class="s">&#39;is_readonly&#39;</span><span class="p">:</span><span class="n">is_readonly</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="s">&#39;/nodes/</span><span class="si">%s</span><span class="s">/request&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">node_hadd</span><span class="p">),</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span><span class="o">&lt;</span> <span class="n">timeout</span><span class="o">*</span><span class="mi">10000</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">message_received</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message_received</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">TOPIC_NODES_REPLY</span><span class="o">%</span><span class="n">client_hadd</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTServer.assertBroadcastRequest"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.assertBroadcastRequest">[docs]</a>    <span class="k">def</span> <span class="nf">assertBroadcastRequest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd_class</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">genre</span><span class="o">=</span><span class="mh">0x04</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="s">&#39;request_info_nodes&#39;</span><span class="p">,</span> <span class="n">node_hadd</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">client_hadd</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">is_writeonly</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">is_readonly</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message_received</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">def</span> <span class="nf">mqtt_on_message</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;On generic message</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">message_received</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">TOPIC_BROADCAST_REPLY</span><span class="o">%</span><span class="n">client_hadd</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">mqtt_on_message</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">msg</span><span class="o">=</span><span class="p">{</span> <span class="s">&#39;cmd_class&#39;</span><span class="p">:</span> <span class="n">cmd_class</span><span class="p">,</span> <span class="s">&#39;genre&#39;</span><span class="p">:</span><span class="n">genre</span><span class="p">,</span> <span class="s">&#39;uuid&#39;</span><span class="p">:</span><span class="n">uuid</span><span class="p">,</span> <span class="s">&#39;reply_hadd&#39;</span><span class="p">:</span><span class="n">client_hadd</span><span class="p">,</span> <span class="s">&#39;data&#39;</span><span class="p">:</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;is_writeonly&#39;</span><span class="p">:</span><span class="n">is_writeonly</span><span class="p">,</span> <span class="s">&#39;is_readonly&#39;</span><span class="p">:</span><span class="n">is_readonly</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">TOPIC_BROADCAST_REQUEST</span><span class="p">,</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span><span class="o">&lt;</span> <span class="n">timeout</span><span class="o">*</span><span class="mi">10000</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">message_received</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message_received</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">TOPIC_BROADCAST_REPLY</span><span class="o">%</span><span class="n">client_hadd</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTServer.assertUpdateValue"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.assertUpdateValue">[docs]</a>    <span class="k">def</span> <span class="nf">assertUpdateValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&#39;user&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">cmd_class</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">genre</span><span class="o">=</span><span class="mh">0x04</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="s">&#39;request_info_nodes&#39;</span><span class="p">,</span> <span class="n">node_hadd</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">client_hadd</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">is_writeonly</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">is_readonly</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message_received</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">print</span> <span class="s">&quot;Waiting for </span><span class="si">%s</span><span class="s"> : </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">node_hadd</span><span class="p">,</span><span class="n">uuid</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">mqtt_on_message</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;On generic message</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">json_loads</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">print</span> <span class="s">&quot;Received message </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="n">msg</span>
+            <span class="k">if</span> <span class="n">msg</span><span class="p">[</span><span class="s">&#39;uuid&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">uuid</span> <span class="ow">and</span> <span class="n">msg</span><span class="p">[</span><span class="s">&#39;hadd&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">node_hadd</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">message_received</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="s">&#39;/values/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">/#&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">node_hadd</span><span class="p">),</span> <span class="n">callback</span><span class="o">=</span><span class="n">mqtt_on_message</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;Subscribe to /values/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">/#&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">node_hadd</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">msg</span><span class="o">=</span><span class="p">{</span> <span class="s">&#39;cmd_class&#39;</span><span class="p">:</span> <span class="n">cmd_class</span><span class="p">,</span> <span class="s">&#39;genre&#39;</span><span class="p">:</span><span class="n">genre</span><span class="p">,</span> <span class="s">&#39;uuid&#39;</span><span class="p">:</span><span class="n">uuid</span><span class="p">,</span> <span class="s">&#39;reply_hadd&#39;</span><span class="p">:</span><span class="n">client_hadd</span><span class="p">,</span> <span class="s">&#39;data&#39;</span><span class="p">:</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;hadd&#39;</span><span class="p">:</span><span class="n">node_hadd</span><span class="p">,</span> <span class="s">&#39;is_writeonly&#39;</span><span class="p">:</span><span class="n">is_writeonly</span><span class="p">,</span> <span class="s">&#39;is_readonly&#39;</span><span class="p">:</span><span class="n">is_readonly</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="s">&#39;/nodes/</span><span class="si">%s</span><span class="s">/request&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">node_hadd</span><span class="p">),</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span><span class="o">&lt;</span> <span class="n">timeout</span><span class="o">*</span><span class="mi">10000</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">message_received</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message_received</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">payload</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">json_loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="s">&#39;/values/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">/#&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">node_hadd</span><span class="p">))</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTServer.assertNotUpdateValue"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.assertNotUpdateValue">[docs]</a>    <span class="k">def</span> <span class="nf">assertNotUpdateValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&#39;user&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">cmd_class</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">genre</span><span class="o">=</span><span class="mh">0x04</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="s">&#39;request_info_nodes&#39;</span><span class="p">,</span> <span class="n">node_hadd</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">client_hadd</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">is_writeonly</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">is_readonly</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message_received</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">print</span> <span class="s">&quot;Waiting for </span><span class="si">%s</span><span class="s"> : </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">node_hadd</span><span class="p">,</span><span class="n">uuid</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">mqtt_on_message</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;On generic message</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">json_loads</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">print</span> <span class="s">&quot;Received message </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="n">msg</span>
+            <span class="k">if</span> <span class="n">msg</span><span class="p">[</span><span class="s">&#39;uuid&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">uuid</span> <span class="ow">and</span> <span class="n">msg</span><span class="p">[</span><span class="s">&#39;hadd&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">node_hadd</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">message_received</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="s">&#39;/values/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">/#&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">node_hadd</span><span class="p">),</span> <span class="n">callback</span><span class="o">=</span><span class="n">mqtt_on_message</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;Subscribe to /values/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">/#&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">node_hadd</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">msg</span><span class="o">=</span><span class="p">{</span> <span class="s">&#39;cmd_class&#39;</span><span class="p">:</span> <span class="n">cmd_class</span><span class="p">,</span> <span class="s">&#39;genre&#39;</span><span class="p">:</span><span class="n">genre</span><span class="p">,</span> <span class="s">&#39;uuid&#39;</span><span class="p">:</span><span class="n">uuid</span><span class="p">,</span> <span class="s">&#39;reply_hadd&#39;</span><span class="p">:</span><span class="n">client_hadd</span><span class="p">,</span> <span class="s">&#39;data&#39;</span><span class="p">:</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;hadd&#39;</span><span class="p">:</span><span class="n">node_hadd</span><span class="p">,</span> <span class="s">&#39;is_writeonly&#39;</span><span class="p">:</span><span class="n">is_writeonly</span><span class="p">,</span> <span class="s">&#39;is_readonly&#39;</span><span class="p">:</span><span class="n">is_readonly</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="s">&#39;/nodes/</span><span class="si">%s</span><span class="s">/request&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">node_hadd</span><span class="p">),</span> <span class="n">json_dumps</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span><span class="o">&lt;</span> <span class="n">timeout</span><span class="o">*</span><span class="mi">10000</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">message_received</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message_received</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="s">&#39;/values/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">/#&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">node_hadd</span><span class="p">))</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTServer.assertWaitValue"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.assertWaitValue">[docs]</a>    <span class="k">def</span> <span class="nf">assertWaitValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&#39;user&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">cmd_class</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">genre</span><span class="o">=</span><span class="mh">0x04</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="s">&#39;request_info_nodes&#39;</span><span class="p">,</span> <span class="n">node_hadd</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">client_hadd</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">is_writeonly</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">is_readonly</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message_received</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">print</span> <span class="s">&quot;Waiting for </span><span class="si">%s</span><span class="s"> : </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">node_hadd</span><span class="p">,</span><span class="n">uuid</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">mqtt_on_message</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;On generic message</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">json_loads</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">print</span> <span class="s">&quot;Received message </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="n">msg</span>
+            <span class="k">if</span> <span class="n">msg</span><span class="p">[</span><span class="s">&#39;uuid&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">uuid</span> <span class="ow">and</span> <span class="n">msg</span><span class="p">[</span><span class="s">&#39;hadd&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">node_hadd</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">message_received</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="s">&#39;/values/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">/#&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">node_hadd</span><span class="p">),</span> <span class="n">callback</span><span class="o">=</span><span class="n">mqtt_on_message</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;Subscribe to /values/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">/#&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">node_hadd</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span><span class="o">&lt;</span> <span class="n">timeout</span><span class="o">*</span><span class="mi">10000</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">message_received</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message_received</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">payload</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">json_loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="s">&#39;/values/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">/#&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">node_hadd</span><span class="p">))</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTServer.assertNotWaitValue"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.assertNotWaitValue">[docs]</a>    <span class="k">def</span> <span class="nf">assertNotWaitValue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&#39;user&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">cmd_class</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">genre</span><span class="o">=</span><span class="mh">0x04</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="s">&#39;request_info_nodes&#39;</span><span class="p">,</span> <span class="n">node_hadd</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">client_hadd</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">is_writeonly</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">is_readonly</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message_received</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">print</span> <span class="s">&quot;Waiting for </span><span class="si">%s</span><span class="s"> : </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">node_hadd</span><span class="p">,</span><span class="n">uuid</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">mqtt_on_message</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;On generic message</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">json_loads</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">payload</span><span class="p">)</span>
+            <span class="k">print</span> <span class="s">&quot;Received message </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="n">msg</span>
+            <span class="k">if</span> <span class="n">msg</span><span class="p">[</span><span class="s">&#39;uuid&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">uuid</span> <span class="ow">and</span> <span class="n">msg</span><span class="p">[</span><span class="s">&#39;hadd&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">node_hadd</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">message_received</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="s">&#39;/values/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">/#&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">node_hadd</span><span class="p">),</span> <span class="n">callback</span><span class="o">=</span><span class="n">mqtt_on_message</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;Subscribe to /values/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">/#&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">node_hadd</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="n">i</span><span class="o">&lt;</span> <span class="n">timeout</span><span class="o">*</span><span class="mi">10000</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">message_received</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message_received</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="s">&#39;/values/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">/#&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">node_hadd</span><span class="p">))</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="Common"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.Common">[docs]</a><span class="k">class</span> <span class="nc">Common</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Common tests for servers and docker</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">longdelay</span> <span class="o">=</span> <span class="mi">50</span>
+    <span class="n">shortdelay</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="n">mindelay</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">server_section</span> <span class="o">=</span> <span class="bp">None</span>
+
+<div class="viewcode-block" id="Common.test_040_server_start_no_error_in_log"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.Common.test_040_server_start_no_error_in_log">[docs]</a>    <span class="k">def</span> <span class="nf">test_040_server_start_no_error_in_log</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">server_section</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Look for thread </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">server_section</span>
+            <span class="n">thread</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">find_thread</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">server_section</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">thread</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">thread</span><span class="p">,</span> <span class="n">JNTBusThread</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">waitHeartbeatNodes</span><span class="p">(</span><span class="n">hadds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadds</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">longdelay</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertNotInLogfile</span><span class="p">(</span><span class="s">&#39;^ERROR &#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertInLogfile</span><span class="p">(</span><span class="s">&#39;Start the server&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertInLogfile</span><span class="p">(</span><span class="s">&#39;Connected to broker&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertInLogfile</span><span class="p">(</span><span class="s">&#39;Found heartbeats in timeout&#39;</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;Reload server&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">reload</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">waitHeartbeatNodes</span><span class="p">(</span><span class="n">hadds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadds</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shortdelay</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertInLogfile</span><span class="p">(</span><span class="s">&#39;Reload the server&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertNotInLogfile</span><span class="p">(</span><span class="s">&#39;^ERROR &#39;</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;Reload threads&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">reload_threads</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">waitHeartbeatNodes</span><span class="p">(</span><span class="n">hadds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadds</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shortdelay</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertInLogfile</span><span class="p">(</span><span class="s">&#39;Reload threads&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertNotInLogfile</span><span class="p">(</span><span class="s">&#39;^ERROR &#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Common.minimal_040_server_start_reload_restart"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.Common.minimal_040_server_start_reload_restart">[docs]</a>    <span class="k">def</span> <span class="nf">minimal_040_server_start_reload_restart</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">server_section</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;Look for thread </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">server_section</span>
+            <span class="n">thread</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">find_thread</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">server_section</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">thread</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">thread</span><span class="p">,</span> <span class="n">JNTBusThread</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">waitHeartbeatNodes</span><span class="p">(</span><span class="n">hadds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadds</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">longdelay</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertInLogfile</span><span class="p">(</span><span class="s">&#39;Start the server&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertInLogfile</span><span class="p">(</span><span class="s">&#39;Connected to broker&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertInLogfile</span><span class="p">(</span><span class="s">&#39;Found heartbeats in timeout&#39;</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;Reload server&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">reload</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">waitHeartbeatNodes</span><span class="p">(</span><span class="n">hadds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadds</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shortdelay</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertInLogfile</span><span class="p">(</span><span class="s">&#39;Reload the server&#39;</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;Reload threads&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">reload_threads</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">waitHeartbeatNodes</span><span class="p">(</span><span class="n">hadds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadds</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shortdelay</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertInLogfile</span><span class="p">(</span><span class="s">&#39;Reload threads&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Common.test_020_request_broadcast"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.Common.test_020_request_broadcast">[docs]</a>    <span class="k">def</span> <span class="nf">test_020_request_broadcast</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hadd_ctrl</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">skipTest</span><span class="p">(</span><span class="s">&quot;No hadd_ctrl defined. Skip test&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertHeartbeatNode</span><span class="p">(</span><span class="n">hadd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadd_ctrl</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertHeartbeatNode</span><span class="p">(</span><span class="n">hadd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadd_ctrl</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">request</span> <span class="ow">in</span> <span class="n">NETWORK_REQUESTS</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertBroadcastRequest</span><span class="p">(</span><span class="n">cmd_class</span><span class="o">=</span><span class="n">COMMAND_DISCOVERY</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">client_hadd</span><span class="o">=</span><span class="n">HADD</span><span class="o">%</span><span class="p">(</span><span class="mi">9999</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertHeartbeatNode</span><span class="p">(</span><span class="n">hadd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadd_ctrl</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertHeartbeatNode</span><span class="p">(</span><span class="n">hadd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadd_ctrl</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">request</span> <span class="ow">in</span> <span class="n">NETWORK_REQUESTS</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertNodeRequest</span><span class="p">(</span><span class="n">cmd_class</span><span class="o">=</span><span class="n">COMMAND_DISCOVERY</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">node_hadd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadd_ctrl</span><span class="p">,</span> <span class="n">client_hadd</span><span class="o">=</span><span class="n">HADD</span><span class="o">%</span><span class="p">(</span><span class="mi">9999</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="Common.minimal_020_request_broadcast"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.Common.minimal_020_request_broadcast">[docs]</a>    <span class="k">def</span> <span class="nf">minimal_020_request_broadcast</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hadd_ctrl</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">skipTest</span><span class="p">(</span><span class="s">&quot;No hadd_ctrl defined. Skip test&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertHeartbeatNode</span><span class="p">(</span><span class="n">hadd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadd_ctrl</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertHeartbeatNode</span><span class="p">(</span><span class="n">hadd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadd_ctrl</span><span class="p">)</span>
+            <span class="n">run</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="k">for</span> <span class="n">request</span> <span class="ow">in</span> <span class="n">NETWORK_REQUESTS</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">assertBroadcastRequest</span><span class="p">(</span><span class="n">cmd_class</span><span class="o">=</span><span class="n">COMMAND_DISCOVERY</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">client_hadd</span><span class="o">=</span><span class="n">HADD</span><span class="o">%</span><span class="p">(</span><span class="mi">9999</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="k">pass</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">run</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertHeartbeatNode</span><span class="p">(</span><span class="n">hadd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadd_ctrl</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertHeartbeatNode</span><span class="p">(</span><span class="n">hadd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadd_ctrl</span><span class="p">)</span>
+            <span class="n">run</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="k">for</span> <span class="n">request</span> <span class="ow">in</span> <span class="n">NETWORK_REQUESTS</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">assertNodeRequest</span><span class="p">(</span><span class="n">cmd_class</span><span class="o">=</span><span class="n">COMMAND_DISCOVERY</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">node_hadd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadd_ctrl</span><span class="p">,</span> <span class="n">client_hadd</span><span class="o">=</span><span class="n">HADD</span><span class="o">%</span><span class="p">(</span><span class="mi">9999</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+                    <span class="n">run</span> <span class="o">=</span> <span class="bp">True</span>
+                    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="k">pass</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">run</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</div></div>
+<div class="viewcode-block" id="JNTTServerCommon"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServerCommon">[docs]</a><span class="k">class</span> <span class="nc">JNTTServerCommon</span><span class="p">(</span><span class="n">Common</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Common tests for servers</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">longdelay</span> <span class="o">=</span> <span class="mi">50</span>
+    <span class="n">shortdelay</span> <span class="o">=</span> <span class="mi">30</span>
+
+<div class="viewcode-block" id="JNTTServerCommon.test_010_start_heartbeat_stop"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServerCommon.test_010_start_heartbeat_stop">[docs]</a>    <span class="k">def</span> <span class="nf">test_010_start_heartbeat_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertHeartbeatNode</span><span class="p">(</span><span class="n">hadd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadd_ctrl</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">server_section</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;Look for thread </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">server_section</span>
+                <span class="n">thread</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">find_thread</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">server_section</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">thread</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">thread</span><span class="p">,</span> <span class="n">JNTBusThread</span><span class="p">)</span>
+
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="JNTTServerCommon.test_011_start_reload_stop"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServerCommon.test_011_start_reload_stop">[docs]</a>    <span class="k">def</span> <span class="nf">test_011_start_reload_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertHeartbeatNodes</span><span class="p">(</span><span class="n">hadds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadds</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">reload</span><span class="p">()</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertHeartbeatNodes</span><span class="p">(</span><span class="n">hadds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadds</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="JNTTServerCommon.test_012_start_reload_threads_stop"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServerCommon.test_012_start_reload_threads_stop">[docs]</a>    <span class="k">def</span> <span class="nf">test_012_start_reload_threads_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertHeartbeatNodes</span><span class="p">(</span><span class="n">hadds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadds</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">reload_threads</span><span class="p">()</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertHeartbeatNodes</span><span class="p">(</span><span class="n">hadds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadds</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="JNTTServerCommon.test_030_wait_for_all_nodes"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServerCommon.test_030_wait_for_all_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">test_030_wait_for_all_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hadds</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">skipTest</span><span class="p">(</span><span class="s">&quot;No hadds defined. Skip test&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertHeartbeatNodes</span><span class="p">(</span><span class="n">hadds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadds</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</div></div>
+<div class="viewcode-block" id="JNTTDockerServerCommon"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTDockerServerCommon">[docs]</a><span class="k">class</span> <span class="nc">JNTTDockerServerCommon</span><span class="p">(</span><span class="n">Common</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Common tests for servers on docker</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">longdelay</span> <span class="o">=</span> <span class="mi">50</span>
+    <span class="n">shortdelay</span> <span class="o">=</span> <span class="mi">30</span>
+</div>
+<div class="viewcode-block" id="JNTTDockerServer"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTDockerServer">[docs]</a><span class="k">class</span> <span class="nc">JNTTDockerServer</span><span class="p">(</span><span class="n">JNTTServer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Tests for servers on docker</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="JNTTDockerServer.setUp"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTDockerServer.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">JNTTServer</span><span class="o">.</span><span class="n">onlyDockerTest</span><span class="p">()</span>
+        <span class="n">JNTTServer</span><span class="o">.</span><span class="n">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2015, Sébastien GALLET aka bibi2100 &lt;bibi21000@gmail.com&gt;.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

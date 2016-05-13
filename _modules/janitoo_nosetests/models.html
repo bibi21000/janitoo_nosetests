@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>janitoo_nosetests.models &mdash; janitoo_nosetests 0.0.6 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinxcontrib-images/LightBox2/lightbox2/css/lightbox.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/united/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.0.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/sphinxcontrib-images/LightBox2/lightbox2/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/sphinxcontrib-images/LightBox2/lightbox2/js/lightbox.min.js"></script>
+    <script type="text/javascript" src="../../_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="janitoo_nosetests 0.0.6 documentation" href="../../index.html" />
+    <link rel="up" title="janitoo_nosetests" href="../janitoo_nosetests.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-inverse navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          janitoo_nosetests</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.6</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+                <li><a href="../../tools/index.html">Tools</a></li>
+                <li><a href="../../api/index.html">Reference</a></li>
+                <li><a href="../../extensions/index.html">Janitoo extensions</a></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="simple">
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <h1>Source code for janitoo_nosetests.models</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="sd">&quot;&quot;&quot;Unittests for models.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    This file is part of Janitoo.</span>
+
+<span class="s">    Janitoo is free software: you can redistribute it and/or modify</span>
+<span class="s">    it under the terms of the GNU General Public License as published by</span>
+<span class="s">    the Free Software Foundation, either version 3 of the License, or</span>
+<span class="s">    (at your option) any later version.</span>
+
+<span class="s">    Janitoo is distributed in the hope that it will be useful,</span>
+<span class="s">    but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="s">    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="s">    GNU General Public License for more details.</span>
+
+<span class="s">    You should have received a copy of the GNU General Public License</span>
+<span class="s">    along with Janitoo. If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="s">&quot;&quot;&quot;</span>
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&#39;Sébastien GALLET aka bibi21000&#39;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s">&#39;bibi21000@gmail.com&#39;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s">&quot;Copyright © 2013-2014-2015-2016 Sébastien GALLET aka bibi21000&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">pkg_resources</span> <span class="kn">import</span> <span class="n">iter_entry_points</span>
+
+<span class="kn">from</span> <span class="nn">nose_parameterized</span> <span class="kn">import</span> <span class="n">parameterized</span>
+
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">sessionmaker</span><span class="p">,</span> <span class="n">scoped_session</span>
+<span class="kn">from</span> <span class="nn">alembic</span> <span class="kn">import</span> <span class="n">command</span> <span class="k">as</span> <span class="n">alcommand</span>
+
+<span class="kn">from</span> <span class="nn">janitoo_nosetests</span> <span class="kn">import</span> <span class="n">JNTTBase</span>
+
+<span class="kn">from</span> <span class="nn">janitoo.options</span> <span class="kn">import</span> <span class="n">JNTOptions</span>
+<span class="kn">from</span> <span class="nn">janitoo_db.base</span> <span class="kn">import</span> <span class="n">Base</span><span class="p">,</span> <span class="n">create_db_engine</span>
+<span class="kn">from</span> <span class="nn">janitoo_db.migrate</span> <span class="kn">import</span> <span class="n">Config</span> <span class="k">as</span> <span class="n">alConfig</span><span class="p">,</span> <span class="n">collect_configs</span><span class="p">,</span> <span class="n">janitoo_config</span>
+
+
+<span class="c">##############################################################</span>
+<span class="c">#Check that we are in sync with the official command classes</span>
+<span class="c">#Must be implemented for non-regression</span>
+<span class="kn">from</span> <span class="nn">janitoo.classes</span> <span class="kn">import</span> <span class="n">COMMAND_DESC</span>
+
+<span class="n">COMMAND_DISCOVERY</span> <span class="o">=</span> <span class="mh">0x5000</span>
+
+<span class="k">assert</span><span class="p">(</span><span class="n">COMMAND_DESC</span><span class="p">[</span><span class="n">COMMAND_DISCOVERY</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;COMMAND_DISCOVERY&#39;</span><span class="p">)</span>
+<span class="c">##############################################################</span>
+
+<div class="viewcode-block" id="JNTTModels"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.JNTTModels">[docs]</a><span class="k">class</span> <span class="nc">JNTTModels</span><span class="p">(</span><span class="n">JNTTBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test the models</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="JNTTModels.tearDown"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.JNTTModels.tearDown">[docs]</a>    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c">#~ try:</span>
+            <span class="c">#~ self.drop_all()</span>
+        <span class="c">#~ except:</span>
+            <span class="c">#~ pass</span>
+        <span class="n">JNTTBase</span><span class="o">.</span><span class="n">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTModels.setUp"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.JNTTModels.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">JNTTBase</span><span class="o">.</span><span class="n">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="n">JNTOptions</span><span class="p">({</span><span class="s">&#39;conf_file&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">getDataFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models_conf</span><span class="p">)})</span>
+        <span class="n">options</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dbengine</span> <span class="o">=</span> <span class="n">create_db_engine</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dbmaker</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">()</span>
+        <span class="c"># Bind the sessionmaker to engine</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dbmaker</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dbengine</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dbsession</span> <span class="o">=</span> <span class="n">scoped_session</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dbmaker</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drop_all</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="JNTTModels.create_all"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.JNTTModels.create_all">[docs]</a>    <span class="k">def</span> <span class="nf">create_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dbengine</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTModels.drop_all"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.JNTTModels.drop_all">[docs]</a>    <span class="k">def</span> <span class="nf">drop_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">drop_all</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dbengine</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="JNTTModelsCommon"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.JNTTModelsCommon">[docs]</a><span class="k">class</span> <span class="nc">JNTTModelsCommon</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Common tests for models</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">models_conf</span> <span class="o">=</span> <span class="s">&quot;tests/data/janitoo_db.conf&quot;</span>
+
+<div class="viewcode-block" id="JNTTModelsCommon.test_001_versiondb"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.JNTTModelsCommon.test_001_versiondb">[docs]</a>    <span class="k">def</span> <span class="nf">test_001_versiondb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drop_all</span><span class="p">()</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">alConfig</span><span class="p">(</span><span class="n">conf_file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">models_conf</span><span class="p">)</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">initdb</span><span class="p">()</span>
+        <span class="n">versions</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">versiondb</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">versions</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTModelsCommon.test_002_heads"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.JNTTModelsCommon.test_002_heads">[docs]</a>    <span class="k">def</span> <span class="nf">test_002_heads</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drop_all</span><span class="p">()</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">alConfig</span><span class="p">(</span><span class="n">conf_file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">models_conf</span><span class="p">)</span>
+        <span class="n">heads</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">heads</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">heads</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTModelsCommon.test_003_checkdb"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.JNTTModelsCommon.test_003_checkdb">[docs]</a>    <span class="k">def</span> <span class="nf">test_003_checkdb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drop_all</span><span class="p">()</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">alConfig</span><span class="p">(</span><span class="n">conf_file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">models_conf</span><span class="p">)</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">initdb</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">checkdb</span><span class="p">())</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">downgrade</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">checkdb</span><span class="p">())</span>
+</div></div>
+<span class="n">DBCONFS</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s">&#39;Sqlite&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;dbconf&#39;</span><span class="p">:</span><span class="s">&#39;sqlite:////tmp/janitoo_tests.sqlite&#39;</span><span class="p">}),</span>
+        <span class="p">(</span><span class="s">&#39;Mysql&#39;</span><span class="p">,{</span><span class="s">&#39;dbconf&#39;</span><span class="p">:</span><span class="s">&#39;mysql://root:janitoo@localhost/janitoo_tests&#39;</span><span class="p">}),</span>
+        <span class="p">(</span><span class="s">&#39;Postgresql&#39;</span><span class="p">,{</span><span class="s">&#39;dbconf&#39;</span><span class="p">:</span><span class="s">&#39;postgresql://janitoo:janitoo@localhost/janitoo_tests&#39;</span><span class="p">}),</span>
+        <span class="p">]</span>
+
+<div class="viewcode-block" id="JNTTDockerModels"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.JNTTDockerModels">[docs]</a><span class="k">class</span> <span class="nc">JNTTDockerModels</span><span class="p">(</span><span class="n">JNTTBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Tests for model on docker</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dbconf</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;sqlite&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;dbconf&#39;</span><span class="p">:</span><span class="s">&#39;sqlite:////tmp/janitoo_tests.sqlite&#39;</span><span class="p">})</span>
+<div class="viewcode-block" id="JNTTDockerModels.setUp"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.JNTTDockerModels.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">JNTTBase</span><span class="o">.</span><span class="n">onlyDockerTest</span><span class="p">()</span>
+        <span class="n">JNTTBase</span><span class="o">.</span><span class="n">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">tmp_conf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cpTempFile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models_conf</span><span class="p">)</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="n">JNTOptions</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;conf_file&#39;</span><span class="p">:</span><span class="n">tmp_conf</span><span class="p">})</span>
+        <span class="n">options</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s">&#39;database&#39;</span><span class="p">,</span> <span class="s">&#39;sqlalchemy.url&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dbconf</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;dbconf&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">models_conf</span> <span class="o">=</span> <span class="n">tmp_conf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dbengine</span> <span class="o">=</span> <span class="n">create_db_engine</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dbconf</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;dbconf&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dbmaker</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">()</span>
+        <span class="c"># Bind the sessionmaker to engine</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dbmaker</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dbengine</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dbsession</span> <span class="o">=</span> <span class="n">scoped_session</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dbmaker</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drop_all</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="JNTTDockerModels.tearDown"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.JNTTDockerModels.tearDown">[docs]</a>    <span class="k">def</span> <span class="nf">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c">#~ try:</span>
+            <span class="c">#~ self.drop_all()</span>
+        <span class="c">#~ except:</span>
+            <span class="c">#~ pass</span>
+        <span class="n">JNTTBase</span><span class="o">.</span><span class="n">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTDockerModels.create_all"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.JNTTDockerModels.create_all">[docs]</a>    <span class="k">def</span> <span class="nf">create_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dbengine</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTDockerModels.drop_all"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.JNTTDockerModels.drop_all">[docs]</a>    <span class="k">def</span> <span class="nf">drop_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">drop_all</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dbengine</span><span class="p">)</span>
+</div></div>
+<div class="viewcode-block" id="jntt_docker_models"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.jntt_docker_models">[docs]</a><span class="k">def</span> <span class="nf">jntt_docker_models</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="n">cls</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&#39;Class&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Launch cls tests for every supported database</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">conf</span> <span class="ow">in</span> <span class="n">DBCONFS</span><span class="p">:</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">],</span> <span class="s">&#39;TestModels_</span><span class="si">%s</span><span class="s">_</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span><span class="n">name</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;TestModels_</span><span class="si">%s</span><span class="s">_</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span><span class="n">name</span><span class="p">),</span> <span class="p">(</span><span class="n">JNTTDockerModels</span><span class="p">,</span><span class="n">cls</span><span class="p">),</span> <span class="p">{</span><span class="s">&#39;dbconf&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">conf</span><span class="p">)}))</span>
+</div>
+<div class="viewcode-block" id="JNTTFullModels"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.JNTTFullModels">[docs]</a><span class="k">class</span> <span class="nc">JNTTFullModels</span><span class="p">(</span><span class="n">JNTTBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Test the models</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">db_uri</span> <span class="o">=</span> <span class="s">&quot;sqlite:////tmp/janitoo_test/home/fullmodel.sqlite&quot;</span>
+<div class="viewcode-block" id="JNTTFullModels.setUp"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.JNTTFullModels.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">JNTTBase</span><span class="o">.</span><span class="n">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="kn">import</span> <span class="nn">janitoo_db.models</span>
+</div></div>
+<div class="viewcode-block" id="JNTTDockerFullModels"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.JNTTDockerFullModels">[docs]</a><span class="k">class</span> <span class="nc">JNTTDockerFullModels</span><span class="p">(</span><span class="n">JNTTFullModels</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Tests for full models on docker</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dbconf</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;sqlite&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;dbconf&#39;</span><span class="p">:</span><span class="s">&#39;sqlite:////tmp/janitoo_tests.sqlite&#39;</span><span class="p">})</span>
+<div class="viewcode-block" id="JNTTDockerFullModels.setUp"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.JNTTDockerFullModels.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">JNTTFullModels</span><span class="o">.</span><span class="n">onlyDockerTest</span><span class="p">()</span>
+        <span class="n">JNTTFullModels</span><span class="o">.</span><span class="n">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dbconf</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s">&#39;dbconf&#39;</span><span class="p">]</span>
+</div></div>
+<div class="viewcode-block" id="jntt_docker_fullmodels"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.jntt_docker_fullmodels">[docs]</a><span class="k">def</span> <span class="nf">jntt_docker_fullmodels</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="n">cls</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s">&#39;Class&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Launch cls tests for every supported database</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">conf</span> <span class="ow">in</span> <span class="n">DBCONFS</span><span class="p">:</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">],</span> <span class="s">&#39;TestFullModels_</span><span class="si">%s</span><span class="s">_</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span><span class="n">name</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="s">&#39;TestFullModels_</span><span class="si">%s</span><span class="s">_</span><span class="si">%s</span><span class="s">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span><span class="n">name</span><span class="p">),</span> <span class="p">(</span><span class="n">JNTTDockerFullModels</span><span class="p">,</span><span class="n">cls</span><span class="p">),</span> <span class="p">{</span><span class="s">&#39;dbconf&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">conf</span><span class="p">)}))</span>
+</div>
+<div class="viewcode-block" id="JNTTFullModelsCommon"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.JNTTFullModelsCommon">[docs]</a><span class="k">class</span> <span class="nc">JNTTFullModelsCommon</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Common tests for models</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="JNTTFullModelsCommon.test_001_upgrade"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.JNTTFullModelsCommon.test_001_upgrade">[docs]</a>    <span class="k">def</span> <span class="nf">test_001_upgrade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">alcommand</span><span class="o">.</span><span class="n">upgrade</span><span class="p">(</span><span class="n">janitoo_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db_uri</span><span class="p">),</span> <span class="s">&#39;heads&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTFullModelsCommon.test_002_downgrade"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.models.JNTTFullModelsCommon.test_002_downgrade">[docs]</a>    <span class="k">def</span> <span class="nf">test_002_downgrade</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">alcommand</span><span class="o">.</span><span class="n">upgrade</span><span class="p">(</span><span class="n">janitoo_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db_uri</span><span class="p">),</span> <span class="s">&#39;heads&#39;</span><span class="p">)</span>
+        <span class="n">alcommand</span><span class="o">.</span><span class="n">downgrade</span><span class="p">(</span><span class="n">janitoo_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db_uri</span><span class="p">),</span> <span class="s">&#39;base&#39;</span><span class="p">)</span></div></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2015, Sébastien GALLET aka bibi2100 &lt;bibi21000@gmail.com&gt;.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
