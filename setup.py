@@ -95,5 +95,6 @@ setup(
                      'xunitmerge',
                      'xunitparser',
                      'nose-parameterized',
+                     'pylint',
                     ],
 )
