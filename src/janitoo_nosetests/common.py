@@ -52,7 +52,7 @@ assert(COMMAND_DESC[COMMAND_DISCOVERY] == 'COMMAND_DISCOVERY')
 ##############################################################
 
 
-class JNTCommon():
+class JNTCommon(object):
     """Common tests for JNTServer
     """
     def test_000_server_start_wait_stop(self):
@@ -179,7 +179,7 @@ class JNTControllerServer(JNTCommon):
         self.assertHeartbeat()
         self.stopServer()
 
-class JNTDBCommon():
+class JNTDBCommon(object):
     """Common tests for JNTDBServer
     """
     def test_040_server_check_db_auto_migrate(self):

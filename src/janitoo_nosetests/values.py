@@ -71,7 +71,7 @@ class JNTTFactory(JNTTBase):
         self.assertEqual(opt, "%s"%main_value.get_data_index(node_uuid=node_uuid, index=0))
         self.assertEqual(type(data), type(main_value.get_data_index(node_uuid=node_uuid, index=0)))
 
-class JNTTFactoryCommon():
+class JNTTFactoryCommon(object):
     """Test the value factory
     """
     def test_001_collect_values_entries(self):

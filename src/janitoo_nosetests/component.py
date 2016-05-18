@@ -79,7 +79,7 @@ class JNTTComponent(JNTTBase):
             mkth = entry.load()
         self.assertNotEqual(mkth, None)
 
-class JNTTComponentCommon():
+class JNTTComponentCommon(object):
     """Common tests for components
     """
 

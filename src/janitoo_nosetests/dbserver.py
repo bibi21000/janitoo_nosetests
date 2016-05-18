@@ -66,7 +66,7 @@ class JNTTDBServer(JNTTServer):
             self.dbengine = None
         JNTTServer.tearDown(self)
 
-class Common():
+class Common(object):
     """Common tests for models
     """
     def test_051_dbserver_no_auto_migrate(self):

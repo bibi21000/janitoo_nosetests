@@ -79,7 +79,7 @@ class JNTTModels(JNTTBase):
     def drop_all(self):
         Base.metadata.drop_all(bind=self.dbengine)
 
-class JNTTModelsCommon():
+class JNTTModelsCommon(object):
     """Common tests for models
     """
     models_conf = "tests/data/janitoo_db.conf"
@@ -171,7 +171,7 @@ def jntt_docker_fullmodels(module_name, cls, prefix='Class'):
     for name, conf in DBCONFS:
         setattr(sys.modules[module_name], 'TestFullModels_%s_%s'%(prefix,name), type('TestFullModels_%s_%s'%(prefix,name), (JNTTDockerFullModels,cls), {'dbconf': (name, conf)}))
 
-class JNTTFullModelsCommon():
+class JNTTFullModelsCommon(object):
     """Common tests for models
     """
 

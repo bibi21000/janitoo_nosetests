@@ -55,7 +55,7 @@ class JNTTCertification(JNTTServer):
     hadds = ['1111/0000']
     client_hadd = "9999/0000"
     conf = {'broker_ip': '127.0.0.1', 'broker_port': '1883'}
-    
+
     def setUp(self):
         JNTTServer.setUp(self)
         self.startClient(self.conf)
@@ -64,7 +64,7 @@ class JNTTCertification(JNTTServer):
         self.stopClient()
         JNTTServer.tearDown(self)
 
-class JNTTCertificationCommon():
+class JNTTCertificationCommon(object):
     """Common tests for certification
     """
 

@@ -147,7 +147,7 @@ class JNTTDockerThreadRun(JNTTThreadRun):
         JNTTThreadRun.onlyDockerTest()
         JNTTThreadRun.setUp(self)
 
-class JNTTThreadCommon():
+class JNTTThreadCommon(object):
     """Common tests for components
     """
 

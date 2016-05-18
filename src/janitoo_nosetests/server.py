@@ -402,7 +402,7 @@ class JNTTServer(JNTTBase):
         self.mqttc.unsubscribe(topic='/values/%s/%s/#'%(type, node_hadd))
         time.sleep(0.5)
 
-class Common():
+class Common(object):
     """Common tests for servers and docker
     """
     longdelay = 50

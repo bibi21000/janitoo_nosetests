@@ -80,7 +80,7 @@ class JNTTPackaging(JNTTBase):
         values = package.get_janitoo_values()
         self.assertTrue(value in values)
 
-class JNTTPackagingCommon():
+class JNTTPackagingCommon(object):
     """Common tests for packages
     """
 
