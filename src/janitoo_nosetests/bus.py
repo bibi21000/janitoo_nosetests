@@ -27,29 +27,21 @@ except:  # pragma: no cover
     # bootstrapping
     pass # pragma: no cover
 
-import sys, os, errno
-import time
-import unittest
-import threading
-import json as mjson
+import sys, os
 import shutil
 import mock
-from pkg_resources import iter_entry_points
 import logging
 from logging.config import fileConfig as logging_fileConfig
 
 from janitoo_nosetests import JNTTBase
 
-from janitoo.mqtt import MQTTClient
-from janitoo.dhcp import JNTNetwork, HeartbeatMessage
-from janitoo.utils import json_dumps, json_loads
+from janitoo.dhcp import HeartbeatMessage
+from janitoo.utils import json_dumps
 from janitoo.utils import HADD_SEP, HADD
-from janitoo.utils import TOPIC_HEARTBEAT
-from janitoo.utils import TOPIC_NODES, TOPIC_NODES_REPLY, TOPIC_NODES_REQUEST
-from janitoo.utils import TOPIC_BROADCAST_REPLY, TOPIC_BROADCAST_REQUEST
-from janitoo.utils import TOPIC_VALUES_USER, TOPIC_VALUES_CONFIG, TOPIC_VALUES_SYSTEM, TOPIC_VALUES_BASIC
-from janitoo.runner import jnt_parse_args
-from janitoo.options import JNTOptions, string_to_bool
+from janitoo.utils import TOPIC_NODES, TOPIC_NODES_REPLY
+from janitoo.utils import TOPIC_BROADCAST_REPLY
+from janitoo.utils import TOPIC_VALUES_USER, TOPIC_VALUES_CONFIG, TOPIC_VALUES_SYSTEM
+from janitoo.options import string_to_bool
 
 class JNTTBus(JNTTBase):
     """Bus base test

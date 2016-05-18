@@ -99,17 +99,17 @@ class JNTTBase(unittest.TestCase):
         os.makedirs(os.path.join(self.path, 'run'))
 
     def tearDown(self):
+        pass
         try:
-            pass
             #shutil.rmtree(self.path)
-        except OSError as exc: # Python >2.5
+        except OSError:
             pass
 
     @classmethod
     def skipManualTest(self, message=''):
         """Skip a manual test (need human intervention)
         """
-        if self.skipManual == True:
+        if self.skipManual:
             raise SkipTest("%s" % ("manual test (%s)" % message))
 
     @classmethod
@@ -129,7 +129,7 @@ class JNTTBase(unittest.TestCase):
     def onlyAllTests(self):
         """Run a test only when JANITOO_ALLTESTS is in env
         """
-        if not 'JANITOO_ALLTESTS' in os.environ:
+        if 'JANITOO_ALLTESTS' not in os.environ:
             raise SkipTest("%s" % ("Only on JANITOO_ALLTESTS"))
 
     @classmethod
@@ -143,7 +143,7 @@ class JNTTBase(unittest.TestCase):
     def onlyTravisTest(self):
         """Run a test only on travis
         """
-        if not 'TRAVIS_OS_NAME' in os.environ:
+        if 'TRAVIS_OS_NAME' not in os.environ:
             raise SkipTest("%s" % ("Only on travis"))
 
     @classmethod
@@ -157,7 +157,7 @@ class JNTTBase(unittest.TestCase):
     def onlyCircleTest(self):
         """Run a test only on circle
         """
-        if not 'CIRCLE_USERNAME' in os.environ:
+        if 'CIRCLE_USERNAME' not in os.environ:
             raise SkipTest("%s" % ("Only on circle"))
 
     @classmethod
@@ -173,8 +173,8 @@ class JNTTBase(unittest.TestCase):
     def onlyCITest(self):
         """Run a test only on continuous integration
         """
-        if not 'TRAVIS_OS_NAME' in os.environ and \
-           not 'CIRCLE_USERNAME' in os.environ:
+        if 'TRAVIS_OS_NAME' not in os.environ and \
+           'CIRCLE_USERNAME' not in os.environ:
             raise SkipTest("%s" % ("Only on Continuous Integration"))
 
     @classmethod
@@ -188,7 +188,7 @@ class JNTTBase(unittest.TestCase):
     def onlyDockerTest(self):
         """Run a test only on docker
         """
-        if not 'JANITOO_DOCKER' in os.environ:
+        if 'JANITOO_DOCKER' not in os.environ:
             raise SkipTest("%s" % ("Only on docker"))
 
     @classmethod
