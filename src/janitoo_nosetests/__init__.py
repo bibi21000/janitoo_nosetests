@@ -99,8 +99,8 @@ class JNTTBase(unittest.TestCase):
         os.makedirs(os.path.join(self.path, 'run'))
 
     def tearDown(self):
-        pass
         try:
+            pass
             #shutil.rmtree(self.path)
         except OSError:
             pass
