@@ -39,6 +39,7 @@ import pwd
 import grp
 import socket
 import tempfile
+from netifaces import interfaces, ifaddresses, AF_INET
 from pkg_resources import iter_entry_points
 
 from nose.plugins.skip import SkipTest
@@ -348,6 +349,17 @@ class JNTTBase(unittest.TestCase):
         if os.path.isfile(path):
             return path
         raise RuntimeError("[%s] : Can't find data file %s"%(self.__class__.__name__, path))
+
+    @property
+    def ip4Addresses(self):
+        """Retrieve all ip4 adresses as a list
+        """
+        ip_list = []
+        for interface in interfaces():
+            for link in ifaddresses(interface).get(AF_INET, ()):
+                ip_list.append(link['addr'])
+        print "Found ip4 addresses %s" % ip_list
+        return ip_list
 
 class JNTTDockerBase(JNTTBase):
     """Tests for servers on docker

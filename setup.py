@@ -96,5 +96,6 @@ setup(
                      'xunitparser',
                      'nose-parameterized',
                      'pylint',
+                     'netifaces',
                     ],
 )
