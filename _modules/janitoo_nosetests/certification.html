@@ -164,7 +164,7 @@
     <span class="n">hadds</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;1111/0000&#39;</span><span class="p">]</span>
     <span class="n">client_hadd</span> <span class="o">=</span> <span class="s">&quot;9999/0000&quot;</span>
     <span class="n">conf</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;broker_ip&#39;</span><span class="p">:</span> <span class="s">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="s">&#39;broker_port&#39;</span><span class="p">:</span> <span class="s">&#39;1883&#39;</span><span class="p">}</span>
-    
+
 <div class="viewcode-block" id="JNTTCertification.setUp"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.certification.JNTTCertification.setUp">[docs]</a>    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">JNTTServer</span><span class="o">.</span><span class="n">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">startClient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conf</span><span class="p">)</span>
@@ -173,7 +173,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">stopClient</span><span class="p">()</span>
         <span class="n">JNTTServer</span><span class="o">.</span><span class="n">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </div></div>
-<div class="viewcode-block" id="JNTTCertificationCommon"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.certification.JNTTCertificationCommon">[docs]</a><span class="k">class</span> <span class="nc">JNTTCertificationCommon</span><span class="p">():</span>
+<div class="viewcode-block" id="JNTTCertificationCommon"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.certification.JNTTCertificationCommon">[docs]</a><span class="k">class</span> <span class="nc">JNTTCertificationCommon</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Common tests for certification</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 

@@ -136,29 +136,21 @@
     <span class="c"># bootstrapping</span>
     <span class="k">pass</span> <span class="c"># pragma: no cover</span>
 
-<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">errno</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">unittest</span>
-<span class="kn">import</span> <span class="nn">threading</span>
-<span class="kn">import</span> <span class="nn">json</span> <span class="kn">as</span> <span class="nn">mjson</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">mock</span>
-<span class="kn">from</span> <span class="nn">pkg_resources</span> <span class="kn">import</span> <span class="n">iter_entry_points</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">logging.config</span> <span class="kn">import</span> <span class="n">fileConfig</span> <span class="k">as</span> <span class="n">logging_fileConfig</span>
 
 <span class="kn">from</span> <span class="nn">janitoo_nosetests</span> <span class="kn">import</span> <span class="n">JNTTBase</span>
 
-<span class="kn">from</span> <span class="nn">janitoo.mqtt</span> <span class="kn">import</span> <span class="n">MQTTClient</span>
-<span class="kn">from</span> <span class="nn">janitoo.dhcp</span> <span class="kn">import</span> <span class="n">JNTNetwork</span><span class="p">,</span> <span class="n">HeartbeatMessage</span>
-<span class="kn">from</span> <span class="nn">janitoo.utils</span> <span class="kn">import</span> <span class="n">json_dumps</span><span class="p">,</span> <span class="n">json_loads</span>
+<span class="kn">from</span> <span class="nn">janitoo.dhcp</span> <span class="kn">import</span> <span class="n">HeartbeatMessage</span>
+<span class="kn">from</span> <span class="nn">janitoo.utils</span> <span class="kn">import</span> <span class="n">json_dumps</span>
 <span class="kn">from</span> <span class="nn">janitoo.utils</span> <span class="kn">import</span> <span class="n">HADD_SEP</span><span class="p">,</span> <span class="n">HADD</span>
-<span class="kn">from</span> <span class="nn">janitoo.utils</span> <span class="kn">import</span> <span class="n">TOPIC_HEARTBEAT</span>
-<span class="kn">from</span> <span class="nn">janitoo.utils</span> <span class="kn">import</span> <span class="n">TOPIC_NODES</span><span class="p">,</span> <span class="n">TOPIC_NODES_REPLY</span><span class="p">,</span> <span class="n">TOPIC_NODES_REQUEST</span>
-<span class="kn">from</span> <span class="nn">janitoo.utils</span> <span class="kn">import</span> <span class="n">TOPIC_BROADCAST_REPLY</span><span class="p">,</span> <span class="n">TOPIC_BROADCAST_REQUEST</span>
-<span class="kn">from</span> <span class="nn">janitoo.utils</span> <span class="kn">import</span> <span class="n">TOPIC_VALUES_USER</span><span class="p">,</span> <span class="n">TOPIC_VALUES_CONFIG</span><span class="p">,</span> <span class="n">TOPIC_VALUES_SYSTEM</span><span class="p">,</span> <span class="n">TOPIC_VALUES_BASIC</span>
-<span class="kn">from</span> <span class="nn">janitoo.runner</span> <span class="kn">import</span> <span class="n">jnt_parse_args</span>
-<span class="kn">from</span> <span class="nn">janitoo.options</span> <span class="kn">import</span> <span class="n">JNTOptions</span><span class="p">,</span> <span class="n">string_to_bool</span>
+<span class="kn">from</span> <span class="nn">janitoo.utils</span> <span class="kn">import</span> <span class="n">TOPIC_NODES</span><span class="p">,</span> <span class="n">TOPIC_NODES_REPLY</span>
+<span class="kn">from</span> <span class="nn">janitoo.utils</span> <span class="kn">import</span> <span class="n">TOPIC_BROADCAST_REPLY</span>
+<span class="kn">from</span> <span class="nn">janitoo.utils</span> <span class="kn">import</span> <span class="n">TOPIC_VALUES_USER</span><span class="p">,</span> <span class="n">TOPIC_VALUES_CONFIG</span><span class="p">,</span> <span class="n">TOPIC_VALUES_SYSTEM</span>
+<span class="kn">from</span> <span class="nn">janitoo.options</span> <span class="kn">import</span> <span class="n">string_to_bool</span>
 
 <div class="viewcode-block" id="JNTTBus"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.bus.JNTTBus">[docs]</a><span class="k">class</span> <span class="nc">JNTTBus</span><span class="p">(</span><span class="n">JNTTBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Bus base test</span>
@@ -175,7 +167,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">factory</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="n">JNTTBase</span><span class="o">.</span><span class="n">tearDown</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </div></div>
-<div class="viewcode-block" id="JNTTBusCommon"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.bus.JNTTBusCommon">[docs]</a><span class="k">class</span> <span class="nc">JNTTBusCommon</span><span class="p">():</span>
+<div class="viewcode-block" id="JNTTBusCommon"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.bus.JNTTBusCommon">[docs]</a><span class="k">class</span> <span class="nc">JNTTBusCommon</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Common tests for buss</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 

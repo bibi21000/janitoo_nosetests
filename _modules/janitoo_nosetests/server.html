@@ -511,7 +511,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="s">&#39;/values/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">/#&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">node_hadd</span><span class="p">))</span>
         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
 </div></div>
-<div class="viewcode-block" id="Common"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.Common">[docs]</a><span class="k">class</span> <span class="nc">Common</span><span class="p">():</span>
+<div class="viewcode-block" id="Common"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.Common">[docs]</a><span class="k">class</span> <span class="nc">Common</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Common tests for servers and docker</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">longdelay</span> <span class="o">=</span> <span class="mi">50</span>

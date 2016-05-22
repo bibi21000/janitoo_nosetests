@@ -256,7 +256,7 @@
         <span class="n">JNTTThreadRun</span><span class="o">.</span><span class="n">onlyDockerTest</span><span class="p">()</span>
         <span class="n">JNTTThreadRun</span><span class="o">.</span><span class="n">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 </div></div>
-<div class="viewcode-block" id="JNTTThreadCommon"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.thread.JNTTThreadCommon">[docs]</a><span class="k">class</span> <span class="nc">JNTTThreadCommon</span><span class="p">():</span>
+<div class="viewcode-block" id="JNTTThreadCommon"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.thread.JNTTThreadCommon">[docs]</a><span class="k">class</span> <span class="nc">JNTTThreadCommon</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Common tests for components</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -273,6 +273,11 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s">&#39;bus&#39;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">check_heartbeat</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">wait_for_nodeman</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="s">&#39;bus&#39;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">bus</span><span class="o">.</span><span class="n">check_heartbeat</span><span class="p">()</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
 </div>

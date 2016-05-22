@@ -148,6 +148,7 @@
 <span class="kn">import</span> <span class="nn">grp</span>
 <span class="kn">import</span> <span class="nn">socket</span>
 <span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">from</span> <span class="nn">netifaces</span> <span class="kn">import</span> <span class="n">interfaces</span><span class="p">,</span> <span class="n">ifaddresses</span><span class="p">,</span> <span class="n">AF_INET</span>
 <span class="kn">from</span> <span class="nn">pkg_resources</span> <span class="kn">import</span> <span class="n">iter_entry_points</span>
 
 <span class="kn">from</span> <span class="nn">nose.plugins.skip</span> <span class="kn">import</span> <span class="n">SkipTest</span>
@@ -211,14 +212,14 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">pass</span>
             <span class="c">#shutil.rmtree(self.path)</span>
-        <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span> <span class="c"># Python &gt;2.5</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
             <span class="k">pass</span>
 </div>
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="JNTTBase.skipManualTest"><a class="viewcode-back" href="../api/index.html#janitoo_nosetests.JNTTBase.skipManualTest">[docs]</a>    <span class="k">def</span> <span class="nf">skipManualTest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Skip a manual test (need human intervention)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">skipManual</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">skipManual</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">SkipTest</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;manual test (</span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="n">message</span><span class="p">))</span>
 </div>
     <span class="nd">@classmethod</span>
@@ -238,7 +239,7 @@
 <div class="viewcode-block" id="JNTTBase.onlyAllTests"><a class="viewcode-back" href="../api/index.html#janitoo_nosetests.JNTTBase.onlyAllTests">[docs]</a>    <span class="k">def</span> <span class="nf">onlyAllTests</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Run a test only when JANITOO_ALLTESTS is in env</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="s">&#39;JANITOO_ALLTESTS&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s">&#39;JANITOO_ALLTESTS&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">SkipTest</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Only on JANITOO_ALLTESTS&quot;</span><span class="p">))</span>
 </div>
     <span class="nd">@classmethod</span>
@@ -252,7 +253,7 @@
 <div class="viewcode-block" id="JNTTBase.onlyTravisTest"><a class="viewcode-back" href="../api/index.html#janitoo_nosetests.JNTTBase.onlyTravisTest">[docs]</a>    <span class="k">def</span> <span class="nf">onlyTravisTest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Run a test only on travis</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="s">&#39;TRAVIS_OS_NAME&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s">&#39;TRAVIS_OS_NAME&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">SkipTest</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Only on travis&quot;</span><span class="p">))</span>
 </div>
     <span class="nd">@classmethod</span>
@@ -266,7 +267,7 @@
 <div class="viewcode-block" id="JNTTBase.onlyCircleTest"><a class="viewcode-back" href="../api/index.html#janitoo_nosetests.JNTTBase.onlyCircleTest">[docs]</a>    <span class="k">def</span> <span class="nf">onlyCircleTest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Run a test only on circle</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="s">&#39;CIRCLE_USERNAME&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s">&#39;CIRCLE_USERNAME&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">SkipTest</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Only on circle&quot;</span><span class="p">))</span>
 </div>
     <span class="nd">@classmethod</span>
@@ -282,8 +283,8 @@
 <div class="viewcode-block" id="JNTTBase.onlyCITest"><a class="viewcode-back" href="../api/index.html#janitoo_nosetests.JNTTBase.onlyCITest">[docs]</a>    <span class="k">def</span> <span class="nf">onlyCITest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Run a test only on continuous integration</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="s">&#39;TRAVIS_OS_NAME&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span> <span class="ow">and</span> \
-           <span class="ow">not</span> <span class="s">&#39;CIRCLE_USERNAME&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s">&#39;TRAVIS_OS_NAME&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span> <span class="ow">and</span> \
+           <span class="s">&#39;CIRCLE_USERNAME&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">SkipTest</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Only on Continuous Integration&quot;</span><span class="p">))</span>
 </div>
     <span class="nd">@classmethod</span>
@@ -297,7 +298,7 @@
 <div class="viewcode-block" id="JNTTBase.onlyDockerTest"><a class="viewcode-back" href="../api/index.html#janitoo_nosetests.JNTTBase.onlyDockerTest">[docs]</a>    <span class="k">def</span> <span class="nf">onlyDockerTest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Run a test only on docker</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="s">&#39;JANITOO_DOCKER&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s">&#39;JANITOO_DOCKER&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">SkipTest</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="s">&quot;Only on docker&quot;</span><span class="p">))</span>
 </div>
     <span class="nd">@classmethod</span>
@@ -457,6 +458,17 @@
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">path</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;[</span><span class="si">%s</span><span class="s">] : Can&#39;t find data file </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">path</span><span class="p">))</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="JNTTBase.ip4Addresses"><a class="viewcode-back" href="../api/index.html#janitoo_nosetests.JNTTBase.ip4Addresses">[docs]</a>    <span class="k">def</span> <span class="nf">ip4Addresses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieve all ip4 adresses as a list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ip_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">interface</span> <span class="ow">in</span> <span class="n">interfaces</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">ifaddresses</span><span class="p">(</span><span class="n">interface</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="p">()):</span>
+                <span class="n">ip_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">link</span><span class="p">[</span><span class="s">&#39;addr&#39;</span><span class="p">])</span>
+        <span class="k">print</span> <span class="s">&quot;Found ip4 addresses </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">ip_list</span>
+        <span class="k">return</span> <span class="n">ip_list</span>
 </div></div>
 <div class="viewcode-block" id="JNTTDockerBase"><a class="viewcode-back" href="../api/index.html#janitoo_nosetests.JNTTDockerBase">[docs]</a><span class="k">class</span> <span class="nc">JNTTDockerBase</span><span class="p">(</span><span class="n">JNTTBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Tests for servers on docker</span>
