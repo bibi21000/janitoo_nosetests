@@ -607,7 +607,7 @@
                 <span class="k">try</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">assertBroadcastRequest</span><span class="p">(</span><span class="n">cmd_class</span><span class="o">=</span><span class="n">COMMAND_DISCOVERY</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">client_hadd</span><span class="o">=</span><span class="n">HADD</span><span class="o">%</span><span class="p">(</span><span class="mi">9999</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
                     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-                <span class="k">except</span><span class="p">:</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                     <span class="k">pass</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">run</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">assertHeartbeatNode</span><span class="p">(</span><span class="n">hadd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadd_ctrl</span><span class="p">)</span>
@@ -619,7 +619,7 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">assertNodeRequest</span><span class="p">(</span><span class="n">cmd_class</span><span class="o">=</span><span class="n">COMMAND_DISCOVERY</span><span class="p">,</span> <span class="n">uuid</span><span class="o">=</span><span class="n">request</span><span class="p">,</span> <span class="n">node_hadd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadd_ctrl</span><span class="p">,</span> <span class="n">client_hadd</span><span class="o">=</span><span class="n">HADD</span><span class="o">%</span><span class="p">(</span><span class="mi">9999</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
                     <span class="n">run</span> <span class="o">=</span> <span class="bp">True</span>
                     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-                <span class="k">except</span><span class="p">:</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                     <span class="k">pass</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">run</span><span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>

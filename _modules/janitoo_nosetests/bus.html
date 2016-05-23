@@ -132,7 +132,7 @@
 
 <span class="k">try</span><span class="p">:</span>
     <span class="nb">__import__</span><span class="p">(</span><span class="s">&#39;pkg_resources&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">declare_namespace</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
-<span class="k">except</span><span class="p">:</span>  <span class="c"># pragma: no cover</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>  <span class="c"># pragma: no cover</span>
     <span class="c"># bootstrapping</span>
     <span class="k">pass</span> <span class="c"># pragma: no cover</span>
 
