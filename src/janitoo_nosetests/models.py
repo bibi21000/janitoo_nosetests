@@ -58,7 +58,7 @@ class JNTTModels(JNTTBase):
     def tearDown(self):
         #~ try:
             #~ self.drop_all()
-        #~ except:
+        #~ except Exception:
             #~ pass
         JNTTBase.tearDown(self)
 
@@ -132,7 +132,7 @@ class JNTTDockerModels(JNTTBase):
     def tearDown(self):
         #~ try:
             #~ self.drop_all()
-        #~ except:
+        #~ except Exception:
             #~ pass
         JNTTBase.tearDown(self)
 

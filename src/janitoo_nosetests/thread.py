@@ -23,7 +23,7 @@ __email__ = 'bibi21000@gmail.com'
 
 try:
     __import__('pkg_resources').declare_namespace(__name__)
-except:  # pragma: no cover
+except Exception:  # pragma: no cover
     # bootstrapping
     pass # pragma: no cover
 
@@ -65,9 +65,9 @@ class JNTTThread(JNTTBase):
                 print "Load entry name %s" % entry.name
                 try:
                     self.factory[entry.name] = entry.load()
-                except:
+                except Exception:
                     pass
-        except:
+        except Exception:
             pass
         print "Thread %s" % self.thread_name
         self.thread = None
@@ -113,7 +113,7 @@ class JNTTThreadRun(JNTTThread):
             time.sleep(5)
             try:
                 self.thread.stop()
-            except:
+            except Exception:
                 pass
         self.options = None
         JNTTThread.tearDown(self)

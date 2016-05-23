@@ -498,7 +498,7 @@ class Common(object):
                 try:
                     self.assertBroadcastRequest(cmd_class=COMMAND_DISCOVERY, uuid=request, client_hadd=HADD%(9999,0))
                     time.sleep(2)
-                except:
+                except Exception:
                     pass
             self.assertTrue(run)
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
@@ -510,7 +510,7 @@ class Common(object):
                     self.assertNodeRequest(cmd_class=COMMAND_DISCOVERY, uuid=request, node_hadd=self.hadd_ctrl, client_hadd=HADD%(9999,0))
                     run = True
                     time.sleep(2)
-                except:
+                except Exception:
                     pass
             self.assertTrue(run)
         finally:
