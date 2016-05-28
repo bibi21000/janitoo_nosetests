@@ -76,4 +76,5 @@ class JNTTBusCommon(object):
         for value in bus.values:
             print("Check bus value : {:s}_".format(self.oid))
             self.assertTrue(value.startswith("{:s}_".format(self.oid)))
+            self.assertNotEqual(0, bus.values[value].cmd_class)
 
