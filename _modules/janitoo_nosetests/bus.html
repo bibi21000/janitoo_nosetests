@@ -188,6 +188,7 @@
         <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">bus</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
             <span class="k">print</span><span class="p">(</span><span class="s">&quot;Check bus value : {:s}_&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oid</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;{:s}_&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oid</span><span class="p">)))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">bus</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">value</span><span class="p">]</span><span class="o">.</span><span class="n">cmd_class</span><span class="p">)</span>
 </pre></div></div></div>
 
     </div>
