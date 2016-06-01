@@ -795,6 +795,12 @@
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="janitoo_nosetests.server.JNTTServer.assertFsmBoot">
+<tt class="descname">assertFsmBoot</tt><big>(</big><em>state='booting'</em><big>)</big><a class="reference internal" href="../_modules/janitoo_nosetests/server.html#JNTTServer.assertFsmBoot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_nosetests.server.JNTTServer.assertFsmBoot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assert Finish State Machine can boot</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="janitoo_nosetests.server.JNTTServer.assertHeartbeatNode">
 <tt class="descname">assertHeartbeatNode</tt><big>(</big><em>hadd=None</em>, <em>timeout=60</em><big>)</big><a class="reference internal" href="../_modules/janitoo_nosetests/server.html#JNTTServer.assertHeartbeatNode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_nosetests.server.JNTTServer.assertHeartbeatNode" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -937,8 +943,13 @@ Must be called at the end of process, when the server has closed the logfile.</p
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="janitoo_nosetests.server.JNTTServerCommon.test_010_start_heartbeat_stop">
-<tt class="descname">test_010_start_heartbeat_stop</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/janitoo_nosetests/server.html#JNTTServerCommon.test_010_start_heartbeat_stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_nosetests.server.JNTTServerCommon.test_010_start_heartbeat_stop" title="Permalink to this definition">¶</a></dt>
+<dt id="janitoo_nosetests.server.JNTTServerCommon.skip_010_start_heartbeat_controller_stop">
+<tt class="descname">skip_010_start_heartbeat_controller_stop</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/janitoo_nosetests/server.html#JNTTServerCommon.skip_010_start_heartbeat_controller_stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_nosetests.server.JNTTServerCommon.skip_010_start_heartbeat_controller_stop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="janitoo_nosetests.server.JNTTServerCommon.skip_030_wait_for_all_nodes">
+<tt class="descname">skip_030_wait_for_all_nodes</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/janitoo_nosetests/server.html#JNTTServerCommon.skip_030_wait_for_all_nodes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_nosetests.server.JNTTServerCommon.skip_030_wait_for_all_nodes" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -949,11 +960,6 @@ Must be called at the end of process, when the server has closed the logfile.</p
 <dl class="method">
 <dt id="janitoo_nosetests.server.JNTTServerCommon.test_012_start_reload_threads_stop">
 <tt class="descname">test_012_start_reload_threads_stop</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/janitoo_nosetests/server.html#JNTTServerCommon.test_012_start_reload_threads_stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_nosetests.server.JNTTServerCommon.test_012_start_reload_threads_stop" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="janitoo_nosetests.server.JNTTServerCommon.test_030_wait_for_all_nodes">
-<tt class="descname">test_030_wait_for_all_nodes</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/janitoo_nosetests/server.html#JNTTServerCommon.test_030_wait_for_all_nodes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_nosetests.server.JNTTServerCommon.test_030_wait_for_all_nodes" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -990,6 +996,12 @@ Must be called at the end of process, when the server has closed the logfile.</p
 <em class="property">class </em><tt class="descclassname">janitoo_nosetests.thread.</tt><tt class="descname">JNTTThread</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="reference internal" href="../_modules/janitoo_nosetests/thread.html#JNTTThread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_nosetests.thread.JNTTThread" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#janitoo_nosetests.JNTTBase" title="janitoo_nosetests.JNTTBase"><tt class="xref py py-class docutils literal"><span class="pre">janitoo_nosetests.JNTTBase</span></tt></a></p>
 <p>Thread base test</p>
+<dl class="method">
+<dt id="janitoo_nosetests.thread.JNTTThread.assertFsmBoot">
+<tt class="descname">assertFsmBoot</tt><big>(</big><em>state='booting'</em><big>)</big><a class="reference internal" href="../_modules/janitoo_nosetests/thread.html#JNTTThread.assertFsmBoot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_nosetests.thread.JNTTThread.assertFsmBoot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assert Finish State Machine can boot</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="janitoo_nosetests.thread.JNTTThread.assertThreadEntryPoint">
 <tt class="descname">assertThreadEntryPoint</tt><big>(</big><em>entry</em><big>)</big><a class="reference internal" href="../_modules/janitoo_nosetests/thread.html#JNTTThread.assertThreadEntryPoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_nosetests.thread.JNTTThread.assertThreadEntryPoint" title="Permalink to this definition">¶</a></dt>
@@ -1186,6 +1198,12 @@ Must be called at the end of process, when the server has closed the logfile.</p
 <dt id="janitoo_nosetests.JNTTBase.assertFile">
 <tt class="descname">assertFile</tt><big>(</big><em>path</em><big>)</big><a class="reference internal" href="../_modules/janitoo_nosetests.html#JNTTBase.assertFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_nosetests.JNTTBase.assertFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check a file exists</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="janitoo_nosetests.JNTTBase.assertFsmBoot">
+<tt class="descname">assertFsmBoot</tt><big>(</big><em>bus=None</em>, <em>state='booting'</em>, <em>timeout=20</em><big>)</big><a class="reference internal" href="../_modules/janitoo_nosetests.html#JNTTBase.assertFsmBoot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#janitoo_nosetests.JNTTBase.assertFsmBoot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assert Finish State Machine can boot</p>
 </dd></dl>
 
 <dl class="method">

@@ -195,6 +195,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">mkth</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
         <span class="n">th</span> <span class="o">=</span> <span class="n">mkth</span><span class="p">({},</span> <span class="n">force</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">th</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTThread.assertFsmBoot"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.thread.JNTTThread.assertFsmBoot">[docs]</a>    <span class="k">def</span> <span class="nf">assertFsmBoot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s">&#39;booting&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Assert Finish State Machine can boot</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">JNTTBase</span><span class="o">.</span><span class="n">assertFsmBoot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bus</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">bus</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s">&#39;booting&#39;</span><span class="p">)</span>
 </div></div>
 <div class="viewcode-block" id="JNTTDockerThread"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.thread.JNTTDockerThread">[docs]</a><span class="k">class</span> <span class="nc">JNTTDockerThread</span><span class="p">(</span><span class="n">JNTTThread</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Tests for threads on docker</span>

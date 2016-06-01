@@ -513,6 +513,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">message_received</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mqttc</span><span class="o">.</span><span class="n">unsubscribe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="s">&#39;/values/</span><span class="si">%s</span><span class="s">/</span><span class="si">%s</span><span class="s">/#&#39;</span><span class="o">%</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">node_hadd</span><span class="p">))</span>
         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="JNTTServer.assertFsmBoot"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.assertFsmBoot">[docs]</a>    <span class="k">def</span> <span class="nf">assertFsmBoot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s">&#39;booting&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Assert Finish State Machine can boot</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">thread</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">find_thread</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">server_section</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertNotEqual</span><span class="p">(</span><span class="n">thread</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">JNTTBase</span><span class="o">.</span><span class="n">assertFsmBoot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bus</span><span class="o">=</span><span class="n">thread</span><span class="o">.</span><span class="n">bus</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s">&#39;booting&#39;</span><span class="p">)</span>
 </div></div>
 <div class="viewcode-block" id="Common"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.Common">[docs]</a><span class="k">class</span> <span class="nc">Common</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Common tests for servers and docker</span>
@@ -634,7 +641,7 @@
     <span class="n">longdelay</span> <span class="o">=</span> <span class="mi">50</span>
     <span class="n">shortdelay</span> <span class="o">=</span> <span class="mi">30</span>
 
-<div class="viewcode-block" id="JNTTServerCommon.test_010_start_heartbeat_stop"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServerCommon.test_010_start_heartbeat_stop">[docs]</a>    <span class="k">def</span> <span class="nf">test_010_start_heartbeat_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="JNTTServerCommon.skip_010_start_heartbeat_controller_stop"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServerCommon.skip_010_start_heartbeat_controller_stop">[docs]</a>    <span class="k">def</span> <span class="nf">skip_010_start_heartbeat_controller_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">assertHeartbeatNode</span><span class="p">(</span><span class="n">hadd</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadd_ctrl</span><span class="p">)</span>
@@ -649,6 +656,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
 </div>
 <div class="viewcode-block" id="JNTTServerCommon.test_011_start_reload_stop"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServerCommon.test_011_start_reload_stop">[docs]</a>    <span class="k">def</span> <span class="nf">test_011_start_reload_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hadds</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">skipTest</span><span class="p">(</span><span class="s">&quot;No hadds defined. Skip test&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">assertHeartbeatNodes</span><span class="p">(</span><span class="n">hadds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadds</span><span class="p">)</span>
@@ -661,6 +670,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
 </div>
 <div class="viewcode-block" id="JNTTServerCommon.test_012_start_reload_threads_stop"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServerCommon.test_012_start_reload_threads_stop">[docs]</a>    <span class="k">def</span> <span class="nf">test_012_start_reload_threads_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hadds</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">skipTest</span><span class="p">(</span><span class="s">&quot;No hadds defined. Skip test&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">assertHeartbeatNodes</span><span class="p">(</span><span class="n">hadds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hadds</span><span class="p">)</span>
@@ -672,7 +683,7 @@
         <span class="k">finally</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="JNTTServerCommon.test_030_wait_for_all_nodes"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServerCommon.test_030_wait_for_all_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">test_030_wait_for_all_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="JNTTServerCommon.skip_030_wait_for_all_nodes"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServerCommon.skip_030_wait_for_all_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">skip_030_wait_for_all_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hadds</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">skipTest</span><span class="p">(</span><span class="s">&quot;No hadds defined. Skip test&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
