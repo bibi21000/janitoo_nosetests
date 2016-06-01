@@ -84,6 +84,11 @@ class JNTTThread(JNTTBase):
         th = mkth({}, force=False)
         self.assertEqual(th, None)
 
+    def assertFsmBoot(self, state='booting'):
+        """Assert Finish State Machine can boot
+        """
+        JNTTBase.assertFsmBoot(self, bus=self.thread.bus, state='booting')
+
 class JNTTDockerThread(JNTTThread):
     """Tests for threads on docker
     """

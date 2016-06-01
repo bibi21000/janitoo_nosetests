@@ -289,6 +289,18 @@ class JNTTBase(unittest.TestCase):
         except socket.gaierror:
             raise AssertionError("Can't connect to %s(%s):%s"%(server, 'unknown', port))
 
+    def assertFsmBoot(self, bus=None, state='booting', timeout=20):
+        """Assert Finish State Machine can boot
+        """
+        if bus is None:
+            self.skipTest("Can't test state of a None bus")
+        i = 0
+        while i<timeout*2 and bus.state == state:
+            time.sleep(0.5)
+            i += 1
+        print "Bus state %s"%bus.state
+        self.assertNotEqual(state, bus.state)
+
     def mkDir(self, path):
         """Create a directory
         """

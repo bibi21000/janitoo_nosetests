@@ -402,6 +402,13 @@ class JNTTServer(JNTTBase):
         self.mqttc.unsubscribe(topic='/values/%s/%s/#'%(type, node_hadd))
         time.sleep(0.5)
 
+    def assertFsmBoot(self, state='booting'):
+        """Assert Finish State Machine can boot
+        """
+        thread = self.server.find_thread(self.server_section)
+        self.assertNotEqual(thread, None)
+        JNTTBase.assertFsmBoot(self, bus=thread.bus, state='booting')
+
 class Common(object):
     """Common tests for servers and docker
     """
