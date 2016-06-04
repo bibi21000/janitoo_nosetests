@@ -336,7 +336,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_received</span><span class="p">)</span>
         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="JNTTServer.assertHeartbeatNodes"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.assertHeartbeatNodes">[docs]</a>    <span class="k">def</span> <span class="nf">assertHeartbeatNodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hadds</span><span class="o">=</span><span class="p">[],</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+<div class="viewcode-block" id="JNTTServer.assertHeartbeatNodes"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.assertHeartbeatNodes">[docs]</a>    <span class="k">def</span> <span class="nf">assertHeartbeatNodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hadds</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">hadds</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">hadds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hadds</span>
         <span class="k">print</span> <span class="s">&quot;Waiting for </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hadds</span><span class="p">)</span>
@@ -352,7 +352,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">heartbeat_received</span><span class="p">)</span>
         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="JNTTServer.waitHeartbeatNodes"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.waitHeartbeatNodes">[docs]</a>    <span class="k">def</span> <span class="nf">waitHeartbeatNodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hadds</span><span class="o">=</span><span class="p">[],</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+<div class="viewcode-block" id="JNTTServer.waitHeartbeatNodes"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServer.waitHeartbeatNodes">[docs]</a>    <span class="k">def</span> <span class="nf">waitHeartbeatNodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hadds</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">hadds</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">hadds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hadds</span>
         <span class="k">print</span> <span class="s">&quot;Waiting for </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hadds</span><span class="p">)</span>
@@ -656,6 +656,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
 </div>
 <div class="viewcode-block" id="JNTTServerCommon.test_011_start_reload_stop"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.server.JNTTServerCommon.test_011_start_reload_stop">[docs]</a>    <span class="k">def</span> <span class="nf">test_011_start_reload_stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">hadds</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hadds</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">skipTest</span><span class="p">(</span><span class="s">&quot;No hadds defined. Skip test&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
