@@ -224,7 +224,7 @@ class JNTTServer(JNTTBase):
         self.assertTrue(self.heartbeat_received)
         time.sleep(0.5)
 
-    def assertHeartbeatNodes(self, hadds=[], timeout=60):
+    def assertHeartbeatNodes(self, hadds=None, timeout=60):
         if hadds is None:
             hadds = self.hadds
         print "Waiting for %s" % (hadds)
@@ -240,7 +240,7 @@ class JNTTServer(JNTTBase):
         self.assertTrue(self.heartbeat_received)
         time.sleep(0.5)
 
-    def waitHeartbeatNodes(self, hadds=[], timeout=60):
+    def waitHeartbeatNodes(self, hadds=None, timeout=60):
         if hadds is None:
             hadds = self.hadds
         print "Waiting for %s" % (hadds)
@@ -544,6 +544,7 @@ class JNTTServerCommon(Common):
             self.stop()
 
     def test_011_start_reload_stop(self):
+        print self.hadds
         if self.hadds is None:
             self.skipTest("No hadds defined. Skip test")
         self.start()
