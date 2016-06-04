@@ -81,7 +81,7 @@ class JNTTFactoryCommon(object):
             entry_points[entrypoint.name] = entrypoint.load()
         self.assertTrue(self.entry_name in entry_points)
 
-    def test_002_build_value_from_factory(self):
+    def test_002_build_value_from_factory(self, **kwargs):
         node_uuid='test_node'
         main_value = self.get_main_value(node_uuid=node_uuid, **kwargs)
         self.assertNotEqual(main_value, None)
