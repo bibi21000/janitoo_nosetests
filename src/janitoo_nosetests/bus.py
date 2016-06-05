@@ -63,9 +63,19 @@ class JNTTBusCommon(object):
     """
 
     def test_001_bus_oid(self):
-        bus = self.bus()
-        self.assertFalse(bus is None)
-        self.assertEqual(self.generic, bus.oid)
+        rais = False
+        bus = None
+        try:
+            bus = self.bus()
+        except RuntimeError:
+            rais = True
+        if rais:
+            print "The bus %s is marked as non aggregate"
+            self.assertTrue(bus is None)
+        else:
+            print "The bus %s is ready for aggregation"
+            self.assertFalse(bus is None)
+            self.assertEqual(self.generic, bus.oid)
         bus = self.bus(oid=self.oid)
         self.assertFalse(bus is None)
         self.assertEqual(self.oid, bus.oid)
