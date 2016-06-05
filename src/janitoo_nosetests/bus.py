@@ -70,10 +70,10 @@ class JNTTBusCommon(object):
         except RuntimeError:
             rais = True
         if rais:
-            print "The bus %s is marked as non aggregate"
+            print "The bus %s is marked as non aggregatable"%self.oid
             self.assertTrue(bus is None)
         else:
-            print "The bus %s is ready for aggregation"
+            print "The bus %s is accepting aggregation"%self.oid
             self.assertFalse(bus is None)
             self.assertEqual(self.generic, bus.oid)
         bus = self.bus(oid=self.oid)
