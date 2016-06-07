@@ -175,9 +175,19 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="JNTTBusCommon.test_001_bus_oid"><a class="viewcode-back" href="../../api/index.html#janitoo_nosetests.bus.JNTTBusCommon.test_001_bus_oid">[docs]</a>    <span class="k">def</span> <span class="nf">test_001_bus_oid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">bus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bus</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">bus</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">generic</span><span class="p">,</span> <span class="n">bus</span><span class="o">.</span><span class="n">oid</span><span class="p">)</span>
+        <span class="n">rais</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">bus</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">bus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bus</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
+            <span class="n">rais</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">if</span> <span class="n">rais</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;The bus </span><span class="si">%s</span><span class="s"> is marked as non aggregatable&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">oid</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">bus</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s">&quot;The bus </span><span class="si">%s</span><span class="s"> is accepting aggregation&quot;</span><span class="o">%</span><span class="bp">self</span><span class="o">.</span><span class="n">oid</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">bus</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">generic</span><span class="p">,</span> <span class="n">bus</span><span class="o">.</span><span class="n">oid</span><span class="p">)</span>
         <span class="n">bus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bus</span><span class="p">(</span><span class="n">oid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">oid</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">bus</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">oid</span><span class="p">,</span> <span class="n">bus</span><span class="o">.</span><span class="n">oid</span><span class="p">)</span>
