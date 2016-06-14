@@ -44,19 +44,26 @@ from janitoo.runner import jnt_parse_args
 from janitoo.options import JNTOptions
 from janitoo.thread import JNTBusThread
 
+from janitoo_tkinter import JanitooTk
+
 class JNTTTkinter(JNTTBase):
     """TKinter base test
     """
+    client_conf = ""
+    section = "tkinter"
+
+    def create_root(self):
+        root = JanitooTk(options=self.options, section=self.section)
+        return root
 
     def setUp(self):
         JNTTBase.setUp(self)
+        self.options = JNTOptions({'conf_file' : self.getDataFile(self.client_conf)})
         self.root = self.create_root()
 
     def tearDown(self):
         JNTTBase.tearDown(self)
 
-    def create_root(self):
-        return None
 
 class Common(object):
     """Common tests for tkinter and docker
