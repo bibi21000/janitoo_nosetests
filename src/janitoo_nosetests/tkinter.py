@@ -64,6 +64,25 @@ class JNTTTkinter(JNTTBase):
     def tearDown(self):
         JNTTBase.tearDown(self)
 
+    def assertNotInLogfile(self, expr='^ERROR '):
+        """Assert an expression is not in logifle.
+        Must be called at the end of process, when the server has closed the logfile.
+        """
+        self.assertTrue(self.client_conf is not None)
+        options = JNTOptions(options={'conf_file':self.getDataFile(self.client_conf)})
+        log_file_from_config = options.get_option('handler_file','args',None)
+        self.assertTrue(log_file_from_config is not None)
+        #I know, it's bad
+        log_args = eval(log_file_from_config)
+        log_file_from_config = log_args[0]
+        self.assertFile(log_file_from_config)
+        found = False
+        with open(log_file_from_config, 'r') as hand:
+            for line in hand:
+                print line
+                if re.search(expr, line):
+                    found = True
+        self.assertFalse(found)
 
 class Common(object):
     """Common tests for tkinter and docker
