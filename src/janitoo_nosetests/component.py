@@ -87,24 +87,19 @@ class JNTTComponentCommon(object):
         self.assertFalse(self.component_name is None)
         self.assertComponentEntryPoint()
 
-    def test_002_component_oid(self):
+    def test_002_component_oid_and_properties(self):
         self.assertFalse(self.component_name is None)
         entries = iter_entry_points(group='janitoo.components', name=self.component_name)
         entry = entries.next()
         mkth = entry.load()
         self.assertFalse(mkth is None)
+
         compo = mkth()
         self.assertFalse(compo is None)
         self.assertEqual(compo.oid,  self.component_name)
         self.assertFalse(compo.name is None)
         self.assertFalse(compo.product_name is None)
 
-    def test_002_component_properties(self):
-        self.assertFalse(self.component_name is None)
-        entries = iter_entry_points(group='janitoo.components', name=self.component_name)
-        entry = entries.next()
-        mkth = entry.load()
-        self.assertFalse(mkth is None)
         compo = mkth(
             name = 'myunbelievablename',
             product_name = 'myunbelievableproduct_name',
@@ -116,3 +111,4 @@ class JNTTComponentCommon(object):
         self.assertEqual(compo.product_name, 'myunbelievableproduct_name')
         self.assertEqual(compo.product_type, 'myunbelievableproduct_type')
         self.assertEqual(compo.product_manufacturer, 'myunbelievableproduct_manufacturer')
+cd
