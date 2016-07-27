@@ -111,4 +111,3 @@ class JNTTComponentCommon(object):
         self.assertEqual(compo.product_name, 'myunbelievableproduct_name')
         self.assertEqual(compo.product_type, 'myunbelievableproduct_type')
         self.assertEqual(compo.product_manufacturer, 'myunbelievableproduct_manufacturer')
-cd
