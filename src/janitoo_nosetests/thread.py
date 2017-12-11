@@ -62,14 +62,14 @@ class JNTTThread(JNTTBase):
         self.factory = {}
         try:
             for entry in iter_entry_points(group='janitoo.threads'):
-                print "Load entry name %s" % entry.name
+                print("Load entry name %s" % entry.name)
                 try:
                     self.factory[entry.name] = entry.load()
                 except Exception:
                     pass
         except Exception:
             pass
-        print "Thread %s" % self.thread_name
+        print("Thread %s" % self.thread_name)
         self.thread = None
 
     def tearDown(self):
@@ -131,17 +131,17 @@ class JNTTThreadRun(JNTTThread):
         while i< self.timeout and not self.thread.nodeman.is_started:
             time.sleep(1)
             i += 1
-            print self.thread.nodeman.state
+            print(self.thread.nodeman.state)
 
     def assertNodeOnBus(self, node_uuid):
         """Assert a node is on the bus"""
-        print 'Look for node %s' % node_uuid
+        print('Look for node %s' % node_uuid)
         self.assertNotEqual(None, self.thread.bus.nodeman.find_node(node_uuid))
 
     def assertValueOnBus(self, node_uuid, value_uuid):
         """Assert a value is on the bus"""
         self.assertNodeOnBus(node_uuid)
-        print 'Look for value %s' % value_uuid
+        print('Look for value %s' % value_uuid)
         self.assertNotEqual(None, self.thread.bus.nodeman.find_value(node_uuid,value_uuid))
 
 class JNTTDockerThreadRun(JNTTThreadRun):

@@ -235,42 +235,42 @@ class JNTTBase(unittest.TestCase):
     def assertFile(self, path):
         """Check a file exists
         """
-        print "Check file %s" % path
+        print("Check file %s" % path)
         self.assertTrue(os.path.isfile(path))
 
     def assertDir(self, path):
         """Check a directory exists
         """
-        print "Check directory %s" % path
+        print("Check directory %s" % path)
         self.assertTrue(os.path.isdir(path))
 
     def assertUser(self, usr):
         """Check a user exists on the system
         """
-        print "Check user %s" % usr
+        print("Check user %s" % usr)
         try:
             pwd.getpwnam(usr)
             res = True
         except KeyError:
-            print('User %s does not exist.' % usr)
+            print(('User %s does not exist.' % usr))
             res = False
         self.assertTrue(res)
 
     def assertGroup(self, grp):
         """Check a group exists on the system
         """
-        print "Check group %s" % grp
+        print("Check group %s" % grp)
         try:
             grp.getgrnam('somegrp')
         except KeyError:
-            print('Group %s does not exist.' % grp)
+            print(('Group %s does not exist.' % grp))
             res = False
         self.assertTrue(res)
 
     def assertDateInterval(self, which, dateref, delta=1):
         """
         """
-        print "Check date %s in interval : %s  +/-  %ss" % (which, dateref, delta)
+        print("Check date %s in interval : %s  +/-  %ss" % (which, dateref, delta))
         self.assertTrue(which > dateref - datetime.timedelta(seconds=delta))
         self.assertTrue(which < dateref + datetime.timedelta(seconds=delta))
 
@@ -284,7 +284,7 @@ class JNTTBase(unittest.TestCase):
             s.connect_ex((ip, port))
             s.send('test')
             s.close()
-        except socket.error, e:
+        except socket.error as e:
             raise AssertionError("Can't connect to %s(%s):%s"%(server, ip, port))
         except socket.gaierror:
             raise AssertionError("Can't connect to %s(%s):%s"%(server, 'unknown', port))
@@ -298,7 +298,7 @@ class JNTTBase(unittest.TestCase):
         while i<timeout*2 and bus.state == state:
             time.sleep(0.5)
             i += 1
-        print "Bus state %s"%bus.state
+        print("Bus state %s"%bus.state)
         self.assertNotEqual(state, bus.state)
 
     def mkDir(self, path):
@@ -370,7 +370,7 @@ class JNTTBase(unittest.TestCase):
         for interface in interfaces():
             for link in ifaddresses(interface).get(AF_INET, ()):
                 ip_list.append(link['addr'])
-        print "Found ip4 addresses %s" % ip_list
+        print("Found ip4 addresses %s" % ip_list)
         return ip_list
 
 class JNTTDockerBase(JNTTBase):

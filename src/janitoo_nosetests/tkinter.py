@@ -79,7 +79,7 @@ class JNTTTkinter(JNTTBase):
         found = False
         with open(log_file_from_config, 'r') as hand:
             for line in hand:
-                print line
+                print(line)
                 if re.search(expr, line):
                     found = True
         self.assertFalse(found)

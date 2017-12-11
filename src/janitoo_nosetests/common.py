@@ -114,7 +114,7 @@ class JNTControllerServer(JNTCommon):
                 self.heartbeat_message = None
             else:
                 time.sleep(0.001)
-        print "HADD : ", add_ctrl, add_node, state
+        print("HADD : ", add_ctrl, add_node, state)
         self.assertTrue(checked)
 
     def assertNodeRequest(self, cmd_class=0, uuid='request_info_nodes', node_hadd=None, client_hadd=None):

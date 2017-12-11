@@ -70,10 +70,10 @@ class JNTTBusCommon(object):
         except RuntimeError:
             rais = True
         if rais:
-            print "The bus %s is marked as non aggregatable"%self.oid
+            print("The bus %s is marked as non aggregatable"%self.oid)
             self.assertTrue(bus is None)
         else:
-            print "The bus %s is accepting aggregation"%self.oid
+            print("The bus %s is accepting aggregation"%self.oid)
             self.assertFalse(bus is None)
             self.assertEqual(self.generic, bus.oid)
         bus = self.bus(oid=self.oid)
@@ -84,7 +84,7 @@ class JNTTBusCommon(object):
         bus = self.bus(oid=self.oid)
         #Bus values must starts with
         for value in bus.values:
-            print("Check for bus {:s} : found value {:s}".format(self.oid, value))
+            print(("Check for bus {:s} : found value {:s}".format(self.oid, value)))
             self.assertTrue(value.startswith("{:s}_".format(self.oid)))
             self.assertNotEqual(0, bus.values[value].cmd_class)
 

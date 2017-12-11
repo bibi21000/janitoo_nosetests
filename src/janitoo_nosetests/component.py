@@ -65,7 +65,7 @@ class JNTTComponent(JNTTBase):
             except Exception:
                 #traceback.print_exc()
                 pass
-        print "Component %s" % self.component_name
+        print("Component %s" % self.component_name)
 
     def tearDown(self):
         self.factory = None
@@ -90,7 +90,7 @@ class JNTTComponentCommon(object):
     def test_002_component_oid_and_properties(self):
         self.assertFalse(self.component_name is None)
         entries = iter_entry_points(group='janitoo.components', name=self.component_name)
-        entry = entries.next()
+        entry = next(entries)
         mkth = entry.load()
         self.assertFalse(mkth is None)
 

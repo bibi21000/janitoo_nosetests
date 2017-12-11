@@ -169,7 +169,7 @@ class JNTTServer(JNTTBase):
                         self.heartbeat_received = True
             elif self.heartbeat_waiting == HADD%(hbadd_ctrl, hbadd_node):
                 self.heartbeat_received = True
-        print "HADD : %s/%s = %s"%(hbadd_ctrl, hbadd_node, state)
+        print("HADD : %s/%s = %s"%(hbadd_ctrl, hbadd_node, state))
 
     def assertInLogfile(self, expr='^ERROR '):
         """Assert an expression is in logifle
@@ -186,7 +186,7 @@ class JNTTServer(JNTTBase):
         found = False
         with open(log_file_from_config, 'r') as hand:
             for line in hand:
-                print line
+                print(line)
                 if re.search(expr, line):
                     found = True
         self.assertTrue(found)
@@ -206,13 +206,13 @@ class JNTTServer(JNTTBase):
         found = False
         with open(log_file_from_config, 'r') as hand:
             for line in hand:
-                print line
+                print(line)
                 if re.search(expr, line):
                     found = True
         self.assertFalse(found)
 
     def assertHeartbeatNode(self, hadd=None, timeout=60):
-        print "Waiting for %s" % (hadd)
+        print("Waiting for %s" % (hadd))
         self.heartbeat_waiting = hadd
         self.heartbeat_waitings = None
         self.heartbeat_message = None
@@ -227,7 +227,7 @@ class JNTTServer(JNTTBase):
     def assertHeartbeatNodes(self, hadds=None, timeout=60):
         if hadds is None:
             hadds = self.hadds
-        print "Waiting for %s" % (hadds)
+        print("Waiting for %s" % (hadds))
         self.heartbeat_waiting = None
         self.heartbeat_waitings = list(hadds)
         self.heartbeat_message = None
@@ -236,14 +236,14 @@ class JNTTServer(JNTTBase):
         while i< timeout*10000 and not self.heartbeat_received:
             time.sleep(0.0001)
             i += 1
-        print "Unreceived heartbeats %s" % self.heartbeat_waitings
+        print("Unreceived heartbeats %s" % self.heartbeat_waitings)
         self.assertTrue(self.heartbeat_received)
         time.sleep(0.5)
 
     def waitHeartbeatNodes(self, hadds=None, timeout=60):
         if hadds is None:
             hadds = self.hadds
-        print "Waiting for %s" % (hadds)
+        print("Waiting for %s" % (hadds))
         self.heartbeat_waiting = None
         self.heartbeat_waitings = list(hadds)
         self.heartbeat_message = None
@@ -252,12 +252,12 @@ class JNTTServer(JNTTBase):
         while i< timeout*10000 and not self.heartbeat_received:
             time.sleep(0.0001)
             i += 1
-        print "Unreceived heartbeats %s" % self.heartbeat_waitings
+        print("Unreceived heartbeats %s" % self.heartbeat_waitings)
         time.sleep(0.5)
 
     def assertNodeRequest(self, cmd_class=0, genre=0x04, uuid='request_info_nodes', node_hadd=None, client_hadd=None, data=None, is_writeonly=False, is_readonly=False, timeout=5):
         self.message_received = False
-        print "Waiting for %s : %s" % (node_hadd,uuid)
+        print("Waiting for %s : %s" % (node_hadd,uuid))
         def mqtt_on_message(client, userdata, message):
             """On generic message
             """
@@ -297,17 +297,17 @@ class JNTTServer(JNTTBase):
     def assertUpdateValue(self, type='user', data=None, cmd_class=0, genre=0x04, uuid='request_info_nodes', node_hadd=None, client_hadd=None, is_writeonly=False, is_readonly=False, timeout=5):
         self.message_received = False
         self.message = None
-        print "Waiting for %s : %s" % (node_hadd,uuid)
+        print("Waiting for %s : %s" % (node_hadd,uuid))
         def mqtt_on_message(client, userdata, message):
             """On generic message
             """
             msg = json_loads(message.payload)
-            print "Received message %s"%msg
+            print("Received message %s"%msg)
             if msg['uuid'] == uuid and msg['hadd'] == node_hadd:
                 self.message = message
                 self.message_received = True
         self.mqttc.subscribe(topic='/values/%s/%s/#'%(type, node_hadd), callback=mqtt_on_message)
-        print 'Subscribe to /values/%s/%s/#'%(type, node_hadd)
+        print('Subscribe to /values/%s/%s/#'%(type, node_hadd))
         time.sleep(0.5)
         msg={ 'cmd_class': cmd_class, 'genre':genre, 'uuid':uuid, 'reply_hadd':client_hadd, 'data':data, 'hadd':node_hadd, 'is_writeonly':is_writeonly, 'is_readonly':is_readonly}
         self.mqttc.publish('/nodes/%s/request' % (node_hadd), json_dumps(msg))
@@ -327,17 +327,17 @@ class JNTTServer(JNTTBase):
     def assertNotUpdateValue(self, type='user', data=None, cmd_class=0, genre=0x04, uuid='request_info_nodes', node_hadd=None, client_hadd=None, is_writeonly=False, is_readonly=False, timeout=5):
         self.message_received = False
         self.message = None
-        print "Waiting for %s : %s" % (node_hadd,uuid)
+        print("Waiting for %s : %s" % (node_hadd,uuid))
         def mqtt_on_message(client, userdata, message):
             """On generic message
             """
             msg = json_loads(message.payload)
-            print "Received message %s"%msg
+            print("Received message %s"%msg)
             if msg['uuid'] == uuid and msg['hadd'] == node_hadd:
                 self.message = message
                 self.message_received = True
         self.mqttc.subscribe(topic='/values/%s/%s/#'%(type, node_hadd), callback=mqtt_on_message)
-        print 'Subscribe to /values/%s/%s/#'%(type, node_hadd)
+        print('Subscribe to /values/%s/%s/#'%(type, node_hadd))
         time.sleep(0.5)
         msg={ 'cmd_class': cmd_class, 'genre':genre, 'uuid':uuid, 'reply_hadd':client_hadd, 'data':data, 'hadd':node_hadd, 'is_writeonly':is_writeonly, 'is_readonly':is_readonly}
         self.mqttc.publish('/nodes/%s/request' % (node_hadd), json_dumps(msg))
@@ -353,17 +353,17 @@ class JNTTServer(JNTTBase):
     def assertWaitValue(self, type='user', data=None, cmd_class=0, genre=0x04, uuid='request_info_nodes', node_hadd=None, client_hadd=None, is_writeonly=False, is_readonly=False, timeout=5):
         self.message_received = False
         self.message = None
-        print "Waiting for %s : %s" % (node_hadd,uuid)
+        print("Waiting for %s : %s" % (node_hadd,uuid))
         def mqtt_on_message(client, userdata, message):
             """On generic message
             """
             msg = json_loads(message.payload)
-            print "Received message %s"%msg
+            print("Received message %s"%msg)
             if msg['uuid'] == uuid and msg['hadd'] == node_hadd:
                 self.message = message
                 self.message_received = True
         self.mqttc.subscribe(topic='/values/%s/%s/#'%(type, node_hadd), callback=mqtt_on_message)
-        print 'Subscribe to /values/%s/%s/#'%(type, node_hadd)
+        print('Subscribe to /values/%s/%s/#'%(type, node_hadd))
         time.sleep(0.5)
         i = 0
         while i< timeout*10000 and not self.message_received:
@@ -381,17 +381,17 @@ class JNTTServer(JNTTBase):
     def assertNotWaitValue(self, type='user', data=None, cmd_class=0, genre=0x04, uuid='request_info_nodes', node_hadd=None, client_hadd=None, is_writeonly=False, is_readonly=False, timeout=5):
         self.message_received = False
         self.message = None
-        print "Waiting for %s : %s" % (node_hadd,uuid)
+        print("Waiting for %s : %s" % (node_hadd,uuid))
         def mqtt_on_message(client, userdata, message):
             """On generic message
             """
             msg = json_loads(message.payload)
-            print "Received message %s"%msg
+            print("Received message %s"%msg)
             if msg['uuid'] == uuid and msg['hadd'] == node_hadd:
                 self.message = message
                 self.message_received = True
         self.mqttc.subscribe(topic='/values/%s/%s/#'%(type, node_hadd), callback=mqtt_on_message)
-        print 'Subscribe to /values/%s/%s/#'%(type, node_hadd)
+        print('Subscribe to /values/%s/%s/#'%(type, node_hadd))
         time.sleep(0.5)
         i = 0
         while i< timeout*10000 and not self.message_received:
@@ -421,7 +421,7 @@ class Common(object):
         self.start()
         time.sleep(5)
         if self.server_section:
-            print "Look for thread %s"%self.server_section
+            print("Look for thread %s"%self.server_section)
             thread = self.server.find_thread(self.server_section)
             self.assertNotEqual(thread, None)
             self.assertIsInstance(thread, JNTBusThread)
@@ -431,14 +431,14 @@ class Common(object):
         self.assertInLogfile('Start the server')
         self.assertInLogfile('Connected to broker')
         self.assertInLogfile('Found heartbeats in timeout')
-        print "Reload server"
+        print("Reload server")
         self.server.reload()
         time.sleep(5)
         self.waitHeartbeatNodes(hadds=self.hadds)
         time.sleep(self.shortdelay)
         self.assertInLogfile('Reload the server')
         self.assertNotInLogfile('^ERROR ')
-        print "Reload threads"
+        print("Reload threads")
         self.server.reload_threads()
         time.sleep(5)
         self.waitHeartbeatNodes(hadds=self.hadds)
@@ -450,7 +450,7 @@ class Common(object):
         self.start()
         time.sleep(5)
         if self.server_section:
-            print "Look for thread %s"%self.server_section
+            print("Look for thread %s"%self.server_section)
             thread = self.server.find_thread(self.server_section)
             self.assertNotEqual(thread, None)
             self.assertIsInstance(thread, JNTBusThread)
@@ -459,13 +459,13 @@ class Common(object):
         self.assertInLogfile('Start the server')
         self.assertInLogfile('Connected to broker')
         self.assertInLogfile('Found heartbeats in timeout')
-        print "Reload server"
+        print("Reload server")
         self.server.reload()
         time.sleep(5)
         self.waitHeartbeatNodes(hadds=self.hadds)
         time.sleep(self.shortdelay)
         self.assertInLogfile('Reload the server')
-        print "Reload threads"
+        print("Reload threads")
         self.server.reload_threads()
         time.sleep(5)
         self.waitHeartbeatNodes(hadds=self.hadds)
@@ -535,7 +535,7 @@ class JNTTServerCommon(Common):
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
             time.sleep(5)
             if self.server_section:
-                print "Look for thread %s"%self.server_section
+                print("Look for thread %s"%self.server_section)
                 thread = self.server.find_thread(self.server_section)
                 self.assertNotEqual(thread, None)
                 self.assertIsInstance(thread, JNTBusThread)
@@ -544,7 +544,7 @@ class JNTTServerCommon(Common):
             self.stop()
 
     def test_011_start_reload_stop(self):
-        print self.hadds
+        print(self.hadds)
         if self.hadds is None:
             self.skipTest("No hadds defined. Skip test")
         self.start()

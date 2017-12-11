@@ -25,6 +25,7 @@ __copyright__ = "Copyright © 2013-2014-2015-2016 Sébastien GALLET aka bibi2100
 
 import warnings
 warnings.filterwarnings("ignore")
+import six
 
 import sys, os
 import time
@@ -33,8 +34,13 @@ import threading
 import logging
 from pkg_resources import iter_entry_points
 import mock
-import ConfigParser
-from ConfigParser import RawConfigParser
+
+if six.PY2:
+    import ConfigParser
+    from ConfigParser import RawConfigParser
+else:
+    import configparser
+    from configparser import RawConfigParser
 
 sys.path.insert(0,os.path.dirname(__name__))
 
@@ -52,7 +58,7 @@ class JNTTFactory(JNTTBase):
     conf_file = 'tests/data/test_value_factory.conf'
 
     def get_main_value(self, node_uuid='test_node', **kwargs):
-        print "entry_name ", self.entry_name
+        print("entry_name ", self.entry_name)
         entry_points = { }
         for entrypoint in iter_entry_points(group = 'janitoo.values'):
             entry_points[entrypoint.name] = entrypoint.load()
@@ -75,7 +81,7 @@ class JNTTFactoryCommon(object):
     """Test the value factory
     """
     def test_001_collect_values_entries(self):
-        print "entry_name ", self.entry_name
+        print("entry_name ", self.entry_name)
         entry_points = { }
         for entrypoint in iter_entry_points(group = 'janitoo.values'):
             entry_points[entrypoint.name] = entrypoint.load()
@@ -93,9 +99,9 @@ class JNTTFactoryPollCommon(JNTTFactoryCommon):
         node_uuid='test_node'
         main_value = self.get_main_value(node_uuid=node_uuid, **kwargs)
         self.assertFalse(main_value.is_writeonly)
-        print main_value
+        print(main_value)
         poll_value = main_value.create_poll_value()
-        print poll_value
+        print(poll_value)
         main_value._set_poll(node_uuid, 0, 0)
         self.assertEqual(0, main_value._get_poll(node_uuid, 0))
         main_value._set_poll(node_uuid, 0, 5)
@@ -114,9 +120,9 @@ class JNTTFactoryConfigCommon(JNTTFactoryCommon):
     def test_021_value_entry_config(self, **kwargs):
         node_uuid='test_node'
         main_value = self.get_main_value(node_uuid=node_uuid, **kwargs)
-        print main_value
+        print(main_value)
         config_value = main_value.create_config_value()
-        print config_value
+        print(config_value)
         main_value.set_config(node_uuid, 0, '0')
         self.assertEqual('0', main_value.get_config(node_uuid, 0))
         main_value.set_config(node_uuid, 0, '5')
