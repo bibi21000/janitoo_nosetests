@@ -89,7 +89,7 @@ setup(
     install_requires=[
                      #~ 'janitoo_packaging == %s'%janitoo_version,
                      'nose==1.3.7',
-                     'nose-html',
+                     'nose-html-reporting',
                      'nose-progressive',
                      'coverage',
                      'xunitmerge',
@@ -97,5 +97,7 @@ setup(
                      'nose-parameterized',
                      'pylint',
                      'netifaces',
+                     'mock == 2.0.0',
+                     'six',
                     ],
 )
