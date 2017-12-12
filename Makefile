@@ -1,19 +1,7 @@
 # Makefile for janitoo
 #
 
-include ../Makefile.janitoo
-
-MODULENAME   = $(shell basename `pwd`)
-DOCKERNAME   = $(shell echo ${MODULENAME}|sed -e "s|janitoo_||g")
-DOCKERVOLS   =
-DOCKERPORT   = 8882
-NOSEMODULES  = janitoo,janitoo_factory,janitoo_db
-MOREMODULES  = janitoo_factory_ext
-
-DEBIANDEPS := $(shell [ -f debian.deps ] && cat debian.deps)
-BOWERDEPS := $(shell [ -f bower.deps ] && cat bower.deps)
-
-TAGGED := $(shell git tag | grep -c v${janitoo_version} )
+include ../janitoo/Makefile.janitoo
 
 -include Makefile.local
 
