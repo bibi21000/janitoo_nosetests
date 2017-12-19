@@ -31,6 +31,7 @@ import logging
 from pkg_resources import iter_entry_points
 
 from nose_parameterized import parameterized
+from nose.plugins.skip import SkipTest
 
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import Table, Column, String
@@ -77,6 +78,13 @@ class JNTTModels(JNTTBase):
         self.dbmaker.configure(bind=self.dbengine)
         self.dbsession = scoped_session(self.dbmaker)
         self.drop_all()
+        self.options = options
+
+    def skipSqliteTest(self):
+        """Skip a test for sqlite database
+        """
+        if self.options.get_option('database', 'sqlalchemy.url').startswith('sqlite:'):
+            raise SkipTest("%s" % ("Skipped for sqlite database"))
 
     def create_all(self):
         Base.metadata.create_all(bind=self.dbengine)
@@ -137,6 +145,13 @@ class JNTTDbsModels(JNTTBase):
         self.dbsession = scoped_session(self.dbmaker)
         self.drop_all()
 
+    @classmethod
+    def skipSqliteTest(self):
+        """Skip a test for sqlite database
+        """
+        if self.dbconf[1]['dbconf'].startswith('sqlite:'):
+            raise SkipTest("%s" % ("Skipped for sqlite database"))
+
     def tearDown(self):
         #~ try:
             #~ self.drop_all()
@@ -184,6 +199,13 @@ class JNTTFullModels(JNTTBase):
     def setUp(self):
         JNTTBase.setUp(self)
         import janitoo_db.models
+
+    @classmethod
+    def skipSqliteTest(self):
+        """Skip a test for sqlite database
+        """
+        if self.db_uri.startswith('sqlite:'):
+            raise SkipTest("%s" % ("Skipped for sqlite database"))
 
 class JNTTDockerFullModels(JNTTFullModels):
     """Tests for full models on docker
