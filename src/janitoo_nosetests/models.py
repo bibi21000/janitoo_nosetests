@@ -33,6 +33,7 @@ from pkg_resources import iter_entry_points
 from nose_parameterized import parameterized
 
 from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy import Table, Column, String
 from alembic import command as alcommand
 
 from janitoo_nosetests import JNTTBase
@@ -51,6 +52,10 @@ COMMAND_DISCOVERY = 0x5000
 
 assert(COMMAND_DESC[COMMAND_DISCOVERY] == 'COMMAND_DISCOVERY')
 ##############################################################
+
+alembic_version = Table('alembic_version', Base.metadata,
+    Column('version_num', String(32), nullable=False)
+)
 
 class JNTTModels(JNTTBase):
     """Test the models
@@ -78,7 +83,11 @@ class JNTTModels(JNTTBase):
 
     def drop_all(self):
         Base.metadata.drop_all(bind=self.dbengine)
-
+        try:
+            alembic_version.drop(bind=self.dbengine)
+        except Exception:
+            pass
+            
 class JNTTModelsCommon(object):
     """Common tests for models
     """
@@ -111,12 +120,11 @@ DBCONFS = [
         ('Postgresql',{'dbconf':'postgresql://janitoo:janitoo@localhost/janitoo_tests'}),
         ]
 
-class JNTTDockerModels(JNTTBase):
+class JNTTDbsModels(JNTTBase):
     """Tests for model on docker
     """
     dbconf = ('sqlite', {'dbconf':'sqlite:////tmp/janitoo_tests.sqlite'})
     def setUp(self):
-        JNTTBase.onlyDockerTest()
         JNTTBase.setUp(self)
         tmp_conf = self.cpTempFile(self.models_conf)
         options = JNTOptions(options={'conf_file':tmp_conf})
@@ -141,11 +149,32 @@ class JNTTDockerModels(JNTTBase):
 
     def drop_all(self):
         Base.metadata.drop_all(bind=self.dbengine)
+        try:
+            alembic_version.drop(bind=self.dbengine)
+        except Exception:
+            pass
 
-def jntt_docker_models(module_name, cls, prefix='Class'):
+class JNTTDockerModels(JNTTDbsModels):
+    """Tests for model on docker
+    """
+    def setUp(self):
+        JNTTBase.onlyDockerTest()
+        JNTTDbsModels.setUp(self)
+
+def jntt_models(module_name, cls, prefix='Class', dbs=None):
     """Launch cls tests for every supported database
     """
-    for name, conf in DBCONFS:
+    if dbs is None:
+        dbs = DBCONFS
+    for name, conf in dbs:
+        setattr(sys.modules[module_name], 'TestModels_%s_%s'%(prefix,name), type('TestModels_%s_%s'%(prefix,name), (JNTTDbsModels,cls), {'dbconf': (name, conf)}))
+
+def jntt_docker_models(module_name, cls, prefix='Class', dbs=None):
+    """Launch cls tests for every supported database
+    """
+    if dbs is None:
+        dbs = DBCONFS
+    for name, conf in dbs:
         setattr(sys.modules[module_name], 'TestModels_%s_%s'%(prefix,name), type('TestModels_%s_%s'%(prefix,name), (JNTTDockerModels,cls), {'dbconf': (name, conf)}))
 
 class JNTTFullModels(JNTTBase):
@@ -165,10 +194,12 @@ class JNTTDockerFullModels(JNTTFullModels):
         JNTTFullModels.setUp(self)
         self.db_uri = self.dbconf[1]['dbconf']
 
-def jntt_docker_fullmodels(module_name, cls, prefix='Class'):
+def jntt_docker_fullmodels(module_name, cls, prefix='Class', dbs=None):
     """Launch cls tests for every supported database
     """
-    for name, conf in DBCONFS:
+    if dbs is None:
+        dbs = DBCONFS
+    for name, conf in dbs:
         setattr(sys.modules[module_name], 'TestFullModels_%s_%s'%(prefix,name), type('TestFullModels_%s_%s'%(prefix,name), (JNTTDockerFullModels,cls), {'dbconf': (name, conf)}))
 
 class JNTTFullModelsCommon(object):
