@@ -381,13 +381,16 @@ class JNTTDockerBase(JNTTBase):
         JNTTBase.onlyDockerTest()
         JNTTBase.setUp(self)
 
-DBCONFS = [
-        ('Sqlite', {'dbconf':'sqlite:////tmp/janitoo_tests.sqlite'}),
-        ('Mysql',{'dbconf':'mysql+pymysql://root:janitoo@localhost/janitoo_tests'}),
-        ('Postgresql',{'dbconf':'postgresql://janitoo:janitoo@localhost/janitoo_tests'}),
-        ]
+#Definitions for database tests
 try:
     from sqlalchemy import Table, Column, String
+    from janitoo_db.base import Base, create_db_engine
+
+    DBCONFS = [
+            ('Sqlite', {'dbconf':'sqlite:////tmp/janitoo_tests.sqlite'}),
+            ('Mysql',{'dbconf':'mysql+pymysql://root:janitoo@localhost/janitoo_tests'}),
+            ('Postgresql',{'dbconf':'postgresql://janitoo:janitoo@localhost/janitoo_tests'}),
+            ]
 
     alembic_version = Table('alembic_version', Base.metadata,
         Column('version_num', String(32), nullable=False)
