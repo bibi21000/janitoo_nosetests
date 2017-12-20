@@ -392,5 +392,5 @@ try:
     alembic_version = Table('alembic_version', Base.metadata,
         Column('version_num', String(32), nullable=False)
     )
-except ImportError
+except ImportError:
     pass
