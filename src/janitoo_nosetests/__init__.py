@@ -386,7 +386,11 @@ DBCONFS = [
         ('Mysql',{'dbconf':'mysql+pymysql://root:janitoo@localhost/janitoo_tests'}),
         ('Postgresql',{'dbconf':'postgresql://janitoo:janitoo@localhost/janitoo_tests'}),
         ]
+try:
+    from sqlalchemy import Table, Column, String
 
-alembic_version = Table('alembic_version', Base.metadata,
-    Column('version_num', String(32), nullable=False)
-)
+    alembic_version = Table('alembic_version', Base.metadata,
+        Column('version_num', String(32), nullable=False)
+    )
+except ImportError
+    pass
