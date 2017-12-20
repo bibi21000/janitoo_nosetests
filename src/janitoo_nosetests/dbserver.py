@@ -30,9 +30,8 @@ import unittest
 from sqlalchemy.orm import sessionmaker, scoped_session
 from alembic import command as alcommand
 
-from janitoo_nosetests import JNTTBase
+from janitoo_nosetests import JNTTBase, alembic_version, DBCONFS
 from janitoo_nosetests.server import JNTTServer, JNTTServerCommon, JNTTDockerServerCommon
-from janitoo_nosetests.models import DBCONFS
 
 from janitoo.utils import JanitooNotImplemented, JanitooException
 from janitoo.options import JNTOptions
@@ -52,6 +51,14 @@ class JNTTDBServer(JNTTServer):
         self.dbmaker.configure(bind=self.dbengine)
         self.dbsession = scoped_session(self.dbmaker)
         Base.metadata.drop_all(bind=self.dbengine)
+        self.drop_all()
+
+    def drop_all(self):
+        Base.metadata.drop_all(bind=self.dbengine)
+        try:
+            alembic_version.drop(bind=self.dbengine)
+        except Exception:
+            pass
 
     def tearDown(self):
         if self.dbsession is not None:

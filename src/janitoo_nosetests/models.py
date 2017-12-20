@@ -37,7 +37,7 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import Table, Column, String
 from alembic import command as alcommand
 
-from janitoo_nosetests import JNTTBase
+from janitoo_nosetests import JNTTBase, alembic_version, DBCONFS
 
 from janitoo.options import JNTOptions
 from janitoo_db.base import Base, create_db_engine
@@ -53,10 +53,6 @@ COMMAND_DISCOVERY = 0x5000
 
 assert(COMMAND_DESC[COMMAND_DISCOVERY] == 'COMMAND_DISCOVERY')
 ##############################################################
-
-alembic_version = Table('alembic_version', Base.metadata,
-    Column('version_num', String(32), nullable=False)
-)
 
 class JNTTModels(JNTTBase):
     """Test the models
@@ -121,12 +117,6 @@ class JNTTModelsCommon(object):
         self.assertTrue(config.checkdb())
         config.downgrade()
         self.assertFalse(config.checkdb())
-
-DBCONFS = [
-        ('Sqlite', {'dbconf':'sqlite:////tmp/janitoo_tests.sqlite'}),
-        ('Mysql',{'dbconf':'mysql://root:janitoo@localhost/janitoo_tests'}),
-        ('Postgresql',{'dbconf':'postgresql://janitoo:janitoo@localhost/janitoo_tests'}),
-        ]
 
 class JNTTDbsModels(JNTTBase):
     """Tests for model on docker
