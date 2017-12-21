@@ -28,6 +28,7 @@ import time, datetime
 import unittest
 import threading
 import logging
+import traceback
 from pkg_resources import iter_entry_points
 
 from nose_parameterized import parameterized
@@ -134,7 +135,7 @@ class JNTTDbsModels(JNTTBase):
         self.dbmaker.configure(bind=self.dbengine)
         self.dbsession = scoped_session(self.dbmaker)
         self.drop_all()
-
+ 
     @classmethod
     def skipSqliteTest(self):
         """Skip a test for sqlite database
@@ -166,17 +167,31 @@ class JNTTDockerModels(JNTTDbsModels):
         JNTTBase.onlyDockerTest()
         JNTTDbsModels.setUp(self)
 
-def jntt_models(module_name, cls, prefix='Class', dbs=None):
+def jntt_models(module_name, cls, prefix='Class', dbs=None, skipcond=None):
     """Launch cls tests for every supported database
     """
+    try:
+        if skipcond is not None:
+            skipcond()
+    except Exception as e:
+        traceback.print_exc()
+        #~ print(e)
+        return
     if dbs is None:
         dbs = DBCONFS
     for name, conf in dbs:
-        setattr(sys.modules[module_name], 'TestModels_%s_%s'%(prefix,name), type('TestModels_%s_%s'%(prefix,name), (JNTTDbsModels,cls), {'dbconf': (name, conf)}))
-
-def jntt_docker_models(module_name, cls, prefix='Class', dbs=None):
+        setattr(sys.modules[module_name], 'TestModels_%s_%s'%(prefix,name), type('TestModels_%s_%s'%(prefix,name), (JNTTDbsModels,cls), {'dbconf': (name, conf), '__qualname__':'TestModels_%s_%s'%(prefix,name), '__name__':'TestModels_%s_%s'%(prefix,name)}))
+        
+def jntt_docker_models(module_name, cls, prefix='Class', dbs=None, skipcond=None):
     """Launch cls tests for every supported database
     """
+    try:
+        if skipcond is not None:
+            skipcond()
+    except Exception as e:
+        traceback.print_exc()
+        #~ print(e)
+        return
     if dbs is None:
         dbs = DBCONFS
     for name, conf in dbs:
@@ -206,9 +221,16 @@ class JNTTDockerFullModels(JNTTFullModels):
         JNTTFullModels.setUp(self)
         self.db_uri = self.dbconf[1]['dbconf']
 
-def jntt_docker_fullmodels(module_name, cls, prefix='Class', dbs=None):
+def jntt_docker_fullmodels(module_name, cls, prefix='Class', dbs=None, skipcond=None):
     """Launch cls tests for every supported database
     """
+    try:
+        if skipcond is not None:
+            skipcond()
+    except Exception as e:
+        traceback.print_exc()
+        #~ print(e)
+        return
     if dbs is None:
         dbs = DBCONFS
     for name, conf in dbs:
