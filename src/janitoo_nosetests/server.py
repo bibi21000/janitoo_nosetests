@@ -472,7 +472,7 @@ class Common(object):
         time.sleep(self.shortdelay)
         self.assertInLogfile('Reload threads')
 
-    def test_020_request_broadcast(self):
+    def skip_020_request_broadcast(self):
         if self.hadd_ctrl is None:
             self.skipTest("No hadd_ctrl defined. Skip test")
         self.start()
@@ -558,7 +558,7 @@ class JNTTServerCommon(Common):
         finally:
             self.stop()
 
-    def test_012_start_reload_threads_stop(self):
+    def skip_012_start_reload_threads_stop(self):
         if self.hadds is None:
             self.skipTest("No hadds defined. Skip test")
         self.start()
