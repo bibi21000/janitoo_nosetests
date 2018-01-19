@@ -62,6 +62,7 @@ class JNTTServer(JNTTBase):
     server_section = None
     hadd_ctrl = None
     hadds = None
+    delay_min = 5
 
     def setUp(self):
         JNTTBase.setUp(self)
@@ -130,6 +131,9 @@ class JNTTServer(JNTTBase):
                 options = vars(jnt_parse_args())
                 self.server = self.server_class(options)
             self.server.start()
+            #~ import pdb; pdb.set_trace()
+            delay_min = self.server.options.get_option(self.server_section,'config_timeout', default = 0)
+            self.delay_min = self.delay_min + delay_min
             self.running_server = threading.Timer(0.01, self.server.run)
             self.running_server.start()
             time.sleep(1.5)
@@ -137,11 +141,11 @@ class JNTTServer(JNTTBase):
     def stopServer(self):
         if self.server is not None:
             self.server.stop()
-            time.sleep(5)
+            time.sleep(self.delay_min)
             self.server = None
         if self.running_server is not None:
             self.running_server.cancel()
-            time.sleep(5)
+            time.sleep(self.delay_min)
             self.running_server = None
         self.message = None
 
@@ -414,12 +418,11 @@ class Common(object):
     """
     longdelay = 50
     shortdelay = 30
-    mindelay = 5
     server_section = None
 
     def test_040_server_start_no_error_in_log(self):
         self.start()
-        time.sleep(5)
+        time.sleep(self.delay_min)
         if self.server_section:
             print("Look for thread %s"%self.server_section)
             thread = self.server.find_thread(self.server_section)
@@ -433,14 +436,14 @@ class Common(object):
         self.assertInLogfile('Found heartbeats in timeout')
         print("Reload server")
         self.server.reload()
-        time.sleep(self.mindelay)
+        time.sleep(self.delay_min)
         self.waitHeartbeatNodes(hadds=self.hadds)
         time.sleep(self.shortdelay)
         self.assertInLogfile('Reload the server')
         self.assertNotInLogfile('^ERROR ')
         print("Reload threads")
         self.server.reload_threads()
-        time.sleep(self.mindelay)
+        time.sleep(self.delay_min)
         self.waitHeartbeatNodes(hadds=self.hadds)
         time.sleep(self.shortdelay)
         self.assertInLogfile('Reload threads')
@@ -448,7 +451,7 @@ class Common(object):
 
     def minimal_040_server_start_reload_restart(self):
         self.start()
-        time.sleep(5)
+        time.sleep(self.delay_min)
         if self.server_section:
             print("Look for thread %s"%self.server_section)
             thread = self.server.find_thread(self.server_section)
@@ -461,13 +464,13 @@ class Common(object):
         self.assertInLogfile('Found heartbeats in timeout')
         print("Reload server")
         self.server.reload()
-        time.sleep(5)
+        time.sleep(self.delay_min)
         self.waitHeartbeatNodes(hadds=self.hadds)
         time.sleep(self.shortdelay)
         self.assertInLogfile('Reload the server')
         print("Reload threads")
         self.server.reload_threads()
-        time.sleep(5)
+        time.sleep(self.delay_min)
         self.waitHeartbeatNodes(hadds=self.hadds)
         time.sleep(self.shortdelay)
         self.assertInLogfile('Reload threads')
@@ -478,13 +481,13 @@ class Common(object):
         self.start()
         try:
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
-            time.sleep(5)
+            time.sleep(self.delay_min)
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
             for request in NETWORK_REQUESTS:
                 self.assertBroadcastRequest(cmd_class=COMMAND_DISCOVERY, uuid=request, client_hadd=HADD%(9999,0))
                 time.sleep(2)
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
-            time.sleep(5)
+            time.sleep(self.delay_min)
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
             for request in NETWORK_REQUESTS:
                 self.assertNodeRequest(cmd_class=COMMAND_DISCOVERY, uuid=request, node_hadd=self.hadd_ctrl, client_hadd=HADD%(9999,0))
@@ -498,7 +501,7 @@ class Common(object):
         self.start()
         try:
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
-            time.sleep(5)
+            time.sleep(self.delay_min)
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
             run = False
             for request in NETWORK_REQUESTS:
@@ -509,7 +512,7 @@ class Common(object):
                     pass
             self.assertTrue(run)
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
-            time.sleep(5)
+            time.sleep(self.delay_min)
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
             run = False
             for request in NETWORK_REQUESTS:
@@ -533,7 +536,7 @@ class JNTTServerCommon(Common):
         self.start()
         try:
             self.assertHeartbeatNode(hadd=self.hadd_ctrl)
-            time.sleep(5)
+            time.sleep(self.delay_min)
             if self.server_section:
                 print("Look for thread %s"%self.server_section)
                 thread = self.server.find_thread(self.server_section)
@@ -550,11 +553,11 @@ class JNTTServerCommon(Common):
         self.start()
         try:
             self.assertHeartbeatNodes(hadds=self.hadds)
-            time.sleep(5)
+            time.sleep(self.delay_min)
             self.server.reload()
-            time.sleep(5)
+            time.sleep(self.delay_min)
             self.assertHeartbeatNodes(hadds=self.hadds)
-            time.sleep(5)
+            time.sleep(self.delay_min)
         finally:
             self.stop()
 
@@ -564,11 +567,11 @@ class JNTTServerCommon(Common):
         self.start()
         try:
             self.assertHeartbeatNodes(hadds=self.hadds)
-            time.sleep(5)
+            time.sleep(self.delay_min)
             self.server.reload_threads()
-            time.sleep(5)
+            time.sleep(self.delay_min)
             self.assertHeartbeatNodes(hadds=self.hadds)
-            time.sleep(5)
+            time.sleep(self.delay_min)
         finally:
             self.stop()
 
