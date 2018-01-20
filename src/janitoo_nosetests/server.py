@@ -259,6 +259,19 @@ class JNTTServer(JNTTBase):
         print("Unreceived heartbeats %s" % self.heartbeat_waitings)
         time.sleep(0.5)
 
+    def waitThreads(self, threads, timeout=60):
+        ths = list(threads)
+        i = 0
+        while i< timeout*10000 and not self.heartbeat_received:
+            time.sleep(0.0001)
+            i += 1
+            for th in ths:
+                thread = self.server.find_thread(th)
+                if thread is not None:
+                    ths.remove(th)
+            if len(ths) == 0:
+                return
+
     def assertNodeRequest(self, cmd_class=0, genre=0x04, uuid='request_info_nodes', node_hadd=None, client_hadd=None, data=None, is_writeonly=False, is_readonly=False, timeout=5):
         self.message_received = False
         print("Waiting for %s : %s" % (node_hadd,uuid))
@@ -424,6 +437,7 @@ class Common(object):
         self.start()
         time.sleep(self.delay_min)
         if self.server_section:
+            self.waitThreads([self.server_section])
             print("Look for thread %s"%self.server_section)
             thread = self.server.find_thread(self.server_section)
             self.assertNotEqual(thread, None)
